@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { IconType } from "react-icons";
 
 export type RoomType = {
@@ -15,3 +16,7 @@ export type LinkProps = {
   link:{heading:string, icon:IconType};
   isSelected:boolean;
 };
+
+export type MainContainerProps = {
+  children: ReactNode;
+}

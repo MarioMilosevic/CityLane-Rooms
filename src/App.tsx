@@ -2,6 +2,8 @@ import supabase from "./config/supabaseClient";
 import { useState, useEffect } from "react";
 import { RoomType } from "./utils/types";
 import Sidebar from "./components/layout/Sidebar";
+import MainContainer from "./components/layout/MainContainer";
+import Navigation from "./components/layout/Navigation";
 function App() {
   const [error, setError] = useState<string>("");
   const [rooms, setRooms] = useState<RoomType[]>([]);
@@ -26,6 +28,9 @@ function App() {
   return (
     <>
       <Sidebar />
+      <MainContainer>
+        <Navigation />
+      </MainContainer>
     </>
   );
 }

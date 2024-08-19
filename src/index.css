@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .custom-color span{
-    /* neutral 900 */
-    color:#171717;
+    /* neutral 400 */
+   color: #737373;
     transition: color 200ms;
 }
 
