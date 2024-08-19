@@ -7,7 +7,7 @@ const Link = ({ index, link, isSelected }: LinkProps) => {
   return (
     <li key={index} className={`${baseClass} ${isSelected && isActive}`}>
       <span>{<link.icon />}</span>
-      <h2>{link.heading}</h2>
+      <h2 className="font-normal">{link.heading}</h2>
     </li>
   );
 };
