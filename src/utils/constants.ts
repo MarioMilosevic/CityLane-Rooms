@@ -9,3 +9,5 @@ export const links = [
   { heading: "Users", icon: FaUsers },
   { heading: "Settings", icon: IoSettingsSharp },
 ];
+
+export const filterTabs = ["All", "No discount", "With discount"];

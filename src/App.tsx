@@ -4,6 +4,7 @@ import { RoomType } from "./utils/types";
 import Sidebar from "./components/layout/Sidebar";
 import MainContainer from "./components/layout/MainContainer";
 import Navigation from "./components/layout/Navigation";
+import Main from "./components/layout/Main";
 function App() {
   const [error, setError] = useState<string>("");
   const [rooms, setRooms] = useState<RoomType[]>([]);
@@ -30,6 +31,7 @@ function App() {
       <Sidebar />
       <MainContainer>
         <Navigation />
+        <Main/>
       </MainContainer>
     </>
   );
