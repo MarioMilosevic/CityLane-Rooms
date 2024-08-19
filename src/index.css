@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-color span{
+    /* gray 900 */
+    color:#111827;
+    transition: color 200ms;
+}
+
+.custom-color:hover span{
+    /* sky 500*/
+    color: #0ea5e9;
+}

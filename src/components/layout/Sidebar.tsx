@@ -4,16 +4,14 @@ import Link from "../common/Link";
 
 const Sidebar = () => {
   return (
-    <div className="border-black border w-[500px]">
-      <div className="bg-gray-50 w-[200px] border border-black">
-        <img src={logo} alt="Logo" className="w-full" />
-      </div>
-      <h1 className="text-2xl font-medium tracking-wide border border-black">
+    <div className="bg-neutral-50 w-[200px]">
+        <img src={logo} alt="Logo" className="w-full border border-black" />
+      <h1 className="text-xl tracking-wide flex justify-center">
         EchoStay
       </h1>
       <ul>
         {links.map((link, index) => (
-          <Link link={link} index={index}/>
+          <Link link={link} index={index} isSelected={true} />
         ))}
       </ul>
     </div>

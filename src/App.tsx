@@ -2,7 +2,6 @@ import supabase from "./config/supabaseClient";
 import { useState, useEffect } from "react";
 import { RoomType } from "./utils/types";
 import Sidebar from "./components/layout/Sidebar";
-import logo from "./assets/images/logo.png";
 function App() {
   const [error, setError] = useState<string>("");
   const [rooms, setRooms] = useState<RoomType[]>([]);

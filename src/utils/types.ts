@@ -1,3 +1,5 @@
+import { IconType } from "react-icons";
+
 export type RoomType = {
     created_at: string;
     description: string;
@@ -7,3 +9,9 @@ export type RoomType = {
     name: string;
     regularPrice: number;
 }
+
+export type LinkProps = {
+  index:number;
+  link:{heading:string, icon:IconType};
+  isSelected:boolean;
+};
