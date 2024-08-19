@@ -1,11 +1,34 @@
-import supabase from "./config/supabaseClient"
+import supabase from "./config/supabaseClient";
+import { useState, useEffect } from "react";
+import { RoomType } from "./utils/types";
+import Sidebar from "./components/layout/Sidebar";
+import logo from "./assets/images/logo.png";
 function App() {
-  console.log(supabase)
+  const [error, setError] = useState<string>("");
+  const [rooms, setRooms] = useState<RoomType[]>([]);
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      const { data, error } = await supabase.from("Rooms").select();
+
+      if (error) {
+        setError("Error loading rooms");
+        console.error(error);
+        setRooms([]);
+      } else {
+        setRooms(data);
+        setError("");
+      }
+    };
+
+    fetchRooms();
+  }, []);
+
   return (
-    <div>
-      Mario
-    </div>
-  )
+    <>
+      <Sidebar />
+    </>
+  );
 }
 
-export default App
+export default App;
