@@ -11,3 +11,11 @@ export const links = [
 ];
 
 export const filterTabs = ["All", "No discount", "With discount"];
+
+export const tableHeaders = [
+  { title: "", width: "small" },
+  { title: "Room", width: "big" },
+  { title: "Capacity", width: "big" },
+  { title: "Price", width: "medium" },
+  { title: "Discount", width: "medium" },
+];

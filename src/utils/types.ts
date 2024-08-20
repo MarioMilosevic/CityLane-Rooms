@@ -31,3 +31,17 @@ export type FilterTabColors = {
   blue: string;
   neutral: string;
 };
+
+export type TableHeaderSizes = {
+  small: string;
+  medium: string;
+  big: string;
+};
+
+export type TableHeaderProps = {
+  width: keyof TableHeaderSizes;
+};
+
+export type TableContainerProps = {
+  children:ReactNode
+}
