@@ -26,12 +26,15 @@ function App() {
     fetchRooms();
   }, []);
 
+  console.log(rooms)
+  console.log(error)
+
   return (
     <>
       <Sidebar />
       <MainContainer>
         <Navigation />
-        <Main/>
+        <Main />
       </MainContainer>
     </>
   );

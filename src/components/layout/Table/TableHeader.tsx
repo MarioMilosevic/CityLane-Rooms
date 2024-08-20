@@ -1,6 +1,6 @@
 import { TableHeaderProps } from "../../../utils/types";
 
-const TableHeader = ({ width, children }:TableHeaderProps) => {
+const TableHeader = ({ width, children }: TableHeaderProps) => {
   const tableHeaderOptions = {
     small: "w-[10%]",
     medium: "w-[20%]",

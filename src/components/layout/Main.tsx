@@ -3,12 +3,14 @@ import { filterTabs, tableHeaders } from "../../utils/constants";
 import { useState } from "react";
 import TableContainer from "./Table/TableContainer";
 import TableHeader from "./Table/TableHeader";
+import TableRow from "./Table/TableRow";
+import TableButton from "./Table/TableButton";
 const Main = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   return (
     <main className="bg-neutral-100 border border-black pl-24">
       <div className="flex justify-between py-8 border border-black">
-        <h1 className="text-xl font-medium">All rooms</h1>
+        <h1 className="text-3xl font-medium">All rooms</h1>
         <div className="flex items-center gap-2 text-sm">
           {filterTabs.map((tab, index) => (
             <FilterTab
@@ -25,11 +27,18 @@ const Main = () => {
         </div>
       </div>
       <TableContainer>
+        <ul className="flex">
         {tableHeaders.map((header, index) => (
           <TableHeader key={index} width={header.width}>
-            {header.title}
+            <TableButton>{header.title}</TableButton>
           </TableHeader>
         ))}
+        </ul>
+        
+        <TableRow/>
+        <TableRow/>
+        <TableRow/>
+        <TableRow/>
       </TableContainer>
     </main>
   );
