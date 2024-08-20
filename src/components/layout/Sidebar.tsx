@@ -4,12 +4,14 @@ import Link from "../common/Link";
 
 const Sidebar = () => {
   return (
-    <div className="bg-neutral-50 w-[200px] flex flex-col">
+    <div className="bg-neutral-50 w-[200px] flex flex-col border-r border-neutral-200">
       <img src={logo} alt="Logo" className="w-full" />
-      <h1 className="text-2xl tracking-wide flex justify-center pb-10">EchoStay</h1>
+      <h1 className="text-2xl tracking-wide flex justify-center pb-10">
+        EchoStay
+      </h1>
       <ul className="flex flex-col  pl-2">
         {links.map((link, index) => (
-          <Link link={link} index={index} isSelected={true} />
+          <Link key={index} link={link} index={index} isSelected={true} />
         ))}
       </ul>
     </div>

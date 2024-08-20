@@ -22,3 +22,9 @@ export const tableHeaders: TableHeader[] = [
   { title: "Price", width: "medium" },
   { title: "Discount", width: "medium" },
 ];
+
+export const tableHeaderOptions = {
+   small: "w-[10%]",
+   medium: "w-[20%]",
+   big: "w-[25%]",
+ };

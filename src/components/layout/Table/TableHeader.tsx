@@ -1,12 +1,8 @@
 import { TableHeaderProps } from "../../../utils/types";
-
+import { tableHeaderOptions } from "../../../utils/constants";
 const TableHeader = ({ width, children }: TableHeaderProps) => {
-  const tableHeaderOptions = {
-    small: "w-[10%]",
-    medium: "w-[20%]",
-    big: "w-[25%]",
-  };
-  return <div className={`${tableHeaderOptions[width]}`}>{children}</div>;
+ 
+  return <div className={`${tableHeaderOptions[width]} py-4`}>{children}</div>;
 };
 
 export default TableHeader;

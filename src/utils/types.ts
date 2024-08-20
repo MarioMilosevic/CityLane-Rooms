@@ -9,11 +9,12 @@ export type RoomType = {
   image: string;
   name: string;
   regularPrice: number;
+  capacity: number;
 };
 
 export type RoomsState = {
-  rooms:RoomType[]
-}
+  rooms: RoomType[];
+};
 
 export type LinkProps = {
   index: number;
@@ -44,18 +45,26 @@ export type TableHeaderSizes = {
 
 export type TableHeaderProps = {
   width: keyof TableHeaderSizes;
-  children:ReactNode
+  children: ReactNode;
 };
 
 export type TableContainerProps = {
-  children:ReactNode
-}
+  children: ReactNode;
+};
 
 export type TableHeader = {
   title: string;
-  width: keyof TableHeaderSizes 
-}
+  width: keyof TableHeaderSizes;
+};
 
 export type TableButtonProps = {
   children: ReactNode;
+};
+
+export type TableRowProps = {
+  room: RoomType;
+};
+
+export type ButtonProps = {
+  children:ReactNode
 }
