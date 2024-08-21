@@ -7,7 +7,7 @@ const SharedLayout = () => {
   return (
     <>
       <Sidebar />
-      <div className="border border-black w-full">
+      <div className="w-full">
         <Navigation />
         <MainContainer>
           <Outlet />

@@ -8,28 +8,13 @@ import TableButton from "../components/layout/Table/TableButton";
 import Button from "../components/common/Button";
 import { useRoomsSlice } from "../hooks/useRoomsSlice";
 import Title from "../components/common/Title";
+import HeaderContainer from "../components/layout/HeaderContainer";
 const Bookings = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const { rooms } = useRoomsSlice();
   return (
     <>
-      <div className="flex justify-between py-8">
-        <Title title="All rooms" />
-        <div className="flex items-center gap-2 text-sm">
-          {filterTabs.map((tab, index) => (
-            <FilterTab
-              key={index}
-              color={activeIndex === index ? "blue" : "neutral"}
-              buttonHandler={() => setActiveIndex(index)}
-            >
-              {tab}
-            </FilterTab>
-          ))}
-          <select className="px-2 py-1 rounded-md">
-            <option value="">Sort by name (A-Z)</option>
-          </select>
-        </div>
-      </div>
+      <HeaderContainer isVisible={true} />
       <TableContainer>
         <div className="flex gap-6">
           {tableHeaders.map((header, index) => (
