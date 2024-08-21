@@ -17,7 +17,7 @@ const SearchFilterTab = ({tabOptions, sortOptions}:SearchFilterTabProps) => {
         </FilterTab>
       ))}
       <select className="px-2 py-1 rounded-md">
-        {sortOptions.map((option) => <SortOption key={option.name} {...option} />)}
+        {sortOptions.map((option, index) => <SortOption key={index} {...option} />)}
       </select>
     </div>
   );

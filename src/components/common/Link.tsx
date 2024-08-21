@@ -1,13 +1,25 @@
 import { LinkProps } from "../../utils/types";
 
 const Link = ({ link, isSelected, clickHandler }: LinkProps) => {
-  const baseClass =
-    "flex items-center gap-2 text-xl bg-neutral-50 rounded-xl p-2 cursor-pointer transition-colors duration-200 hover:bg-neutral-200";
-  const isActive = "custom-color";
+  const buttonBaseClass =
+    "group flex items-center gap-2 text-xl rounded-xl p-2 cursor-pointer transition-colors duration-200 hover:bg-neutral-800";
+
+  const buttonClass = isSelected ? "bg-neutral-800" : "bg-neutral-50";
+
+  const spanClass = isSelected ? "text-sky-500" : "group-hover:text-sky-500";
+  const h2Class = isSelected
+    ? "text-neutral-50"
+    : "group-hover:text-neutral-50";
+
   return (
-    <button className={`${baseClass} ${isSelected && isActive}`} onClick={clickHandler}>
-      <span>{<link.icon />}</span>
-      <h2 className="capitalize font-normal">{link.heading}</h2>
+    <button
+      className={`${buttonBaseClass} ${buttonClass} `}
+      onClick={clickHandler}
+    >
+      <span className={`transition-colors duration-200 ${spanClass}`}>
+        {<link.icon />}
+      </span>
+      <h2 className={`capitalize font-normal  ${h2Class}`}>{link.heading}</h2>
     </button>
   );
 };

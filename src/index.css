@@ -2,14 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.custom-color span{
-    /* neutral 400 */
-   color: #737373;
-    transition: color 200ms;
+.sidebar_custom_color_active {
+    background-color: #404040;
+    color: #f5f5f5;
 }
 
-.custom-color:hover span{
-    /* sky 500*/
-    color: #0ea5e9;
+.sidebar_custom_color_active span {
+    color: #0ea5e9;   
 }
+
