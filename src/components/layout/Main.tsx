@@ -7,25 +7,25 @@ import TableRow from "./Table/TableRow";
 import TableButton from "./Table/TableButton";
 import Button from "../common/Button";
 import { useRoomsSlice } from "../../hooks/useRoomsSlice";
+import Title from "../common/Title";
 const Main = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const {rooms} = useRoomsSlice()
   return (
-    <main className="bg-neutral-100 pl-24">
+    <>
       <div className="flex justify-between py-8">
-        <h1 className="text-3xl font-medium">All rooms</h1>
+        <Title title="All rooms"/>
         <div className="flex items-center gap-2 text-sm">
           {filterTabs.map((tab, index) => (
             <FilterTab
-              key={index}
-              color={activeIndex === index ? "blue" : "neutral"}
-              buttonHandler={() => setActiveIndex(index)}
+            key={index}
+            color={activeIndex === index ? "blue" : "neutral"}
+            buttonHandler={() => setActiveIndex(index)}
             >
               {tab}
             </FilterTab>
           ))}
           <select className="px-2 py-1 rounded-md">
-            <option value="">Sort by name (A-Z)</option>
             <option value="">Sort by name (A-Z)</option>
           </select>
         </div>
@@ -43,7 +43,7 @@ const Main = () => {
         </ul>
       </TableContainer>
         <Button>Add new room</Button>
-    </main>
+        </>
   );
 };
 

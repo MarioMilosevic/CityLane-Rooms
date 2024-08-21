@@ -1,13 +1,15 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Bookings from "./pages/Bookings";
+import Settings from "./pages/Settings";
+import Rooms from "./pages/Rooms";
+import Users from "./pages/Users";
+import SharedLayout from "./components/layout/SharedLayout";
 import supabase from "./config/supabaseClient";
-import { /*useState,*/ useEffect } from "react";
-import Sidebar from "./components/layout/Sidebar";
-import MainContainer from "./components/layout/MainContainer";
-import Navigation from "./components/layout/Navigation";
-import Main from "./components/layout/Main";
-import { setRooms } from "./redux/features/roomsSlice";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setRooms } from "./redux/features/roomsSlice";
+
 function App() {
-  // const [error, setError] = useState<string>("");
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchRooms = async () => {
@@ -22,7 +24,6 @@ function App() {
         dispatch(setRooms([]));
       } else {
         dispatch(setRooms(data));
-        // setError("");
       }
     };
 
@@ -30,13 +31,17 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
-      <Sidebar />
-      <MainContainer>
-        <Navigation />
-        <Main />
-      </MainContainer>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<Navigate to="/bookings" replace />} /> {/* Redirect to /bookings */}
+          <Route path="bookings" element={<Bookings />} />
+          <Route path="rooms" element={<Rooms />} />
+          <Route path="users" element={<Users />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

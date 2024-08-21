@@ -1,12 +1,11 @@
-import { IoHomeOutline, IoSettingsSharp } from "react-icons/io5";
+import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegCalendarAlt, FaUsers } from "react-icons/fa";
 import { MdLocalHotel } from "react-icons/md";
 import { TableHeader } from "./types";
 
-export const initialRoomsState = []
+export const initialRoomsState = [];
 
 export const links = [
-  { heading: "Home", icon: IoHomeOutline },
   { heading: "Bookings", icon: FaRegCalendarAlt },
   { heading: "Rooms", icon: MdLocalHotel },
   { heading: "Users", icon: FaUsers },
@@ -24,7 +23,7 @@ export const tableHeaders: TableHeader[] = [
 ];
 
 export const tableHeaderOptions = {
-   small: "w-[10%]",
-   medium: "w-[20%]",
-   big: "w-[25%]",
- };
+  small: "w-[10%]",
+  medium: "w-[20%]",
+  big: "w-[25%]",
+};
