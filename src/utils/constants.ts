@@ -6,10 +6,10 @@ import { TableHeader } from "./types";
 export const initialRoomsState = [];
 
 export const links = [
-  { heading: "Bookings", icon: FaRegCalendarAlt },
-  { heading: "Rooms", icon: MdLocalHotel },
-  { heading: "Users", icon: FaUsers },
-  { heading: "Settings", icon: IoSettingsSharp },
+  { heading: "bookings", icon: FaRegCalendarAlt },
+  { heading: "rooms", icon: MdLocalHotel },
+  { heading: "users", icon: FaUsers },
+  { heading: "settings", icon: IoSettingsSharp },
 ];
 
 export const roomsTabs = ["All", "No discount", "With discount"];

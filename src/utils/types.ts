@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { IconType } from "react-icons";
+import { MouseEventHandler } from "react";
 
 export type RoomType = {
   created_at: string;
@@ -20,6 +21,7 @@ export type LinkProps = {
   index: number;
   link: { heading: string; icon: IconType };
   isSelected: boolean;
+  clickHandler:MouseEventHandler<HTMLButtonElement>
 };
 
 export type MainContainerProps = {
@@ -45,7 +47,7 @@ export type TableHeaderSizes = {
 
 export type TableHeaderProps = {
   width: keyof TableHeaderSizes;
-  children: ReactNode;
+  title: string;
 };
 
 export type TableContainerProps = {
@@ -57,9 +59,6 @@ export type TableHeader = {
   width: keyof TableHeaderSizes;
 };
 
-export type TableButtonProps = {
-  children: ReactNode;
-};
 
 export type TableRowProps = {
   room: RoomType;

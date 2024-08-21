@@ -2,7 +2,6 @@ import { bookingsTabs, tableHeaders, roomsSortOptions } from "../utils/constants
 import TableContainer from "../components/layout/Table/TableContainer";
 import TableHeader from "../components/layout/Table/TableHeader";
 import TableRow from "../components/layout/Table/TableRow";
-import TableButton from "../components/layout/Table/TableButton";
 import Button from "../components/common/Button";
 import { useRoomsSlice } from "../hooks/useRoomsSlice";
 import HeaderContainer from "../components/layout/HeaderContainer";
@@ -14,9 +13,7 @@ const Rooms = () => {
       <TableContainer>
         <div className="flex gap-6">
           {tableHeaders.map((header, index) => (
-            <TableHeader key={index} width={header.width}>
-              <TableButton>{header.title}</TableButton>
-            </TableHeader>
+            <TableHeader key={index} {...header}/>
           ))}
         </div>
         <ul className="flex flex-col gap-1">
