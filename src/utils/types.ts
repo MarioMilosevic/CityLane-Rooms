@@ -68,3 +68,19 @@ export type TableRowProps = {
 export type ButtonProps = {
   children:ReactNode
 }
+
+export type HeaderContainerProps = {
+  isVisible: boolean;
+  tabOptions: string[];
+  sortOptions:SortOptionType[]
+}
+
+export type SortOptionType = {
+  name: string;
+  value: string;
+}
+
+export type SearchFilterTabProps = {
+  tabOptions: string[];
+  sortOptions: SortOptionType[];
+}

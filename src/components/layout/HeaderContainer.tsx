@@ -1,14 +1,12 @@
 import Title from "../common/Title";
-import { filterTabs } from "../../utils/constants";
-import FilterTab from "../common/FilterTab";
-import { useState } from "react";
 import SearchFilterTab from "../common/SearchFilterTab";
+import { HeaderContainerProps } from "../../utils/types";
 
-const HeaderContainer = ({ isVisible }: { isVisible: boolean }) => {
+const HeaderContainer = ({ isVisible, tabOptions, sortOptions }:HeaderContainerProps) => {
   return (
     <header className="flex justify-between py-8 border-black border">
       <Title title="All rooms" />
-      {isVisible && <SearchFilterTab />}
+      {isVisible && <SearchFilterTab tabOptions={tabOptions} sortOptions={sortOptions}/>}
     </header>
   );
 };

@@ -1,12 +1,13 @@
 import FilterTab from "./FilterTab";
-import { filterTabs } from "../../utils/constants";
 import { useState } from "react";
-const SearchFilterTab = () => {
+import SortOption from "./SortOption";
+import { SearchFilterTabProps } from "../../utils/types";
+const SearchFilterTab = ({tabOptions, sortOptions}:SearchFilterTabProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   return (
     <div className="flex items-center gap-2 text-sm">
-      {filterTabs.map((tab, index) => (
+      {tabOptions.map((tab, index) => (
         <FilterTab
           key={index}
           color={activeIndex === index ? "blue" : "neutral"}
@@ -16,7 +17,7 @@ const SearchFilterTab = () => {
         </FilterTab>
       ))}
       <select className="px-2 py-1 rounded-md">
-        <option value="">Sort by name (A-Z)</option>
+        {sortOptions.map((option) => <SortOption key={option.name} {...option} />)}
       </select>
     </div>
   );
