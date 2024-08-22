@@ -97,3 +97,26 @@ export const userFields = [
     id: "password_second",
   },
 ];
+
+export const settingsFields = [
+  {
+    name: "Minimum nights/booking",
+    type: "number",
+    id:"min_nights"
+  },
+  {
+    name: "Maximum nights/booking",
+    type: "number",
+    id:"max_nights"
+  },
+  {
+    name: "Maximum guests/booking",
+    type: "number",
+    id:"max_guests"
+  },
+  {
+    name: "Breakfast price",
+    type: "number",
+    id:"breakfast_price"
+  },
+]

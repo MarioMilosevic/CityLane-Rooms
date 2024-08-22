@@ -35,8 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           {/* <Route index element={<Navigate to="/bookings" replace />} />  */}
-          {/* <Route index element={<Navigate to="/rooms" replace />} /> */}
-          <Route index element={<Navigate to="/users" replace />} />
+          <Route index element={<Navigate to="/settings" replace />} />
           <Route path="bookings" element={<Bookings />} />
           <Route path="rooms" element={<Rooms />} />
           <Route path="users" element={<Users />} />
