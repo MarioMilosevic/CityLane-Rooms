@@ -23,7 +23,7 @@ const Rooms = () => {
           ))}
         </ul>
       </TableContainer>
-      <Button>Add new room</Button>
+      <Button color="blue">Add new room</Button>
     </>
   );
 };

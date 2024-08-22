@@ -59,9 +59,18 @@ export type TableHeader = {
   width: keyof TableHeaderSizes;
 };
 
+export type TableRowOptions = {
+  icon: IconType;
+  text: string;
+}[];
+
+export type ModalButtonProps = {
+  options:TableRowOptions
+}
 
 export type TableRowProps = {
   room: RoomType;
+  options: TableRowOptions
 };
 
 export type buttonColorOptions = {
