@@ -64,8 +64,14 @@ export type TableRowProps = {
   room: RoomType;
 };
 
+export type buttonColorOptions = {
+  white: string;
+  blue: string;
+}
+
 export type PrimaryActionButtonProps = {
-  children:ReactNode
+  children: ReactNode
+  color: keyof buttonColorOptions
 }
 
 export type HeaderContainerProps = {
