@@ -1,6 +1,14 @@
 const ModalButton = ({ options }) => {
+  const proba = (e) => {
+    e.stopPropagation();
+    console.log('event')
+  };
+
   return (
-    <button className="bg-neutral-50 z-20 absolute top-10 right-0 flex flex-col rounded-md" onClick={() => console.log('nest0')}>
+    <button
+      className="bg-neutral-50 z-20 absolute top-10 right-0 flex flex-col rounded-md"
+      onClick={proba}
+    >
       {options.map((option, index) => (
         <span
           key={index}

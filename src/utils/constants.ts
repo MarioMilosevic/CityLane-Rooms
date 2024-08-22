@@ -74,3 +74,26 @@ export const roomsOptions = [
     text: "Delete",
   },
 ];
+
+export const userFields = [
+  {
+    name: "Full name",
+    type: "text",
+    id: "full_name",
+  },
+  {
+    name: "Email address",
+    type: "email",
+    id: "email_address",
+  },
+  {
+    name: "Password (min 8 characters)",
+    type: "password",
+    id: "password_first",
+  },
+  {
+    name: "Repeat password",
+    type: "password",
+    id: "password_second",
+  },
+];

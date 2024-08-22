@@ -69,9 +69,10 @@ export type PrimaryActionButtonProps = {
 }
 
 export type HeaderContainerProps = {
+  title: string;
   isVisible: boolean;
-  tabOptions: string[];
-  sortOptions:SortOptionType[]
+  tabOptions?: string[];
+  sortOptions?:SortOptionType[]
 }
 
 export type SortOptionType = {
@@ -80,6 +81,12 @@ export type SortOptionType = {
 }
 
 export type SearchFilterTabProps = {
-  tabOptions: string[];
-  sortOptions: SortOptionType[];
+  tabOptions?: string[];
+  sortOptions?: SortOptionType[];
+}
+
+export type InputFieldProps = {
+  name: string;
+  id: string;
+  type: string;
 }

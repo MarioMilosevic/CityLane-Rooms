@@ -10,7 +10,7 @@ const Rooms = () => {
   const { rooms } = useRoomsSlice();
   return (
     <>
-      <HeaderContainer isVisible={true} tabOptions={bookingsTabs} sortOptions={roomsSortOptions}/>
+      <HeaderContainer title="All rooms" isVisible={true} tabOptions={bookingsTabs} sortOptions={roomsSortOptions}/>
       <TableContainer>
         <div className="flex gap-6">
           {tableHeaders.map((header, index) => (
