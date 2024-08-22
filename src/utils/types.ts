@@ -64,7 +64,7 @@ export type TableRowProps = {
   room: RoomType;
 };
 
-export type ButtonProps = {
+export type PrimaryActionButtonProps = {
   children:ReactNode
 }
 

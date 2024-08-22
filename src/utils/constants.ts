@@ -1,7 +1,8 @@
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegCalendarAlt, FaUsers } from "react-icons/fa";
-import { MdLocalHotel } from "react-icons/md";
+import { MdLocalHotel, MdDelete, MdModeEditOutline } from "react-icons/md";
 import { TableHeader } from "./types";
+import { HiDocumentDuplicate } from "react-icons/hi";
 
 export const initialRoomsState = [];
 
@@ -58,3 +59,18 @@ export const tableHeaderOptions = {
   medium: "w-[20%]",
   big: "w-[25%]",
 };
+
+export const roomsOptions = [
+  {
+    icon: HiDocumentDuplicate,
+    text: "Duplicate",
+  },
+  {
+    icon: MdModeEditOutline,
+    text: "Edit",
+  },
+  {
+    icon: MdDelete,
+    text: "Delete",
+  },
+];
