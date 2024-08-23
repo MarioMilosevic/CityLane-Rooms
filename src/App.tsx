@@ -4,32 +4,10 @@ import Settings from "./pages/Settings";
 import Rooms from "./pages/Rooms";
 import Users from "./pages/Users";
 import SharedLayout from "./components/layout/SharedLayout";
-import supabase from "./config/supabaseClient";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { setRooms } from "./redux/features/roomsSlice";
+import useFetchRooms from "./hooks/useFetchRooms";
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const fetchRooms = async () => {
-      const { data, error } = await supabase
-        .from("Rooms")
-        .select()
-        .order("created_at", { ascending: true });
-
-      if (error) {
-        // setError("Error loading rooms");
-        console.error(error);
-        dispatch(setRooms([]));
-      } else {
-        dispatch(setRooms(data));
-      }
-    };
-
-    fetchRooms();
-  }, [dispatch]);
-
+  useFetchRooms();
   return (
     <BrowserRouter>
       <Routes>

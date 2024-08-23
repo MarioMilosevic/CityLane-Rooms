@@ -18,7 +18,7 @@ const TableRow = ({ room, options }: TableRowProps) => {
       <div className="w-[25%]">Fits up to {capacity} guests</div>
       <div className="w-[20%] font-semibold">{`$${regularPrice}.00`}</div>
 
-      <div className="w-[20%] font-semibold relative border border-black">
+      <div className="w-[20%] font-semibold relative">
         {discount ? (
           <span className="text-green-500">{`$${discount}.00`}</span>
         ) : (
