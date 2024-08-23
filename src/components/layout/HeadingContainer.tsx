@@ -1,13 +1,13 @@
 import Title from "../common/Title";
 import SearchFilterTab from "../common/SearchFilterTab";
-import { HeaderContainerProps } from "../../utils/types";
+import { HeadingContainerProps } from "../../utils/types";
 
-const HeaderContainer = ({
+const HeadingContainer = ({
   title,
   isVisible,
   tabOptions,
   sortOptions,
-}: HeaderContainerProps) => {
+}: HeadingContainerProps) => {
   return (
     <header className="flex justify-between py-8">
       <Title title={title} />
@@ -18,4 +18,4 @@ const HeaderContainer = ({
   );
 };
 
-export default HeaderContainer;
+export default HeadingContainer;

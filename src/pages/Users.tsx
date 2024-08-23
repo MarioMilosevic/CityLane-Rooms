@@ -1,4 +1,4 @@
-import HeaderContainer from "../components/layout/HeaderContainer";
+import HeaderContainer from "../components/layout/HeadingContainer";
 import InputField from "../components/layout/InputField";
 import { userFields } from "../utils/constants";
 import TableContainer from "../components/layout/Table/TableContainer";

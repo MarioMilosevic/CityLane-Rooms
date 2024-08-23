@@ -21,7 +21,7 @@ export type LinkProps = {
   index: number;
   link: { heading: string; icon: IconType };
   isSelected: boolean;
-  clickHandler:MouseEventHandler<HTMLButtonElement>
+  clickHandler: MouseEventHandler<HTMLButtonElement>;
 };
 
 export type MainContainerProps = {
@@ -66,47 +66,49 @@ export type TableRowOptions = {
 }[];
 
 export type ModalButtonProps = {
-  options:TableRowOptions
-}
+  icon: IconType;
+  text: string;
+  clickHandler: () => void;
+};
 
 export type TableRowProps = {
   room: RoomType;
-  options: TableRowOptions
+  options: TableRowOptions;
 };
 
 export type buttonColorOptions = {
   white: string;
   blue: string;
-}
+};
 
 export type PrimaryActionButtonProps = {
-  children: ReactNode
-  color: keyof buttonColorOptions
-}
+  children: ReactNode;
+  color: keyof buttonColorOptions;
+};
 
-export type HeaderContainerProps = {
+export type HeadingContainerProps = {
   title: string;
   isVisible: boolean;
   tabOptions?: string[];
-  sortOptions?:SortOptionType[]
-}
+  sortOptions?: SortOptionType[];
+};
 
 export type SortOptionType = {
   name: string;
   value: string;
-}
+};
 
 export type SearchFilterTabProps = {
   tabOptions?: string[];
   sortOptions?: SortOptionType[];
-}
+};
 
 export type InputFieldProps = {
   name: string;
   id: string;
   type: string;
-}
+};
 
 export type ModalProps = {
-  children:ReactNode;
-}
+  children: ReactNode;
+};
