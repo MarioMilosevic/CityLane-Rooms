@@ -54,6 +54,8 @@ export const tableHeaders: TableHeader[] = [
   { title: "Discount", width: "medium" },
 ];
 
+// makni 
+
 export const tableHeaderOptions = {
   small: "w-[10%]",
   medium: "w-[20%]",
