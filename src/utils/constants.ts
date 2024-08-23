@@ -64,14 +64,17 @@ export const roomsOptions = [
   {
     icon: HiDocumentDuplicate,
     text: "Duplicate",
+    clickHandler:() => console.log('nesto')
   },
   {
     icon: MdModeEditOutline,
     text: "Edit",
+    clickHandler:() => console.log('nesto')
   },
   {
     icon: MdDelete,
     text: "Delete",
+    clickHandler:() => console.log('nesto')
   },
 ];
 

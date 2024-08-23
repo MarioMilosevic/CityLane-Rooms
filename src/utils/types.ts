@@ -62,6 +62,7 @@ export type TableHeader = {
 export type TableRowOptions = {
   icon: IconType;
   text: string;
+  clickHandler: () => void;
 }[];
 
 export type ModalButtonProps = {
@@ -106,3 +107,6 @@ export type InputFieldProps = {
   type: string;
 }
 
+export type ModalProps = {
+  children:ReactNode;
+}

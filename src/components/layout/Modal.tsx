@@ -2,9 +2,9 @@ import { ModalProps } from "../../utils/types";
 
 const Modal = ({ children }: ModalProps) => {
   return (
-    <button className="bg-white z-10 absolute top-12 right-0 flex flex-col rounded-md">
-      {children};
-    </button>
+    <div className="bg-neutral-50 border border-neutral-500 z-10 absolute top-12 right-6 flex flex-col items-center justify-start rounded-md">
+      {children}
+    </div>
   );
 };
 

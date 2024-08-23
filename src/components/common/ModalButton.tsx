@@ -1,26 +1,19 @@
 import { ModalButtonProps } from "../../utils/types";
 
 const ModalButton = ({ options }: ModalButtonProps) => {
-  const proba = (e) => {
-    e.stopPropagation();
-    console.log("event");
-  };
-
   return (
-    <button
-      className="bg-white z-20 absolute top-10 right-0 flex flex-col rounded-md"
-      onClick={proba}
-    >
+    <div className="bg-neutral-50 border border-neutral-500 z-10 absolute top-12 right-6 flex flex-col items-center justify-start rounded-md">
       {options.map((option, index) => (
-        <div
+        <button
           key={index}
-          className="flex items-center justify-between gap-4 px-4 py-1"
+          className="flex items-center justify-between gap-4 px-4 py-1 w-full"
+          onClick={option.clickHandler}
         >
           <option.icon />
           <p>{option.text}</p>
-        </div>
+        </button>
       ))}
-    </button>
+    </div>
   );
 };
 
