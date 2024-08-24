@@ -1,11 +1,10 @@
 import {
   bookingsTabs,
-  tableHeaders,
   roomsSortOptions,
 } from "../utils/constants";
-import TableContainer from "../components/layout/Table/TableContainer";
-import TableHeader from "../components/layout/Table/TableHeader";
-import TableRow from "../components/layout/Table/TableRow";
+import ContentWrapper from "../components/layout/ContentWrapper";
+import ContentHeader from "../components/layout/ContentHeader";
+import TableRow from "../components/layout/TableRow";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import { useRoomsSlice } from "../hooks/useRoomsSlice";
 import HeaderContainer from "../components/layout/HeadingContainer";
@@ -20,18 +19,20 @@ const Rooms = () => {
         tabOptions={bookingsTabs}
         sortOptions={roomsSortOptions}
       />
-      <TableContainer>
-        <div className="flex gap-6">
-          {tableHeaders.map((header, index) => (
-            <TableHeader key={index} {...header} />
-          ))}
+      <ContentWrapper>
+        <div className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6">
+            <ContentHeader title=""/>
+            <ContentHeader title="Room"/>
+            <ContentHeader title="Capacity"/>
+            <ContentHeader title="Price"/>
+            <ContentHeader title="Discount"/>
         </div>
         <ul className="flex flex-col gap-1">
           {rooms.map((room) => (
             <TableRow key={room.id} room={room} options={roomsOptions} />
           ))}
         </ul>
-      </TableContainer>
+      </ContentWrapper>
       <PrimaryActionButton color="blue">Add new room</PrimaryActionButton>
     </>
   );

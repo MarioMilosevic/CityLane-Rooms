@@ -1,6 +1,6 @@
 import HeaderContainer from "../components/layout/HeadingContainer";
 import InputField from "../components/layout/InputField";
-import TableContainer from "../components/layout/Table/TableContainer";
+import TableContainer from "../components/layout/ContentWrapper";
 import { settingsFields } from "../utils/constants";
 const Settings = () => {
   return (

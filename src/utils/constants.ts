@@ -1,7 +1,6 @@
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegCalendarAlt, FaUsers } from "react-icons/fa";
 import { MdLocalHotel, MdDelete, MdModeEditOutline } from "react-icons/md";
-import { TableHeader } from "./types";
 import { HiDocumentDuplicate } from "react-icons/hi";
 
 export const initialRoomsState = [];
@@ -46,21 +45,6 @@ export const roomsSortOptions = [
 ];
 export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
 
-export const tableHeaders: TableHeader[] = [
-  { title: "", width: "small" },
-  { title: "Room", width: "big" },
-  { title: "Capacity", width: "big" },
-  { title: "Price", width: "medium" },
-  { title: "Discount", width: "medium" },
-];
-
-// makni 
-
-export const tableHeaderOptions = {
-  small: "w-[10%]",
-  medium: "w-[20%]",
-  big: "w-[25%]",
-};
 
 export const roomsOptions = [
   {

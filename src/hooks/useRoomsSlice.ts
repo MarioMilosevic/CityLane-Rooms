@@ -5,3 +5,4 @@ export const useRoomsSlice = () => {
   const rooms = useSelector((state: RootState) => state.rooms);
   return rooms;
 };
+

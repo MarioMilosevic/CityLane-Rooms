@@ -1,7 +1,7 @@
 import HeaderContainer from "../components/layout/HeadingContainer";
 import InputField from "../components/layout/InputField";
 import { userFields } from "../utils/constants";
-import TableContainer from "../components/layout/Table/TableContainer";
+import TableContainer from "../components/layout/ContentWrapper";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 const Users = () => {
   return (

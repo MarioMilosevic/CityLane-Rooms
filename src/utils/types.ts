@@ -39,25 +39,15 @@ export type FilterTabColors = {
   neutral: string;
 };
 
-export type TableHeaderSizes = {
-  small: string;
-  medium: string;
-  big: string;
-};
 
-export type TableHeaderProps = {
-  width: keyof TableHeaderSizes;
+export type ContentHeaderProps = {
   title: string;
 };
 
-export type TableContainerProps = {
+export type ContentWrapperProps = {
   children: ReactNode;
 };
 
-export type TableHeader = {
-  title: string;
-  width: keyof TableHeaderSizes;
-};
 
 export type TableRowOptions = {
   icon: IconType;
@@ -71,7 +61,7 @@ export type ModalButtonProps = {
   clickHandler: () => void;
 };
 
-export type TableRowProps = {
+export type ContentRowProps = {
   room: RoomType;
   options: TableRowOptions;
 };

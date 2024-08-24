@@ -16,7 +16,7 @@ const Sidebar = () => {
     <aside className="bg-neutral-50 w-[200px] flex flex-col border-r border-neutral-200">
       <img src={logo} alt="Logo" className="w-full" />
       <h1 className="text-2xl tracking-wide flex justify-center pb-10">
-        EchoStay
+        RoomHub
       </h1>
       <div className="flex flex-col pl-2">
         {links.map((link, index) => (
