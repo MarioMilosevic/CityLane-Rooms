@@ -1,10 +1,7 @@
-import {
-  bookingsTabs,
-  roomsSortOptions,
-} from "../utils/constants";
+import { bookingsTabs, roomsSortOptions } from "../utils/constants";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import ContentHeader from "../components/layout/ContentHeader";
-import TableRow from "../components/layout/TableRow";
+import ContentRow from "../components/layout/ContentRow";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import { useRoomsSlice } from "../hooks/useRoomsSlice";
 import HeaderContainer from "../components/layout/HeadingContainer";
@@ -21,15 +18,15 @@ const Rooms = () => {
       />
       <ContentWrapper>
         <div className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6">
-            <ContentHeader title=""/>
-            <ContentHeader title="Room"/>
-            <ContentHeader title="Capacity"/>
-            <ContentHeader title="Price"/>
-            <ContentHeader title="Discount"/>
+          <ContentHeader title="" />
+          <ContentHeader title="Room" />
+          <ContentHeader title="Capacity" />
+          <ContentHeader title="Price" />
+          <ContentHeader title="Discount" />
         </div>
         <ul className="flex flex-col gap-1">
           {rooms.map((room) => (
-            <TableRow key={room.id} room={room} options={roomsOptions} />
+            <ContentRow key={room.id} room={room} options={roomsOptions} />
           ))}
         </ul>
       </ContentWrapper>

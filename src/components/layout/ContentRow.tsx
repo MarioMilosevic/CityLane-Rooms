@@ -7,9 +7,11 @@ import Modal from "./Modal";
 
 const ContentRow = ({ room, options }: ContentRowProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const modalRef = useClickOutside(() => setIsModalOpen(false), isModalOpen);
+  if(!room) return null
+  console.log(room)
   const { image, name, regularPrice, discount, capacity } = room;
 
-  const modalRef = useClickOutside(() => setIsModalOpen(false), isModalOpen);
 
   return (
     <div className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative">
