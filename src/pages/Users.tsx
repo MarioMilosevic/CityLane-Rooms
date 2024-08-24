@@ -1,6 +1,5 @@
 import HeaderContainer from "../components/layout/HeadingContainer";
 import InputField from "../components/layout/InputField";
-import { userFields } from "../utils/constants";
 import TableContainer from "../components/layout/ContentWrapper";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 const Users = () => {
@@ -8,13 +7,14 @@ const Users = () => {
     <>
       <HeaderContainer isVisible={false} title={"Create a new user"} />
       <TableContainer>
-        {userFields.map((field) => (
-          <InputField key={field.id} {...field} />
-        ))}
+          <InputField type="text" name="Full name"/>
+          <InputField type="email" name="Email address"/>
+          <InputField type="password" name="Password (min 8 characters)"/>
+          <InputField type="password" name="Repeat password"/>
       </TableContainer>
       <div className="w-full flex justify-end gap-4 pr-4">
-        <PrimaryActionButton color="white">Cancel</PrimaryActionButton>
-        <PrimaryActionButton color="blue">Create new user</PrimaryActionButton>
+        <PrimaryActionButton  text="Cancel" clickHandler={() => console.log('kasnije')} color="white"/>
+        <PrimaryActionButton  text="Create new user" clickHandler={() => console.log('kasnije')} color="blue" />
       </div>
     </>
   );

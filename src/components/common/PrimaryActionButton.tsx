@@ -1,6 +1,6 @@
 import { PrimaryActionButtonProps } from "../../utils/types";
 
-const PrimaryActionButton = ({ color, clickHandler,children }: PrimaryActionButtonProps) => {
+const PrimaryActionButton = ({ text, color, clickHandler }: PrimaryActionButtonProps) => {
   const buttonColorOptions = {
     blue: "bg-sky-500 hover:bg-sky-600 text-sky-100 hover:text-sky-50",
     white:
@@ -12,7 +12,7 @@ const PrimaryActionButton = ({ color, clickHandler,children }: PrimaryActionButt
        ${buttonColorOptions[color]} font-medium text-lg px-4 py-2 rounded-md transition-all duration-200`}
       onClick={clickHandler}
     >
-      {children}
+      {text}
     </button>
   );
 };

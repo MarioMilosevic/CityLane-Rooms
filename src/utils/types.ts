@@ -72,7 +72,7 @@ export type buttonColorOptions = {
 };
 
 export type PrimaryActionButtonProps = {
-  children: ReactNode;
+  text: string;
   color: keyof buttonColorOptions;
   clickHandler:() => void
 };
@@ -96,7 +96,6 @@ export type SearchFilterTabProps = {
 
 export type InputFieldProps = {
   name: string;
-  id: string;
   type: string;
 };
 

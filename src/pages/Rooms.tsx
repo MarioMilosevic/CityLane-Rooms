@@ -9,6 +9,7 @@ import { useRoomsSlice } from "../hooks/useRoomsSlice";
 import HeaderContainer from "../components/layout/HeadingContainer";
 import { roomsOptions } from "../utils/constants";
 import ModalForm from "../components/layout/ModalForm";
+import InputField from "../components/layout/InputField";
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -35,13 +36,34 @@ const Rooms = () => {
         </ul>
       </ContentWrapper>
       <PrimaryActionButton
+        text="Add new room"
         color="blue"
         clickHandler={() => setIsModalOpen(true)}
-      >
-        Add new room
-      </PrimaryActionButton>
+      />
       {isModalOpen &&
-        createPortal(<ModalForm closeModal={() => setIsModalOpen(false) }>Ovo je neki portal</ModalForm>, document.body)}
+        createPortal(
+          <ModalForm closeModal={() => setIsModalOpen(false)}>
+            <InputField type="number" name="Room name" />
+            <InputField type="number" name="Maximum capacity" />
+            <InputField type="number" name="Regular price" />
+            <InputField type="number" name="Discount" />
+            <InputField type="textarea" name="Description for website" />
+            <InputField type="file" name="Room photo" />
+            <div className="flex justify-end gap-4">
+            <PrimaryActionButton
+              text="Cancel"
+              clickHandler={() => setIsModalOpen(false)}
+              color="white"
+              />
+            <PrimaryActionButton
+              text="Create new cabin"
+              clickHandler={() => console.log("kasnije")}
+              color="blue"
+              />
+              </div>
+          </ModalForm>,
+          document.body
+        )}
     </>
   );
 };
