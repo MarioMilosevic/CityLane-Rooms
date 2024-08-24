@@ -74,6 +74,7 @@ export type buttonColorOptions = {
 export type PrimaryActionButtonProps = {
   children: ReactNode;
   color: keyof buttonColorOptions;
+  clickHandler:() => void
 };
 
 export type HeadingContainerProps = {
@@ -102,3 +103,8 @@ export type InputFieldProps = {
 export type ModalProps = {
   children: ReactNode;
 };
+
+export type ModalFormProps = {
+  children: ReactNode;
+  closeModal: () => void;
+}

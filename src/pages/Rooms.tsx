@@ -1,4 +1,6 @@
 import { bookingsTabs, roomsSortOptions } from "../utils/constants";
+import { createPortal } from "react-dom";
+import { useState } from "react";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import ContentHeader from "../components/layout/ContentHeader";
 import ContentRow from "../components/layout/ContentRow";
@@ -6,8 +8,10 @@ import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import { useRoomsSlice } from "../hooks/useRoomsSlice";
 import HeaderContainer from "../components/layout/HeadingContainer";
 import { roomsOptions } from "../utils/constants";
+import ModalForm from "../components/layout/ModalForm";
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   return (
     <>
       <HeaderContainer
@@ -30,7 +34,14 @@ const Rooms = () => {
           ))}
         </ul>
       </ContentWrapper>
-      <PrimaryActionButton color="blue">Add new room</PrimaryActionButton>
+      <PrimaryActionButton
+        color="blue"
+        clickHandler={() => setIsModalOpen(true)}
+      >
+        Add new room
+      </PrimaryActionButton>
+      {isModalOpen &&
+        createPortal(<ModalForm closeModal={() => setIsModalOpen(false) }>Ovo je neki portal</ModalForm>, document.body)}
     </>
   );
 };
