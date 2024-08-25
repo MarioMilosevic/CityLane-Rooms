@@ -42,14 +42,14 @@ const Rooms = () => {
       />
       {isModalOpen &&
         createPortal(
-          <ModalForm closeModal={() => setIsModalOpen(false)}>
+          <ModalForm closeModal={() => setIsModalOpen(false)} >
             <InputField type="number" name="Room name" />
             <InputField type="number" name="Maximum capacity" />
             <InputField type="number" name="Regular price" />
             <InputField type="number" name="Discount" />
             <InputField type="textarea" name="Description for website" />
             <InputField type="file" name="Room photo" />
-            <div className="flex justify-end gap-4">
+            <div className="flex items-center justify-end gap-4 py-4">
             <PrimaryActionButton
               text="Cancel"
               clickHandler={() => setIsModalOpen(false)}
