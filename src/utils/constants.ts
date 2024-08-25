@@ -12,6 +12,11 @@ export const links = [
   { heading: "settings", icon: IoSettingsSharp },
 ];
 
+// Bookings
+export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
+
+// Rooms
+
 export const roomsTabs = ["All", "No discount", "With discount"];
 export const roomsSortOptions = [
   {
@@ -43,24 +48,38 @@ export const roomsSortOptions = [
     value: "capacity-asc",
   },
 ];
-export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
-
 
 export const roomsOptions = [
   {
     icon: HiDocumentDuplicate,
     text: "Duplicate",
-    clickHandler:() => console.log('nesto')
+    clickHandler: () => console.log("nesto"),
   },
   {
     icon: MdModeEditOutline,
     text: "Edit",
-    clickHandler:() => console.log('nesto')
+    clickHandler: () => console.log("nesto"),
   },
   {
     icon: MdDelete,
     text: "Delete",
-    clickHandler:() => console.log('nesto')
+    clickHandler: () => console.log("nesto"),
   },
 ];
 
+// Users
+
+export const usersFormData = [
+  { name: "Full name", type: "text" },
+  { name: "Email address", type: "email" },
+  { name: "Password (min 8 characters)", type: "password" },
+  { name: "Repeat password", type: "password" },
+];
+
+// Settings
+export const settingsFormData = [
+  { name: "Minimum nights/booking", type: "number" },
+  { name: "Maximum nights/booking", type: "number" },
+  { name: "Maximum guests/booking", type: "number" },
+  { name: "Breakfast price", type: "number" },
+];

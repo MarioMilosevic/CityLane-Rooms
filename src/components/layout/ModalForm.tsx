@@ -5,7 +5,7 @@ const ModalForm = ({ children, closeModal }: ModalFormProps) => {
   const modalRef = useClickOutside(closeModal);
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
-      <div
+      <form
         className="flex flex-col bg-neutral-50  z-20 border px-8 py-4 relative"
         ref={modalRef}
       >
@@ -14,7 +14,7 @@ const ModalForm = ({ children, closeModal }: ModalFormProps) => {
           onClick={closeModal}
         />
         {children}
-      </div>
+      </form>
     </div>
   );
 };

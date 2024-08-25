@@ -1,15 +1,17 @@
-import { bookingsTabs, roomsSortOptions } from "../utils/constants";
+import { roomsTabs, roomsSortOptions } from "../utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
+import { useRoomsSlice } from "../hooks/useRoomsSlice";
+import { roomsOptions } from "../utils/constants";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import ContentHeader from "../components/layout/ContentHeader";
 import ContentRow from "../components/layout/ContentRow";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
-import { useRoomsSlice } from "../hooks/useRoomsSlice";
 import HeaderContainer from "../components/layout/HeadingContainer";
-import { roomsOptions } from "../utils/constants";
 import ModalForm from "../components/layout/ModalForm";
-import InputField from "../components/layout/InputField";
+import FormBlock from "../components/layout/FormBlock";
+import Label from "../components/layout/Label";
+import Input from "../components/layout/Input";
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -18,7 +20,7 @@ const Rooms = () => {
       <HeaderContainer
         title="All rooms"
         isVisible={true}
-        tabOptions={bookingsTabs}
+        tabOptions={roomsTabs}
         sortOptions={roomsSortOptions}
       />
       <ContentWrapper>
@@ -42,25 +44,41 @@ const Rooms = () => {
       />
       {isModalOpen &&
         createPortal(
-          <ModalForm closeModal={() => setIsModalOpen(false)} >
-            <InputField type="number" name="Room name" />
-            <InputField type="number" name="Maximum capacity" />
-            <InputField type="number" name="Regular price" />
-            <InputField type="number" name="Discount" />
-            <InputField type="textarea" name="Description for website" />
-            <InputField type="file" name="Room photo" />
+          <ModalForm closeModal={() => setIsModalOpen(false)}>
+            <FormBlock>
+              <Label name="Room name"/>
+              <Input type="number" name="Room name"/>
+            </FormBlock>
+            <FormBlock>
+              <Label name="Regular price"/>
+              <Input type="number" name="Regular price"/>
+            </FormBlock>
+            <FormBlock>
+              <Label name="Description for website"/>
+              <Input type="textarea" name="Description for website"/>
+            </FormBlock>
+            <FormBlock>
+              <Label name="Room photo"/>
+              <Input type="file" name="Room photo"/>
+            </FormBlock>
+            {/* <FormBlock type="number" name="Room name" /> */}
+            {/* <FormBlock type="numbescription for websitee="Maximum capacity" />
+            <FormBlock type="number" name="Regular price" />
+            <FormBlock type="number" name="Discount" />
+            <FormBlock type="textarea" name="Description for website" />
+            <FormBlock type="file" name="Room photo" /> */}
             <div className="flex items-center justify-end gap-4 py-4">
-            <PrimaryActionButton
-              text="Cancel"
-              clickHandler={() => setIsModalOpen(false)}
-              color="white"
+              <PrimaryActionButton
+                text="Cancel"
+                clickHandler={() => setIsModalOpen(false)}
+                color="white"
               />
-            <PrimaryActionButton
-              text="Create new cabin"
-              clickHandler={() => console.log("kasnije")}
-              color="blue"
+              <PrimaryActionButton
+                text="Create new cabin"
+                clickHandler={() => console.log("kasnije")}
+                color="blue"
               />
-              </div>
+            </div>
           </ModalForm>,
           document.body
         )}

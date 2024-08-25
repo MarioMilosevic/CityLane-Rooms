@@ -94,9 +94,8 @@ export type SearchFilterTabProps = {
   sortOptions?: SortOptionType[];
 };
 
-export type InputFieldProps = {
-  name: string;
-  type: string;
+export type FormBlockProps = {
+  children:ReactNode
 };
 
 export type ModalProps = {
@@ -106,4 +105,12 @@ export type ModalProps = {
 export type ModalFormProps = {
   children: ReactNode;
   closeModal: () => void;
+}
+export type LabelProps = {
+  name:string
+}
+
+export type InputProps = {
+  name: string;
+  type: string;
 }

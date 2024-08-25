@@ -1,20 +1,33 @@
 import HeaderContainer from "../components/layout/HeadingContainer";
-import InputField from "../components/layout/InputField";
-import TableContainer from "../components/layout/ContentWrapper";
+import ContentWrapper from "../components/layout/ContentWrapper";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
+import FormBlock from "../components/layout/FormBlock";
+import Label from "../components/layout/Label";
+import Input from "../components/layout/Input";
+import { usersFormData } from "../utils/constants";
 const Users = () => {
   return (
     <>
       <HeaderContainer isVisible={false} title={"Create a new user"} />
-      <TableContainer>
-          <InputField type="text" name="Full name"/>
-          <InputField type="email" name="Email address"/>
-          <InputField type="password" name="Password (min 8 characters)"/>
-          <InputField type="password" name="Repeat password"/>
-      </TableContainer>
+      <ContentWrapper>
+        {usersFormData.map((user, index) => (
+          <FormBlock key={index}>
+            <Label name={user.name} />
+            <Input name={user.name} type={user.type} />
+          </FormBlock>
+        ))}
+      </ContentWrapper>
       <div className="w-full flex justify-end gap-4 pr-4">
-        <PrimaryActionButton  text="Cancel" clickHandler={() => console.log('kasnije')} color="white"/>
-        <PrimaryActionButton  text="Create new user" clickHandler={() => console.log('kasnije')} color="blue" />
+        <PrimaryActionButton
+          text="Cancel"
+          clickHandler={() => console.log("kasnije")}
+          color="white"
+        />
+        <PrimaryActionButton
+          text="Create new user"
+          clickHandler={() => console.log("kasnije")}
+          color="blue"
+        />
       </div>
     </>
   );

@@ -1,16 +1,21 @@
 import HeaderContainer from "../components/layout/HeadingContainer";
-import InputField from "../components/layout/InputField";
-import TableContainer from "../components/layout/ContentWrapper";
+import FormBlock from "../components/layout/FormBlock";
+import ContentWrapper from "../components/layout/ContentWrapper";
+import Label from "../components/layout/Label";
+import Input from "../components/layout/Input";
+import { settingsFormData } from "../utils/constants";
 const Settings = () => {
   return (
     <>
       <HeaderContainer title="Update hotel settings" isVisible={false} />
-      <TableContainer>
-        <InputField name="Minimum nights/booking" type="number" />
-        <InputField name="Maximum nights/booking" type="number" />
-        <InputField name="Maximum guests/booking" type="number" />
-        <InputField name="Breakfast price" type="number" />
-      </TableContainer>
+      <ContentWrapper>
+        {settingsFormData.map((form, index) => (
+          <FormBlock key={index}>
+            <Label name={form.name} />
+            <Input name={form.name} type={form.type} />
+          </FormBlock>
+        ))}
+      </ContentWrapper>
     </>
   );
 };
