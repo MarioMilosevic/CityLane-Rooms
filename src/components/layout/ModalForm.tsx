@@ -2,7 +2,8 @@ import { ModalFormProps } from "../../utils/types";
 import { PiXBold } from "react-icons/pi";
 import useClickOutside from "../../hooks/useClickOutside";
 const ModalForm = ({ children, closeModal }: ModalFormProps) => {
-  const modalRef = useClickOutside(closeModal);
+  const modalRef = useClickOutside<HTMLFormElement>(closeModal);
+
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
       <form

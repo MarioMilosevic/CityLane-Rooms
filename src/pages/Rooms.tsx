@@ -2,7 +2,7 @@ import { roomsTabs, roomsSortOptions } from "../utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
 import { useRoomsSlice } from "../hooks/useRoomsSlice";
-import { roomsOptions } from "../utils/constants";
+import { roomsOptions, roomsFormFields } from "../utils/constants";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import ContentHeader from "../components/layout/ContentHeader";
 import ContentRow from "../components/layout/ContentRow";
@@ -15,6 +15,7 @@ import Input from "../components/layout/Input";
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   return (
     <>
       <HeaderContainer
@@ -36,37 +37,21 @@ const Rooms = () => {
             <ContentRow key={room.id} room={room} options={roomsOptions} />
           ))}
         </ul>
+        <PrimaryActionButton
+          text="Add new room"
+          color="blue"
+          clickHandler={() => setIsModalOpen(true)}
+        />
       </ContentWrapper>
-      <PrimaryActionButton
-        text="Add new room"
-        color="blue"
-        clickHandler={() => setIsModalOpen(true)}
-      />
       {isModalOpen &&
         createPortal(
           <ModalForm closeModal={() => setIsModalOpen(false)}>
-            <FormBlock>
-              <Label name="Room name"/>
-              <Input type="number" name="Room name"/>
-            </FormBlock>
-            <FormBlock>
-              <Label name="Regular price"/>
-              <Input type="number" name="Regular price"/>
-            </FormBlock>
-            <FormBlock>
-              <Label name="Description for website"/>
-              <Input type="textarea" name="Description for website"/>
-            </FormBlock>
-            <FormBlock>
-              <Label name="Room photo"/>
-              <Input type="file" name="Room photo"/>
-            </FormBlock>
-            {/* <FormBlock type="number" name="Room name" /> */}
-            {/* <FormBlock type="numbescription for websitee="Maximum capacity" />
-            <FormBlock type="number" name="Regular price" />
-            <FormBlock type="number" name="Discount" />
-            <FormBlock type="textarea" name="Description for website" />
-            <FormBlock type="file" name="Room photo" /> */}
+            {roomsFormFields.map((field, index) => (
+              <FormBlock key={index}>
+                <Label name={field.name} />
+                <Input name={field.name} type={field.type} />
+              </FormBlock>
+            ))}
             <div className="flex items-center justify-end gap-4 py-4">
               <PrimaryActionButton
                 text="Cancel"

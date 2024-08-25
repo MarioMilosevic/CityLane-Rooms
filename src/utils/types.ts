@@ -39,7 +39,6 @@ export type FilterTabColors = {
   neutral: string;
 };
 
-
 export type ContentHeaderProps = {
   title: string;
 };
@@ -47,7 +46,6 @@ export type ContentHeaderProps = {
 export type ContentWrapperProps = {
   children: ReactNode;
 };
-
 
 export type TableRowOptions = {
   icon: IconType;
@@ -95,7 +93,7 @@ export type SearchFilterTabProps = {
 };
 
 export type FormBlockProps = {
-  children:ReactNode
+  children: ReactNode;
 };
 
 export type ModalProps = {
@@ -105,12 +103,13 @@ export type ModalProps = {
 export type ModalFormProps = {
   children: ReactNode;
   closeModal: () => void;
-}
+};
+
 export type LabelProps = {
-  name:string
-}
+  name: string;
+};
 
 export type InputProps = {
   name: string;
   type: string;
-}
+};

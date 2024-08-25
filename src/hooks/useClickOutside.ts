@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 
-const useClickOutside = (
+const useClickOutside = <T extends HTMLElement>(
   handler: (e: MouseEvent) => void,
   capturing = true
 ) => {
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<T | null>(null);
   useEffect(() => {
     const maybeHandler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {

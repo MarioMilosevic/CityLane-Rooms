@@ -9,7 +9,7 @@ const PrimaryActionButton = ({ text, color, clickHandler }: PrimaryActionButtonP
   return (
     <button
       className={`
-       ${buttonColorOptions[color]} font-medium text-lg px-4 py-2 rounded-md transition-all duration-200`}
+       ${buttonColorOptions[color]} mt-8 font-medium text-lg px-4 py-2 rounded-md transition-all duration-200`}
       onClick={clickHandler}
     >
       {text}

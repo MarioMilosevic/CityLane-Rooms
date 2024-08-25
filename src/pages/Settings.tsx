@@ -3,13 +3,13 @@ import FormBlock from "../components/layout/FormBlock";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import Label from "../components/layout/Label";
 import Input from "../components/layout/Input";
-import { settingsFormData } from "../utils/constants";
+import { settingsFormFields } from "../utils/constants";
 const Settings = () => {
   return (
     <>
       <HeaderContainer title="Update hotel settings" isVisible={false} />
       <ContentWrapper>
-        {settingsFormData.map((form, index) => (
+        {settingsFormFields.map((form, index) => (
           <FormBlock key={index}>
             <Label name={form.name} />
             <Input name={form.name} type={form.type} />

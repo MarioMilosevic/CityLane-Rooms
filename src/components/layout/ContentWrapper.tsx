@@ -2,9 +2,9 @@ import { ContentWrapperProps } from "../../utils/types";
 
 const ContentWrapper = ({ children }: ContentWrapperProps) => {
   return (
-    <div className="border border-neutral-200 rounded-md mb-8 w-full">
+    <form className="border border-neutral-200 rounded-md mb-8 w-full" onSubmit={(e) => e.preventDefault()}>
       {children}
-    </div>
+    </form>
   );
 };
 

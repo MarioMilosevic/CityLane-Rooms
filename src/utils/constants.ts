@@ -16,6 +16,12 @@ export const links = [
 export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
 
 // Rooms
+export const roomsFormFields = [
+  { name: "Room name", type: "text" },
+  { name: "Regular price", type: "number" },
+  { name: "Description for website", type: "textarea" },
+  { name: "Room photo", type: "file" },
+];
 
 export const roomsTabs = ["All", "No discount", "With discount"];
 export const roomsSortOptions = [
@@ -58,7 +64,7 @@ export const roomsOptions = [
   {
     icon: MdModeEditOutline,
     text: "Edit",
-    clickHandler: () => console.log("nesto"),
+    clickHandler: () => console.log("edit"),
   },
   {
     icon: MdDelete,
@@ -69,7 +75,7 @@ export const roomsOptions = [
 
 // Users
 
-export const usersFormData = [
+export const usersFormFields = [
   { name: "Full name", type: "text" },
   { name: "Email address", type: "email" },
   { name: "Password (min 8 characters)", type: "password" },
@@ -77,7 +83,7 @@ export const usersFormData = [
 ];
 
 // Settings
-export const settingsFormData = [
+export const settingsFormFields = [
   { name: "Minimum nights/booking", type: "number" },
   { name: "Maximum nights/booking", type: "number" },
   { name: "Maximum guests/booking", type: "number" },
