@@ -21,6 +21,7 @@ import Input from "../components/layout/Input";
 import RowOption from "../components/common/RowOption";
 import { fetchRoom } from "../utils/api";
 import { RoomType } from "../utils/types";
+import { showToast } from "../utils/toastNotification";
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -34,7 +35,9 @@ const Rooms = () => {
       console.log(fetchedRoom);
       setSingleRoom(fetchedRoom);
       setIsModalOpen(true);
+      showToast('Modal opened')
     } catch (error) {
+      showToast('Error fetching room data')
       console.error("Error fetching single room: ", error);
     }
   };
