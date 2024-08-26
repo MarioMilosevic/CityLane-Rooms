@@ -47,11 +47,6 @@ export type ContentWrapperProps = {
   children: ReactNode;
 };
 
-export type TableRowOptions = {
-  icon: IconType;
-  text: string;
-  clickHandler: () => void;
-}[];
 
 export type RowOptionProps = {
   icon: IconType;
@@ -61,7 +56,7 @@ export type RowOptionProps = {
 
 export type ContentRowProps = {
   room: RoomType;
-  options: TableRowOptions;
+  children:ReactNode
 };
 
 export type buttonColorOptions = {

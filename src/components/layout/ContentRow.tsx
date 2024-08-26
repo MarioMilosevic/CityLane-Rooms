@@ -2,23 +2,15 @@ import { ContentRowProps } from "../../utils/types";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
-import RowOption from "../common/RowOption";
 import OptionButton from "./OptionButton";
 
-const ContentRow = ({ room, options }: ContentRowProps) => {
-  // napraviti pojedinacne arraye koji ce svaki objekat da ima svoju funkciju, 
-  // napraviti poseban folder API u kojem ce da budu sve funkcije pojedinacno
-  // importovati ih u constants dje su mi arrayevi i dodijeliti odgovarajucem njegovu funkciju
-  // odje importat sve te arrayeve koji mogu da se renderuju
-  // nekako preko propsa odrediti koji ce da se renderuje
-  // svakoj komponenti proslijediti id kao parametar 
+const ContentRow = ({ room, children }: ContentRowProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsModalOpen(false),
     isModalOpen
   );
-  const { id, image, name, regularPrice, discount, capacity } = room;
-
+  const { image, name, regularPrice, discount, capacity } = room;
 
   return (
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative">
@@ -46,16 +38,12 @@ const ContentRow = ({ room, options }: ContentRowProps) => {
           <BsThreeDotsVertical className="h-5 w-5" />
         </button>
 
-        {isModalOpen && (
-          <OptionButton ref={modalRef}>
-            {options.map((option, index) => (
-              <RowOption key={index} {...option} roomId={id } />
-            ))}
-          </OptionButton>
-        )}
+        {isModalOpen && <OptionButton ref={modalRef }>{children}</OptionButton>}
       </div>
     </li>
   );
 };
 
 export default ContentRow;
+
+

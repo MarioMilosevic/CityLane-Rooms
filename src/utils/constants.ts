@@ -1,8 +1,6 @@
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegCalendarAlt, FaUsers } from "react-icons/fa";
-import { MdLocalHotel, MdDelete, MdModeEditOutline } from "react-icons/md";
-import { HiDocumentDuplicate } from "react-icons/hi";
-import { fetchRoom } from "./api";
+import { MdLocalHotel } from "react-icons/md";
 
 export const initialRoomsState = [];
 
@@ -56,23 +54,26 @@ export const roomsSortOptions = [
   },
 ];
 
-export const roomsOptions = [
-  {
-    icon: HiDocumentDuplicate,
-    text: "Duplicate",
-    clickHandler: () => console.log("nesto"),
-  },
-  {
-    icon: MdModeEditOutline,
-    text: "Edit",
-    clickHandler:(roomId:string)  => fetchRoom(roomId),
-  },
-  {
-    icon: MdDelete,
-    text: "Delete",
-    clickHandler: () => console.log("nesto"),
-  },
-];
+// export const roomsOptions = [
+//   {
+//     icon: HiDocumentDuplicate,
+//     text: "Duplicate",
+//     clickHandler: () => console.log("nesto"),
+//   },
+//   {
+//     icon: MdModeEditOutline,
+//     text: "Edit",
+//     clickHandler: (roomId: string) => fetchRoom(roomId),
+//     // da fecujem sobu
+//     // da otvorim modal
+//     // da proslijedim informacije iz sobe po input komponentama
+//   },
+//   {
+//     icon: MdDelete,
+//     text: "Delete",
+//     clickHandler: () => console.log("nesto"),
+//   },
+// ];
 
 // Users
 

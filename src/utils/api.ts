@@ -26,7 +26,7 @@ export const fetchAllRooms = async (
   }
 };
 
-export const fetchRoom = async (roomId: string) => {
+export const fetchRoom = async (roomId: number) => {
   const { data, error } = await supabase
     .from("Rooms")
     .select("*")
