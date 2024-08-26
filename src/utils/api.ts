@@ -2,8 +2,9 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import { Dispatch } from "@reduxjs/toolkit";
 import { RoomType } from "./types";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import supabase from "../config/supabaseClient";
 
-export const fetchRooms = async (
+export const fetchAllRooms = async (
   supabase: SupabaseClient,
   dispatch: Dispatch,
   setRooms: ActionCreatorWithPayload<RoomType[], "rooms/setRooms">
@@ -22,5 +23,20 @@ export const fetchRooms = async (
   } catch (error) {
     dispatch(setRooms([]));
     console.error("Error fetching rooms", error);
+  }
+};
+
+export const fetchRoom = async (roomId: string) => {
+  const { data, error } = await supabase
+    .from("Rooms")
+    .select("*")
+    .eq("id", roomId);
+
+  if (error) {
+    console.error('Errof fetching room: ', error)
+    return null
+  } else {
+    console.log(data)
+    return data
   }
 };

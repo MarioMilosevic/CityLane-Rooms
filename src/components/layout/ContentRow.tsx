@@ -1,22 +1,24 @@
 import { ContentRowProps } from "../../utils/types";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import ModalButton from "../common/ModalButton";
 import { useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
-import Modal from "./Modal";
+import RowOption from "../common/RowOption";
+import OptionButton from "./OptionButton";
 
 const ContentRow = ({ room, options }: ContentRowProps) => {
+  // napraviti pojedinacne arraye koji ce svaki objekat da ima svoju funkciju, 
+  // napraviti poseban folder API u kojem ce da budu sve funkcije pojedinacno
+  // importovati ih u constants dje su mi arrayevi i dodijeliti odgovarajucem njegovu funkciju
+  // odje importat sve te arrayeve koji mogu da se renderuju
+  // nekako preko propsa odrediti koji ce da se renderuje
+  // svakoj komponenti proslijediti id kao parametar 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsModalOpen(false),
     isModalOpen
   );
-  const { image, name, regularPrice, discount, capacity } = room;
+  const { id, image, name, regularPrice, discount, capacity } = room;
 
-  const modalButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsModalOpen((prev) => !prev);
-  };
 
   return (
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative">
@@ -39,17 +41,17 @@ const ContentRow = ({ room, options }: ContentRowProps) => {
         )}
         <button
           className="cursor-pointer w-8 h-8 flex items-center justify-center"
-          onClick={modalButtonHandler}
+          onClick={() => setIsModalOpen((prev) => !prev)}
         >
           <BsThreeDotsVertical className="h-5 w-5" />
         </button>
 
         {isModalOpen && (
-          <Modal ref={modalRef}>
+          <OptionButton ref={modalRef}>
             {options.map((option, index) => (
-              <ModalButton key={index} {...option} />
+              <RowOption key={index} {...option} roomId={id } />
             ))}
-          </Modal>
+          </OptionButton>
         )}
       </div>
     </li>

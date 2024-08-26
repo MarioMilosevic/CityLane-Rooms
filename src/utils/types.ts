@@ -53,7 +53,7 @@ export type TableRowOptions = {
   clickHandler: () => void;
 }[];
 
-export type ModalButtonProps = {
+export type RowOptionProps = {
   icon: IconType;
   text: string;
   clickHandler: () => void;
@@ -96,7 +96,7 @@ export type FormBlockProps = {
   children: ReactNode;
 };
 
-export type ModalProps = {
+export type OptionButtonProps = {
   children: ReactNode;
 };
 
