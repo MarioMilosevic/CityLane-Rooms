@@ -38,12 +38,10 @@ const ContentRow = ({ room, children }: ContentRowProps) => {
           <BsThreeDotsVertical className="h-5 w-5" />
         </button>
 
-        {isModalOpen && <OptionButton ref={modalRef }>{children}</OptionButton>}
+        {isModalOpen && <OptionButton ref={modalRef}>{children}</OptionButton>}
       </div>
     </li>
   );
 };
 
 export default ContentRow;
-
-

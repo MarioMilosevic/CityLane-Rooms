@@ -2,10 +2,10 @@ import { roomsTabs, roomsSortOptions } from "../utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
 import { useRoomsSlice } from "../hooks/useRoomsSlice";
-import { roomsOptions, roomsFormFields } from "../utils/constants";
+import { roomsFormFields } from "../utils/constants";
 import { HiDocumentDuplicate } from "react-icons/hi";
-import {MdDelete, MdModeEditOutline } from "react-icons/md";
-
+import { MdDelete, MdModeEditOutline } from "react-icons/md";
+import TextArea from "../components/layout/TextArea";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import ContentHeader from "../components/layout/ContentHeader";
 import ContentRow from "../components/layout/ContentRow";
@@ -21,11 +21,10 @@ const Rooms = () => {
   const { rooms } = useRoomsSlice();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-
-  const editHandler = (postId:number) => {
-    fetchRoom(postId)
-    setIsModalOpen(true)
-  }
+  const editHandler = (postId: number) => {
+    fetchRoom(postId);
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -45,11 +44,22 @@ const Rooms = () => {
         </div>
         <ul className="flex flex-col gap-1">
           {rooms.map((room) => (
-            // <ContentRow key={room.id} room={room} options={roomsOptions} />
-            <ContentRow key={room.id} room={room} >
-                <RowOption text="Duplicate" icon={HiDocumentDuplicate} clickHandler={() => console.log('duplicate je iz ROOMSA')}/>
-                <RowOption text="Edit" icon={MdModeEditOutline} clickHandler={() => editHandler(room.id)} />
-                <RowOption text="Delete" icon={MdDelete} clickHandler={() => console.log('delete iz ROOMSA')} />
+            <ContentRow key={room.id} room={room}>
+              <RowOption
+                text="Duplicate"
+                icon={HiDocumentDuplicate}
+                clickHandler={() => console.log("duplicate je iz ROOMSA")}
+              />
+              <RowOption
+                text="Edit"
+                icon={MdModeEditOutline}
+                clickHandler={() => editHandler(room.id)}
+              />
+              <RowOption
+                text="Delete"
+                icon={MdDelete}
+                clickHandler={() => console.log("delete iz ROOMSA")}
+              />
             </ContentRow>
           ))}
         </ul>
@@ -65,7 +75,8 @@ const Rooms = () => {
             {roomsFormFields.map((field, index) => (
               <FormBlock key={index}>
                 <Label name={field.name} />
-                <Input name={field.name} type={field.type} />
+                {field.type === "textarea" ? <TextArea /> : <Input name={field.name} type= {field.type}/> }
+                {/* <Input name={field.name} type={field.type} /> */}
               </FormBlock>
             ))}
             <div className="flex items-center justify-end gap-4 py-4">
