@@ -4,6 +4,17 @@ import { MdLocalHotel } from "react-icons/md";
 
 export const initialRoomsState = [];
 
+export const initialSingleRoomState = {
+  created_at: "",
+  description: "",
+  discount: 0,
+  id: 0,
+  image: "",
+  name: "",
+  regularPrice: 0,
+  capacity: 0,
+};
+
 export const links = [
   { heading: "bookings", icon: FaRegCalendarAlt },
   { heading: "rooms", icon: MdLocalHotel },
@@ -15,12 +26,6 @@ export const links = [
 export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
 
 // Rooms
-export const roomsFormFields = [
-  { name: "Room name", type: "text" },
-  { name: "Regular price", type: "number" },
-  { name: "Description for website", type: "textarea" },
-  { name: "Room photo", type: "file" },
-];
 
 export const roomsTabs = ["All", "No discount", "With discount"];
 export const roomsSortOptions = [
@@ -54,27 +59,6 @@ export const roomsSortOptions = [
   },
 ];
 
-// export const roomsOptions = [
-//   {
-//     icon: HiDocumentDuplicate,
-//     text: "Duplicate",
-//     clickHandler: () => console.log("nesto"),
-//   },
-//   {
-//     icon: MdModeEditOutline,
-//     text: "Edit",
-//     clickHandler: (roomId: string) => fetchRoom(roomId),
-//     // da fecujem sobu
-//     // da otvorim modal
-//     // da proslijedim informacije iz sobe po input komponentama
-//   },
-//   {
-//     icon: MdDelete,
-//     text: "Delete",
-//     clickHandler: () => console.log("nesto"),
-//   },
-// ];
-
 // Users
 
 export const usersFormFields = [
@@ -91,10 +75,6 @@ export const settingsFormFields = [
   { name: "Maximum guests/booking", type: "number" },
   { name: "Breakfast price", type: "number" },
 ];
-
-
-
-
 
 // u slucaju da mi nestane rooms
 /*

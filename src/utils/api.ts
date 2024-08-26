@@ -36,7 +36,6 @@ export const fetchRoom = async (roomId: number) => {
     console.error('Errof fetching room: ', error)
     return null
   } else {
-    console.log(data)
-    return data
+    return data[0]
   }
 };

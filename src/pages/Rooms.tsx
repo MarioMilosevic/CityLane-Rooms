@@ -1,8 +1,11 @@
-import { roomsTabs, roomsSortOptions } from "../utils/constants";
+import {
+  roomsTabs,
+  roomsSortOptions,
+  initialSingleRoomState,
+} from "../utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
 import { useRoomsSlice } from "../hooks/useRoomsSlice";
-import { roomsFormFields } from "../utils/constants";
 import { HiDocumentDuplicate } from "react-icons/hi";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import TextArea from "../components/layout/TextArea";
@@ -17,14 +20,30 @@ import Label from "../components/layout/Label";
 import Input from "../components/layout/Input";
 import RowOption from "../components/common/RowOption";
 import { fetchRoom } from "../utils/api";
+import { RoomType } from "../utils/types";
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [singleRoom, setSingleRoom] = useState<RoomType>(
+    initialSingleRoomState
+  );
 
-  const editHandler = (postId: number) => {
-    fetchRoom(postId);
-    setIsModalOpen(true);
+  const editHandler = async (postId: number) => {
+    try {
+      const fetchedRoom = await fetchRoom(postId);
+      console.log(fetchedRoom);
+      setSingleRoom(fetchedRoom);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching single room: ", error);
+    }
   };
+
+  const addNewRoomHandler = () => {
+    setIsModalOpen(true);
+    setSingleRoom(initialSingleRoomState);
+  };
+
 
   return (
     <>
@@ -66,19 +85,41 @@ const Rooms = () => {
         <PrimaryActionButton
           text="Add new room"
           color="blue"
-          clickHandler={() => setIsModalOpen(true)}
+          clickHandler={addNewRoomHandler}
         />
       </ContentWrapper>
       {isModalOpen &&
         createPortal(
           <ModalForm closeModal={() => setIsModalOpen(false)}>
-            {roomsFormFields.map((field, index) => (
+            <FormBlock>
+              <Label name={"Room name"} />
+              <Input name={"Room name"} value={singleRoom.name} type="text" />
+            </FormBlock>
+            <FormBlock>
+              <Label name={"Regular price"} />
+              <Input
+                name={"Regular price"}
+                value={singleRoom.regularPrice}
+                type="number"
+              />
+            </FormBlock>
+            <FormBlock>
+              <Label name={"Description for website"} />
+              <TextArea
+                name={"Description for website"}
+                value={singleRoom.description}
+              />
+            </FormBlock>
+            <FormBlock>
+              <Label name={"Room photo"} />
+              <Input name={"Room photo"} value="" type="file" />
+            </FormBlock>
+            {/* {roomsFormFields.map((field, index) => (
               <FormBlock key={index}>
                 <Label name={field.name} />
-                {field.type === "textarea" ? <TextArea /> : <Input name={field.name} type= {field.type}/> }
-                {/* <Input name={field.name} type={field.type} /> */}
+                {field.type === "textarea" ? <TextArea /> : <Input name={field.name} type={field.type}/> }
               </FormBlock>
-            ))}
+            ))} */}
             <div className="flex items-center justify-end gap-4 py-4">
               <PrimaryActionButton
                 text="Cancel"

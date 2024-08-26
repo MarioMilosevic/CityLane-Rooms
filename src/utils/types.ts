@@ -107,4 +107,10 @@ export type LabelProps = {
 export type InputProps = {
   name: string;
   type: string;
+  value: string | number;
 };
+
+export type TextAreaProps = {
+  value: string;
+  name: string;
+}
