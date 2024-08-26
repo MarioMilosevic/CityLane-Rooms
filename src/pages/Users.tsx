@@ -5,6 +5,7 @@ import FormBlock from "../components/layout/FormBlock";
 import Label from "../components/layout/Label";
 import Input from "../components/layout/Input";
 import { usersFormFields } from "../utils/constants";
+import PrimaryActionButtonWrapper from "../components/layout/PrimaryActionButtonWrapper";
 const Users = () => {
   return (
     <>
@@ -16,7 +17,7 @@ const Users = () => {
             <Input name={user.name} type={user.type} value="" />
           </FormBlock>
         ))}
-        <div className="w-full flex justify-end gap-4 pr-4 py-4">
+        <PrimaryActionButtonWrapper>
           <PrimaryActionButton
             text="Cancel"
             clickHandler={() => console.log("kasnije")}
@@ -27,7 +28,7 @@ const Users = () => {
             clickHandler={() => console.log("kasnije")}
             color="blue"
           />
-        </div>
+        </PrimaryActionButtonWrapper>
       </ContentWrapper>
     </>
   );

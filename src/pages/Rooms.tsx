@@ -24,6 +24,9 @@ import { showToast } from "../utils/toastNotification";
 import { deleteRoomFromServer } from "../utils/api";
 import { deleteRoom } from "../redux/features/roomsSlice";
 import { useDispatch } from "react-redux";
+import ContentHeaderWrapper from "../components/layout/ContentHeaderWrapper";
+import ContentRowWrapper from "../components/layout/ContentRowWrapper";
+import PrimaryActionButtonWrapper from "../components/layout/PrimaryActionButtonWrapper";
 
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
@@ -74,14 +77,14 @@ const Rooms = () => {
         sortOptions={roomsSortOptions}
       />
       <ContentWrapper>
-        <div className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6">
+        <ContentHeaderWrapper>
           <ContentHeader title="" />
           <ContentHeader title="Room" />
           <ContentHeader title="Capacity" />
           <ContentHeader title="Price" />
           <ContentHeader title="Discount" />
-        </div>
-        <ul className="flex flex-col gap-1">
+        </ContentHeaderWrapper>
+        <ContentRowWrapper>
           {rooms.map((room) => (
             <ContentRow key={room.id} room={room}>
               <RowOption
@@ -101,7 +104,7 @@ const Rooms = () => {
               />
             </ContentRow>
           ))}
-        </ul>
+        </ContentRowWrapper>
         <PrimaryActionButton
           text="Add new room"
           color="blue"
@@ -158,7 +161,7 @@ const Rooms = () => {
                 changeHandler={(e) => console.log(e)}
               />
             </FormBlock>
-            <div className="flex items-center justify-end gap-4 py-4">
+            <PrimaryActionButtonWrapper>
               <PrimaryActionButton
                 text="Cancel"
                 clickHandler={() => setIsModalOpen(false)}
@@ -169,7 +172,7 @@ const Rooms = () => {
                 clickHandler={() => console.log("kasnije")}
                 color="blue"
               />
-            </div>
+            </PrimaryActionButtonWrapper>
           </ModalForm>,
           document.body
         )}

@@ -115,3 +115,15 @@ export type TextAreaProps = {
   name: string;
   changeHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
+
+export type ContentRowWrapperProps = {
+  children: ReactNode;
+};
+
+export type ContentHeaderWrapperProps = {
+  children: ReactNode;
+};
+
+export type PrimaryActionButtonWrapperProps = {
+  children: ReactNode;
+};
