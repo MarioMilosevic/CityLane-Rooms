@@ -19,26 +19,44 @@ import FormBlock from "../components/layout/FormBlock";
 import Label from "../components/layout/Label";
 import Input from "../components/layout/Input";
 import RowOption from "../components/common/RowOption";
-import { fetchRoom } from "../utils/api";
 import { RoomType } from "../utils/types";
 import { showToast } from "../utils/toastNotification";
+import { deleteRoomFromServer } from "../utils/api";
+import { deleteRoom } from "../redux/features/roomsSlice";
+import { useDispatch } from "react-redux";
+
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [singleRoom, setSingleRoom] = useState<RoomType>(
     initialSingleRoomState
   );
+  const dispatch = useDispatch();
 
-  const editHandler = async (postId: number) => {
+  const editHandler = async (roomId: number) => {
     try {
-      const fetchedRoom = await fetchRoom(postId);
-      console.log(fetchedRoom);
-      setSingleRoom(fetchedRoom);
-      setIsModalOpen(true);
-      showToast('Modal opened')
+      const room = rooms.find((room) => room.id === roomId);
+      if (room) {
+        setSingleRoom(room);
+        setIsModalOpen(true);
+      }
     } catch (error) {
-      showToast('Error fetching room data')
+      showToast("Error fetching room data");
       console.error("Error fetching single room: ", error);
+    }
+  };
+
+  const deleteHandler = async (roomId: number) => {
+    try {
+      console.log(roomId);
+      const response = await deleteRoomFromServer(roomId);
+      if (response[0]) {
+        dispatch(deleteRoom(roomId));
+        showToast("Room deleted successfully", "success");
+      }
+    } catch (error) {
+      showToast("Error deleting room");
+      console.error("Error deleting room :", error);
     }
   };
 
@@ -46,7 +64,6 @@ const Rooms = () => {
     setIsModalOpen(true);
     setSingleRoom(initialSingleRoomState);
   };
-
 
   return (
     <>
@@ -80,7 +97,7 @@ const Rooms = () => {
               <RowOption
                 text="Delete"
                 icon={MdDelete}
-                clickHandler={() => console.log("delete iz ROOMSA")}
+                clickHandler={() => deleteHandler(room.id)}
               />
             </ContentRow>
           ))}
@@ -96,7 +113,14 @@ const Rooms = () => {
           <ModalForm closeModal={() => setIsModalOpen(false)}>
             <FormBlock>
               <Label name={"Room name"} />
-              <Input name={"Room name"} value={singleRoom.name} type="text" />
+              <Input
+                name={"Room name"}
+                value={singleRoom.name}
+                type="text"
+                changeHandler={(e) =>
+                  setSingleRoom((prev) => ({ ...prev, name: e.target.value }))
+                }
+              />
             </FormBlock>
             <FormBlock>
               <Label name={"Regular price"} />
@@ -104,6 +128,12 @@ const Rooms = () => {
                 name={"Regular price"}
                 value={singleRoom.regularPrice}
                 type="number"
+                changeHandler={(e) =>
+                  setSingleRoom((prev) => ({
+                    ...prev,
+                    regularPrice: Number(e.target.value),
+                  }))
+                }
               />
             </FormBlock>
             <FormBlock>
@@ -111,18 +141,23 @@ const Rooms = () => {
               <TextArea
                 name={"Description for website"}
                 value={singleRoom.description}
+                changeHandler={(e) =>
+                  setSingleRoom((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
               />
             </FormBlock>
             <FormBlock>
               <Label name={"Room photo"} />
-              <Input name={"Room photo"} value="" type="file" />
+              <Input
+                name={"Room photo"}
+                value=""
+                type="file"
+                changeHandler={(e) => console.log(e)}
+              />
             </FormBlock>
-            {/* {roomsFormFields.map((field, index) => (
-              <FormBlock key={index}>
-                <Label name={field.name} />
-                {field.type === "textarea" ? <TextArea /> : <Input name={field.name} type={field.type}/> }
-              </FormBlock>
-            ))} */}
             <div className="flex items-center justify-end gap-4 py-4">
               <PrimaryActionButton
                 text="Cancel"

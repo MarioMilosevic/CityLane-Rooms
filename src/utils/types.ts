@@ -47,7 +47,6 @@ export type ContentWrapperProps = {
   children: ReactNode;
 };
 
-
 export type RowOptionProps = {
   icon: IconType;
   text: string;
@@ -56,7 +55,7 @@ export type RowOptionProps = {
 
 export type ContentRowProps = {
   room: RoomType;
-  children:ReactNode
+  children: ReactNode;
 };
 
 export type buttonColorOptions = {
@@ -67,7 +66,7 @@ export type buttonColorOptions = {
 export type PrimaryActionButtonProps = {
   text: string;
   color: keyof buttonColorOptions;
-  clickHandler:() => void
+  clickHandler: () => void;
 };
 
 export type HeadingContainerProps = {
@@ -108,9 +107,11 @@ export type InputProps = {
   name: string;
   type: string;
   value: string | number;
+  changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export type TextAreaProps = {
   value: string;
   name: string;
-}
+  changeHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+};

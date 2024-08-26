@@ -13,9 +13,13 @@ export const roomsSlice = createSlice({
     setRooms: (state, action: PayloadAction<RoomType[]>) => {
       state.rooms = action.payload;
     },
+    deleteRoom: (state, action:PayloadAction<number>) => {
+     state.rooms = state.rooms.filter((room) => room.id !== action.payload)
+    }
   },
 });
 
-export const { setRooms } = roomsSlice.actions;
+
+export const { setRooms, deleteRoom } = roomsSlice.actions;
 
 export default roomsSlice.reducer;

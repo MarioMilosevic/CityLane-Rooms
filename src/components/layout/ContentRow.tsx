@@ -22,7 +22,7 @@ const ContentRow = ({ room, children }: ContentRowProps) => {
         />
       </div>
       <h3 className="text-lg font-medium">{name}</h3>
-      <p className="">Fits up to {capacity} guests</p>
+      <p>Fits up to {capacity} guests</p>
       <h4 className="font-medium">{`$${regularPrice}.00`}</h4>
 
       <div className="font-medium relative flex items-center justify-between pr-6">

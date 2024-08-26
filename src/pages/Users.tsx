@@ -13,22 +13,22 @@ const Users = () => {
         {usersFormFields.map((user, index) => (
           <FormBlock key={index}>
             <Label name={user.name} />
-            <Input name={user.name} type={user.type} />
+            <Input name={user.name} type={user.type} value="" />
           </FormBlock>
         ))}
-      <div className="w-full flex justify-end gap-4 pr-4 py-4">
-        <PrimaryActionButton
-          text="Cancel"
-          clickHandler={() => console.log("kasnije")}
-          color="white"
+        <div className="w-full flex justify-end gap-4 pr-4 py-4">
+          <PrimaryActionButton
+            text="Cancel"
+            clickHandler={() => console.log("kasnije")}
+            color="white"
           />
-        <PrimaryActionButton
-          text="Create new user"
-          clickHandler={() => console.log('kasnije')}
-          color="blue"
+          <PrimaryActionButton
+            text="Create new user"
+            clickHandler={() => console.log("kasnije")}
+            color="blue"
           />
-      </div>
-          </ContentWrapper>
+        </div>
+      </ContentWrapper>
     </>
   );
 };

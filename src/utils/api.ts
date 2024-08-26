@@ -26,16 +26,21 @@ export const fetchAllRooms = async (
   }
 };
 
-export const fetchRoom = async (roomId: number) => {
-  const { data, error } = await supabase
-    .from("Rooms")
-    .select("*")
-    .eq("id", roomId);
-
-  if (error) {
-    console.error('Errof fetching room: ', error)
-    return null
-  } else {
-    return data[0]
+export const deleteRoomFromServer = async (roomId: number) => {
+  console.log(roomId);
+  try {
+    const { data, error } = await supabase
+      .from("Rooms")
+      .delete()
+      .eq("id", roomId)
+      .select();
+    if (error) {
+      throw new Error();
+    } else {
+      return data;
+    }
+  } catch (error) {
+    console.error("Error in deleteRoom function:", error);
+    throw error; // Re-throw the error so the caller can handle it
   }
 };
