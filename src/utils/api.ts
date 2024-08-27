@@ -44,3 +44,12 @@ export const deleteRoomFromServer = async (roomId: number) => {
     throw error; // Re-throw the error so the caller can handle it
   }
 };
+
+export const createRoom = async (newRoom:RoomType) => {
+  try {
+    const response = await supabase.from("Rooms").insert(newRoom).select();
+    console.log(response)
+  } catch (err) {
+    console.error("Error when creating new room", err);
+  }
+};

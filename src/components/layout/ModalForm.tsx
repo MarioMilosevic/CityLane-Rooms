@@ -7,6 +7,8 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
+import { createRoom } from "../../utils/api";
+import { formatDate } from "../../utils/helpers";
 
 const ModalForm = ({
   setIsModalOpen,
@@ -20,14 +22,24 @@ const ModalForm = ({
 
   const isEditing = singleRoom.id;
 
-  const addNewRoom = () => {
+
+  const addNewRoom =async () => {
     console.log("treba da doda sobu");
+    console.log(singleRoom)
+    const formatedDate = formatDate(new Date())
+    console.log(formatedDate)
+    // try {
+    //  const mario = await createRoom(singleRoom)
+    //   console.log(mario)
+    // } catch (error) {
+    //   console.error("Error", error)
+    // }
   };
 
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
       <form
-        className="flex flex-col bg-neutral-50 z-20 border px-8 py-4 relative"
+        className="flex flex-col bg-neutral-50 h-[500px] z-20 border px-8 py-4 relative"
         ref={modalRef}
         onSubmit={(e) => e.preventDefault()}
       >
