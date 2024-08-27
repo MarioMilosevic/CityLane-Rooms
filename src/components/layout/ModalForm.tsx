@@ -7,8 +7,10 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
-import { createRoom, insertRowAutoTimestamp } from "../../utils/api";
-import { formatDate } from "../../utils/helpers";
+import { createNewRoom } from "../../utils/api";
+import { showToast } from "../../utils/toastNotification";
+import { useDispatch } from "react-redux";
+import { addRoom } from "../../redux/features/roomsSlice";
 
 const ModalForm = ({
   setIsModalOpen,
@@ -19,23 +21,26 @@ const ModalForm = ({
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalOpen(false)
   );
-
-  const isEditing = singleRoom.id;
+  const dispatch = useDispatch();
+  const isEditing = singleRoom.name;
+  console.log("isEditing", isEditing);
 
   const addNewRoom = async () => {
-    console.log("treba da doda sobu");
-    console.log(singleRoom);
     try {
-      insertRowAutoTimestamp()
+      const data = await createNewRoom(singleRoom);
+      dispatch(addRoom(data[0]));
+      showToast("Room created successfully!", "success");
+      setIsModalOpen(false);
     } catch (error) {
-      console.error("Error", error);
+      console.error("Error creating new room:", error);
+      showToast("Unable to create new room. Please try again later.", "error");
     }
   };
 
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
       <form
-        className="flex flex-col bg-neutral-50 h-[500px] z-20 border px-8 py-4 relative"
+        className="flex flex-col bg-neutral-50 z-20 border px-8 py-4 relative"
         ref={modalRef}
         onSubmit={(e) => e.preventDefault()}
       >
@@ -55,6 +60,20 @@ const ModalForm = ({
           />
         </FormBlock>
         <FormBlock>
+          <Label name={"Maximum capacity"} />
+          <Input
+            name={"Maximum capacity"}
+            value={singleRoom.capacity}
+            type="number"
+            changeHandler={(e) =>
+              setSingleRoom((prev) => ({
+                ...prev,
+                capacity: e.target.value,
+              }))
+            }
+          />
+        </FormBlock>
+        <FormBlock>
           <Label name={"Regular price"} />
           <Input
             name={"Regular price"}
@@ -63,7 +82,21 @@ const ModalForm = ({
             changeHandler={(e) =>
               setSingleRoom((prev) => ({
                 ...prev,
-                regularPrice: Number(e.target.value),
+                regularPrice: e.target.value,
+              }))
+            }
+          />
+        </FormBlock>
+        <FormBlock>
+          <Label name={"Discount"} />
+          <Input
+            name={"Discount"}
+            value={singleRoom.discount}
+            type="number"
+            changeHandler={(e) =>
+              setSingleRoom((prev) => ({
+                ...prev,
+                discount: e.target.value,
               }))
             }
           />
@@ -98,9 +131,7 @@ const ModalForm = ({
           />
           <PrimaryActionButton
             text={`${isEditing ? "Edit room" : "Create new room"}`}
-            clickHandler={
-              isEditing ? () => console.log("funkcija za EDIT") : addNewRoom
-            }
+            clickHandler={addNewRoom}
             color="blue"
           />
         </PrimaryActionButtonWrapper>

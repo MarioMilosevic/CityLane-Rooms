@@ -1,6 +1,6 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Dispatch } from "@reduxjs/toolkit";
-import { RoomType } from "./types";
+import { NewRoomType, RoomType } from "./types";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import supabase from "../config/supabaseClient";
 
@@ -41,36 +41,19 @@ export const deleteRoomFromServer = async (roomId: number) => {
     }
   } catch (error) {
     console.error("Error in deleteRoom function:", error);
-    throw error; // Re-throw the error so the caller can handle it
+    throw error; 
   }
 };
 
-export const createRoom = async (newRoom:RoomType) => {
-  try {
-    const response = await supabase.from("Rooms").insert(newRoom).select();
-    console.log(response)
-  } catch (err) {
-    console.error("Error when creating new room", err);
-  }
-};
-
-
-export const insertRowAutoTimestamp = async () => {
-  const { data, error } = await supabase.from("Rooms").insert([
-    {
-      name: "Example Name",
-      regularPrice: 100.0,
-      discount: 10.0,
-      description: "Example description",
-      image: "example.jpg",
-      capacity: 50,
-      // created_at is automatically handled
-    },
-  ]);
-
+export const createNewRoom = async (newRoom: NewRoomType) => {
+  const { data, error } = await supabase
+    .from("Rooms")
+    .insert([newRoom])
+    .select();
   if (error) {
     console.error("Error inserting row:", error);
-  } else {
-    console.log("Row inserted with auto timestamp:", data);
+    throw error;
   }
+
+  return data;
 };

@@ -2,14 +2,23 @@ import { ReactNode, MouseEventHandler, Dispatch, SetStateAction } from "react";
 import { IconType } from "react-icons";
 
 export type RoomType = {
-  created_at: string;
-  description: string;
-  discount: number;
-  id: number;
-  image: string;
   name: string;
-  regularPrice: number;
-  capacity: number;
+  regularPrice: string;
+  discount: string;
+  description: string;
+  image: string;
+  capacity: string;
+  id: number;
+  created_at: string;
+};
+
+export type NewRoomType = {
+  name: string;
+  regularPrice: string;
+  discount: string;
+  description: string;
+  image: string;
+  capacity: string;
 };
 
 export type RoomsState = {
@@ -95,8 +104,8 @@ export type OptionButtonProps = {
 
 export type ModalFormProps = {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  singleRoom: RoomType;
-  setSingleRoom: Dispatch<SetStateAction<RoomType>>;
+  singleRoom: NewRoomType;
+  setSingleRoom: Dispatch<SetStateAction<NewRoomType>>;
 };
 
 export type LabelProps = {

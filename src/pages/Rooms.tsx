@@ -15,7 +15,7 @@ import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import HeaderContainer from "../components/layout/HeadingContainer";
 import ModalForm from "../components/layout/ModalForm";
 import RowOption from "../components/common/RowOption";
-import { RoomType } from "../utils/types";
+import { NewRoomType } from "../utils/types";
 import { showToast } from "../utils/toastNotification";
 import { deleteRoomFromServer } from "../utils/api";
 import { deleteRoom } from "../redux/features/roomsSlice";
@@ -26,7 +26,7 @@ import ContentRowWrapper from "../components/layout/ContentRowWrapper";
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [singleRoom, setSingleRoom] = useState<RoomType>(
+  const [singleRoom, setSingleRoom] = useState<NewRoomType>(
     initialSingleRoomState
   );
   const dispatch = useDispatch();

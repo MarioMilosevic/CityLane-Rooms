@@ -1,20 +1,27 @@
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegCalendarAlt, FaUsers } from "react-icons/fa";
 import { MdLocalHotel } from "react-icons/md";
-import { formatDate } from "./helpers";
+import { NewRoomType } from "./types";
 
 export const initialRoomsState = [];
 
-export const initialSingleRoomState = {
-  created_at: formatDate(new Date),
-  description: "",
-  discount: 0,
-  id: 0,
-  image: "",
+export const initialSingleRoomState:NewRoomType = {
   name: "",
-  regularPrice: 0,
-  capacity: 4,
+  regularPrice: "",
+  discount: "0",
+  description: "",
+  image: "",
+  capacity: "",
 };
+
+// export const initialSingleRoomState:NewRoomType = {
+//   name: "Example Name",
+//   regularPrice: 100.0,
+//   discount: 10.0,
+//   description: "Example description",
+//   image: "example.jpg",
+//   capacity: 50,
+// };
 
 export const links = [
   { heading: "bookings", icon: FaRegCalendarAlt },
