@@ -8,16 +8,12 @@ import { useState } from "react";
 import { useRoomsSlice } from "../hooks/useRoomsSlice";
 import { HiDocumentDuplicate } from "react-icons/hi";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
-import TextArea from "../components/layout/TextArea";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import ContentHeader from "../components/layout/ContentHeader";
 import ContentRow from "../components/layout/ContentRow";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import HeaderContainer from "../components/layout/HeadingContainer";
 import ModalForm from "../components/layout/ModalForm";
-import FormBlock from "../components/layout/FormBlock";
-import Label from "../components/layout/Label";
-import Input from "../components/layout/Input";
 import RowOption from "../components/common/RowOption";
 import { RoomType } from "../utils/types";
 import { showToast } from "../utils/toastNotification";
@@ -26,7 +22,6 @@ import { deleteRoom } from "../redux/features/roomsSlice";
 import { useDispatch } from "react-redux";
 import ContentHeaderWrapper from "../components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "../components/layout/ContentRowWrapper";
-import PrimaryActionButtonWrapper from "../components/layout/PrimaryActionButtonWrapper";
 
 const Rooms = () => {
   const { rooms } = useRoomsSlice();
@@ -44,14 +39,13 @@ const Rooms = () => {
         setIsModalOpen(true);
       }
     } catch (error) {
-      showToast("Error fetching room data");
+      showToast("Unexpected error occured, please try again later", 'error');
       console.error("Error fetching single room: ", error);
     }
   };
 
   const deleteHandler = async (roomId: number) => {
     try {
-      console.log(roomId);
       const response = await deleteRoomFromServer(roomId);
       if (response[0]) {
         dispatch(deleteRoom(roomId));
@@ -113,67 +107,11 @@ const Rooms = () => {
       </ContentWrapper>
       {isModalOpen &&
         createPortal(
-          <ModalForm closeModal={() => setIsModalOpen(false)}>
-            <FormBlock>
-              <Label name={"Room name"} />
-              <Input
-                name={"Room name"}
-                value={singleRoom.name}
-                type="text"
-                changeHandler={(e) =>
-                  setSingleRoom((prev) => ({ ...prev, name: e.target.value }))
-                }
-              />
-            </FormBlock>
-            <FormBlock>
-              <Label name={"Regular price"} />
-              <Input
-                name={"Regular price"}
-                value={singleRoom.regularPrice}
-                type="number"
-                changeHandler={(e) =>
-                  setSingleRoom((prev) => ({
-                    ...prev,
-                    regularPrice: Number(e.target.value),
-                  }))
-                }
-              />
-            </FormBlock>
-            <FormBlock>
-              <Label name={"Description for website"} />
-              <TextArea
-                name={"Description for website"}
-                value={singleRoom.description}
-                changeHandler={(e) =>
-                  setSingleRoom((prev) => ({
-                    ...prev,
-                    description: e.target.value,
-                  }))
-                }
-              />
-            </FormBlock>
-            <FormBlock>
-              <Label name={"Room photo"} />
-              <Input
-                name={"Room photo"}
-                value=""
-                type="file"
-                changeHandler={(e) => console.log(e)}
-              />
-            </FormBlock>
-            <PrimaryActionButtonWrapper>
-              <PrimaryActionButton
-                text="Cancel"
-                clickHandler={() => setIsModalOpen(false)}
-                color="white"
-              />
-              <PrimaryActionButton
-                text="Create new cabin"
-                clickHandler={() => console.log("kasnije")}
-                color="blue"
-              />
-            </PrimaryActionButtonWrapper>
-          </ModalForm>,
+          <ModalForm
+            setIsModalOpen={setIsModalOpen}
+            singleRoom={singleRoom}
+            setSingleRoom={setSingleRoom}
+          />,
           document.body
         )}
     </>

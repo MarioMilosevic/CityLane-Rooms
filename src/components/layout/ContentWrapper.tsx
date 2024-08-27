@@ -2,9 +2,9 @@ import { ContentWrapperProps } from "../../utils/types";
 
 const ContentWrapper = ({ children }: ContentWrapperProps) => {
   return (
-    <form className="rounded-md mb-8 w-full" onSubmit={(e) => e.preventDefault()}>
+    <div className="rounded-md mb-8 w-full">
       {children}
-    </form>
+    </div>
   );
 };
 

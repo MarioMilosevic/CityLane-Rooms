@@ -1,6 +1,5 @@
-import { ReactNode } from "react";
+import { ReactNode, MouseEventHandler, Dispatch, SetStateAction } from "react";
 import { IconType } from "react-icons";
-import { MouseEventHandler } from "react";
 
 export type RoomType = {
   created_at: string;
@@ -95,8 +94,9 @@ export type OptionButtonProps = {
 };
 
 export type ModalFormProps = {
-  children: ReactNode;
-  closeModal: () => void;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  singleRoom: RoomType;
+  setSingleRoom: Dispatch<SetStateAction<RoomType>>;
 };
 
 export type LabelProps = {
