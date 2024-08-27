@@ -16,13 +16,13 @@ const ModalForm = ({
   setIsModalOpen,
   singleRoom,
   setSingleRoom,
+  isEditing
 }: ModalFormProps) => {
   console.log(singleRoom);
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalOpen(false)
   );
   const dispatch = useDispatch();
-  const isEditing = singleRoom.name;
   console.log("isEditing", isEditing);
 
   const addNewRoom = async () => {
@@ -131,7 +131,9 @@ const ModalForm = ({
           />
           <PrimaryActionButton
             text={`${isEditing ? "Edit room" : "Create new room"}`}
-            clickHandler={addNewRoom}
+            clickHandler={
+              isEditing ? () => console.log("funkcija za EDIT") : addNewRoom
+            }
             color="blue"
           />
         </PrimaryActionButtonWrapper>

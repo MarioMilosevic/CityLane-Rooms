@@ -29,6 +29,7 @@ const Rooms = () => {
   const [singleRoom, setSingleRoom] = useState<NewRoomType>(
     initialSingleRoomState
   );
+  const [isEditing, setIsEditing] = useState<boolean>(false)
   const dispatch = useDispatch();
 
   const editHandler = async (roomId: number) => {
@@ -37,6 +38,7 @@ const Rooms = () => {
       if (room) {
         setSingleRoom(room);
         setIsModalOpen(true);
+        setIsEditing(true)
       }
     } catch (error) {
       showToast("Unexpected error occured, please try again later", "error");
@@ -60,6 +62,7 @@ const Rooms = () => {
   const addNewRoomHandler = () => {
     setIsModalOpen(true);
     setSingleRoom(initialSingleRoomState);
+    setIsEditing(false)
   };
 
   return (
@@ -111,6 +114,7 @@ const Rooms = () => {
             singleRoom={singleRoom}
             setIsModalOpen={setIsModalOpen}
             setSingleRoom={setSingleRoom}
+            isEditing={isEditing}
           />,
           document.body
         )}
