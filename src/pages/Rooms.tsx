@@ -39,7 +39,7 @@ const Rooms = () => {
         setIsModalOpen(true);
       }
     } catch (error) {
-      showToast("Unexpected error occured, please try again later", 'error');
+      showToast("Unexpected error occured, please try again later", "error");
       console.error("Error fetching single room: ", error);
     }
   };
@@ -108,8 +108,8 @@ const Rooms = () => {
       {isModalOpen &&
         createPortal(
           <ModalForm
-            setIsModalOpen={setIsModalOpen}
             singleRoom={singleRoom}
+            setIsModalOpen={setIsModalOpen}
             setSingleRoom={setSingleRoom}
           />,
           document.body

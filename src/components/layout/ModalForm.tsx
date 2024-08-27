@@ -7,7 +7,7 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
-import { createRoom } from "../../utils/api";
+import { createRoom, insertRowAutoTimestamp } from "../../utils/api";
 import { formatDate } from "../../utils/helpers";
 
 const ModalForm = ({
@@ -22,18 +22,14 @@ const ModalForm = ({
 
   const isEditing = singleRoom.id;
 
-
-  const addNewRoom =async () => {
+  const addNewRoom = async () => {
     console.log("treba da doda sobu");
-    console.log(singleRoom)
-    const formatedDate = formatDate(new Date())
-    console.log(formatedDate)
-    // try {
-    //  const mario = await createRoom(singleRoom)
-    //   console.log(mario)
-    // } catch (error) {
-    //   console.error("Error", error)
-    // }
+    console.log(singleRoom);
+    try {
+      insertRowAutoTimestamp()
+    } catch (error) {
+      console.error("Error", error);
+    }
   };
 
   return (

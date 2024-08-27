@@ -53,3 +53,24 @@ export const createRoom = async (newRoom:RoomType) => {
     console.error("Error when creating new room", err);
   }
 };
+
+
+export const insertRowAutoTimestamp = async () => {
+  const { data, error } = await supabase.from("Rooms").insert([
+    {
+      name: "Example Name",
+      regularPrice: 100.0,
+      discount: 10.0,
+      description: "Example description",
+      image: "example.jpg",
+      capacity: 50,
+      // created_at is automatically handled
+    },
+  ]);
+
+  if (error) {
+    console.error("Error inserting row:", error);
+  } else {
+    console.log("Row inserted with auto timestamp:", data);
+  }
+};

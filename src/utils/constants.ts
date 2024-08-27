@@ -1,18 +1,19 @@
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegCalendarAlt, FaUsers } from "react-icons/fa";
 import { MdLocalHotel } from "react-icons/md";
+import { formatDate } from "./helpers";
 
 export const initialRoomsState = [];
 
 export const initialSingleRoomState = {
-  created_at: "",
+  created_at: formatDate(new Date),
   description: "",
   discount: 0,
   id: 0,
   image: "",
   name: "",
   regularPrice: 0,
-  capacity: 0,
+  capacity: 4,
 };
 
 export const links = [
