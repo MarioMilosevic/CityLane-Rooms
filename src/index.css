@@ -3,11 +3,26 @@
 @tailwind utilities;
 
 .sidebar_custom_color_active {
-    background-color: #404040;
-    color: #f5f5f5;
+  background-color: #404040;
+  color: #f5f5f5;
 }
 
 .sidebar_custom_color_active span {
-    color: #0ea5e9;   
+  color: #0ea5e9;
 }
 
+.file_custom::file-selector-button {
+  background-color: #0ea5e9;
+  color: #e0f2fe;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 200ms;
+  margin-right: 1rem;
+}
+
+.file_custom::file-selector-button:hover {
+  background-color: #0284c7;
+  color: #f0f9ff;
+}

@@ -18,12 +18,10 @@ const ModalForm = ({
   setSingleRoom,
   isEditing
 }: ModalFormProps) => {
-  console.log(singleRoom);
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalOpen(false)
   );
   const dispatch = useDispatch();
-  console.log("isEditing", isEditing);
 
   const addNewRoom = async () => {
     try {
@@ -118,7 +116,7 @@ const ModalForm = ({
           <Label name={"Room photo"} />
           <Input
             name={"Room photo"}
-            value=""
+            value={singleRoom.image}
             type="file"
             changeHandler={(e) => console.log(e)}
           />

@@ -106,6 +106,7 @@ export type ModalFormProps = {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   singleRoom: NewRoomType;
   setSingleRoom: Dispatch<SetStateAction<NewRoomType>>;
+  isEditing:boolean
 };
 
 export type LabelProps = {
