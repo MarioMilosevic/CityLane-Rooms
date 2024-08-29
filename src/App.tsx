@@ -4,10 +4,8 @@ import Settings from "./pages/Settings";
 import Rooms from "./pages/Rooms";
 import Users from "./pages/Users";
 import SharedLayout from "./components/layout/SharedLayout";
-// import useFetchRooms from "./hooks/useFetchRooms";
 
 function App() {
-  // useFetchRooms();
   return (
     <BrowserRouter>
       <Routes>

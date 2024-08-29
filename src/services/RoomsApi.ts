@@ -1,5 +1,6 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { NewRoomType, RoomType } from "../types/types";
+import { nanoid } from "nanoid";
 import supabase from "../config/supabaseClient";
 
 export const fetchAllRooms = async (
@@ -73,18 +74,24 @@ export const createNewRoom = async (newRoom: NewRoomType) => {
     console.error("Error inserting row:", error);
     throw error;
   }
-
   return data;
 };
 
-export const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const files = e.target.files;
+// export const uploadImage = async (obj) => {
+//   const fileName = `${nanoid()}_${obj.name}`;
+//   console.log(fileName)
+//   return fileName
+//   // const files = e.target.files;
+//   // console.log(files);
 
-  if (!files || files.length === 0) return null;
+//   // if (!files || files.length === 0) return null;
 
-  const file = files[0];
-  const fileName = `${Date.now()}_${file.name}`;
-  //uuid
+//   // const file = files[0];
+
+// };
+
+export const uploadImage = async (file) => {
+  const fileName = `${nanoid()}_${file.name}`;
 
   const { data, error } = await supabase.storage
     .from("RoomHubBucket")
@@ -104,3 +111,15 @@ export const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     return null;
   }
 };
+
+// const addNewRoom = async (e) => {
+//   try {
+//     const data = await createNewRoom(singleRoom);
+//     addRoom(data[0]);
+//     showToast("Room created successfully!", "success");
+//     setIsModalOpen(false);
+//   } catch (error) {
+//     console.error("Error creating new room:", error);
+//     showToast("Unable to create new room. Please try again later.", "error");
+//   }
+// };

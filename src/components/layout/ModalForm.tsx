@@ -3,6 +3,7 @@ import { PiXBold } from "react-icons/pi";
 import { createNewRoom } from "../../services/RoomsApi";
 import { showToast } from "../../services/toastNotification";
 import { uploadImage } from "../../services/RoomsApi";
+import { RoomType } from "../../types/types";
 import useClickOutside from "../../hooks/useClickOutside";
 import FormBlock from "./FormBlock";
 import Label from "./Label";
@@ -10,8 +11,6 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
-import toast from "react-hot-toast";
-import { RoomType } from "../../types/types";
 
 const ModalForm = ({
   setIsModalOpen,
@@ -30,36 +29,27 @@ const ModalForm = ({
 
   const addNewRoom = async () => {
     try {
-      const data = await createNewRoom(singleRoom);
+      const imageUrl = await uploadImage(singleRoom.image);
+
+      const newRoom = {
+        ...singleRoom,
+        image: imageUrl,
+      };
+      setIsModalOpen(false);
+      setSingleRoom(newRoom);
+      const data = await createNewRoom(newRoom);
       addRoom(data[0]);
       showToast("Room created successfully!", "success");
-      setIsModalOpen(false);
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
     }
   };
 
-  const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const uploadPromise = uploadImage(e);
-
-    toast.promise(uploadPromise, {
-      loading: "Saving...",
-      success: "Image saved",
-      error: "Error saving image",
-    });
-
-    try {
-      const imageUrl = await uploadPromise;
-      if (imageUrl) {
-        setSingleRoom((prev) => ({
-          ...prev,
-          image: imageUrl,
-        }));
-      }
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    setSingleRoom((prev) => ({ ...prev, image: file }));
   };
 
   return (
@@ -141,7 +131,14 @@ const ModalForm = ({
         </FormBlock>
         <FormBlock>
           <Label name={"Room photo"} />
-          <Input name={"Room photo"} type="file" changeHandler={handleImage} />
+          <Input
+            name={"Room photo"}
+            type="file"
+            changeHandler={(e) => handleImage(e)}
+            // changeHandler={(e) =>
+            //   setSingleRoom((prev) => ({ ...prev, image: e.target.files[0] }))
+            // }
+          />
         </FormBlock>
         <PrimaryActionButtonWrapper>
           <PrimaryActionButton

@@ -23,7 +23,6 @@ import useFetchRooms from "../hooks/useFetchRooms";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
-
   useFetchRooms(setRooms);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

@@ -5,23 +5,23 @@ import { NewRoomType } from "../types/types";
 
 export const initialRoomsState = [];
 
-export const initialSingleRoomState: NewRoomType = {
-  name: "",
-  regularPrice: "",
-  discount: "0",
-  description: "",
-  image: "",
-  capacity: "",
-};
-
-// export const initialSingleRoomState:NewRoomType = {
-//   name: "Example Name",
-//   regularPrice: 100.0,
-//   discount: 10.0,
-//   description: "Example description",
+// export const initialSingleRoomState: NewRoomType = {
+//   name: "",
+//   regularPrice: "",
+//   discount: "0",
+//   description: "",
 //   image: "",
-//   capacity: 50,
+//   capacity: "",
 // };
+
+export const initialSingleRoomState:NewRoomType = {
+  name: "Example Name",
+  regularPrice: 100.0,
+  discount: 10.0,
+  description: "Example description",
+  image: "",
+  capacity: 50,
+};
 
 export const links = [
   { heading: "bookings", icon: FaRegCalendarAlt },
