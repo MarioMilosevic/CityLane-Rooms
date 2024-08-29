@@ -12,6 +12,7 @@ import { showToast } from "../../utils/toastNotification";
 import { useDispatch } from "react-redux";
 import { addRoom } from "../../redux/features/roomsSlice";
 import { uploadImage } from "../../utils/api";
+import toast from "react-hot-toast";
 
 const ModalForm = ({
   setIsModalOpen,
@@ -38,14 +39,25 @@ const ModalForm = ({
     }
   };
 
-  const handleImage = async (e:React.ChangeEvent<HTMLInputElement>) => {
-    const imageUrl = await uploadImage(e);
-    if (imageUrl) {
-      const { publicUrl } = imageUrl;
-      setSingleRoom((prev) => ({
-        ...prev,
-        image: publicUrl,
-      }));
+  const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const uploadPromise = uploadImage(e);
+
+    toast.promise(uploadPromise, {
+      loading: "Loading...",
+      success: "Image loaded",
+      error: "Error saving image",
+    });
+
+    try {
+      const imageUrl = await uploadPromise;
+      if (imageUrl) {
+        setSingleRoom((prev) => ({
+          ...prev,
+          image: imageUrl,
+        }));
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
     }
   };
 
@@ -128,12 +140,7 @@ const ModalForm = ({
         </FormBlock>
         <FormBlock>
           <Label name={"Room photo"} />
-          <Input
-            name={"Room photo"}
-            type="file"
-            changeHandler={handleImage}
-           
-          />
+          <Input name={"Room photo"} type="file" changeHandler={handleImage} />
         </FormBlock>
         <PrimaryActionButtonWrapper>
           <PrimaryActionButton
@@ -147,6 +154,7 @@ const ModalForm = ({
               isEditing ? () => console.log("funkcija za EDIT") : addNewRoom
             }
             color="blue"
+            disabled={!singleRoom.image}
           />
         </PrimaryActionButtonWrapper>
       </form>

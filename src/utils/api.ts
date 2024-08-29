@@ -26,21 +26,67 @@ export const fetchAllRooms = async (
   }
 };
 
+// export const deleteRoomFromServer = async (roomId: number) => {
+//   try {
+//     const { data, error } = await supabase
+//       .from("Rooms")
+//       .delete()
+//       .eq("id", roomId)
+//       .select();
+//     if (error) {
+//       throw new Error();
+//     } else {
+//       return data;
+//     }
+//   } catch (error) {
+//     console.error("Error in deleteRoom function:", error);
+//     throw error;
+//   }
+// };
+
 export const deleteRoomFromServer = async (roomId: number) => {
-  console.log(roomId);
   try {
-    const { data, error } = await supabase
+    const { data: roomData, error: fetchError } = await supabase
+      .from("Rooms")
+      .select("image")
+      .eq("id", roomId)
+      .single();
+
+    if (fetchError) {
+      throw new Error("Error fetching room data");
+    }
+
+    const imagePath = roomData?.image;
+    if (imagePath) {
+      const { error: deleteImageError } = await supabase.storage
+        .from("RoomHubBucket")
+        .remove([
+          imagePath.replace(
+            `${
+              supabase.storage.from("RoomHubBucket").getPublicUrl("").data
+                .publicUrl
+            }`
+          ),
+        ]);
+
+      if (deleteImageError) {
+        throw new Error("Error deleting image from storage");
+      }
+    }
+
+    const { data, error: deleteRoomError } = await supabase
       .from("Rooms")
       .delete()
       .eq("id", roomId)
       .select();
-    if (error) {
-      throw new Error();
-    } else {
-      return data;
+
+    if (deleteRoomError) {
+      throw new Error("Error deleting room from database");
     }
+
+    return data;
   } catch (error) {
-    console.error("Error in deleteRoom function:", error);
+    console.error("Error in deleteRoomFromServer function:", error);
     throw error;
   }
 };
@@ -58,36 +104,9 @@ export const createNewRoom = async (newRoom: NewRoomType) => {
   return data;
 };
 
-// export const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const file = e.target.files[0];
-
-//   if (!file) return;
-
-//   const fileName = `${Date.now()}_${file.name}`;
-
-//   const { data, error } = await supabase.storage
-//     .from("RoomHubBucket")
-//     .upload(`uploads/${fileName}`, file);
-
-//   if (data) {
-//     const { data: publicURL } = supabase.storage
-//       .from("RoomHubBucket")
-//       .getPublicUrl(`uploads/${fileName}`);
-//     return publicURL;
-//   } else {
-//     console.error("Error uploading file: ", error.message);
-//     return null;
-//   }
-// };
-
-
-import React from "react";
-import { supabase } from "./supabaseClient"; // Adjust the import path to where you have your Supabase client setup
-
 export const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
   const files = e.target.files;
 
-  // Check if files is null or empty
   if (!files || files.length === 0) return null;
 
   const file = files[0];
@@ -102,7 +121,7 @@ export const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
       .from("RoomHubBucket")
       .getPublicUrl(`uploads/${fileName}`);
 
-    return publicURL.publicUrl; // Access the publicUrl property
+    return publicURL.publicUrl;
   } else {
     console.error("Error uploading file: ", error.message);
     return null;

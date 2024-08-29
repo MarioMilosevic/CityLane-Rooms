@@ -75,6 +75,7 @@ export type PrimaryActionButtonProps = {
   text: string;
   color: keyof buttonColorOptions;
   clickHandler: () => void;
+  disabled?:boolean
 };
 
 export type HeadingContainerProps = {

@@ -49,6 +49,7 @@ const Rooms = () => {
   const deleteHandler = async (roomId: number) => {
     try {
       const response = await deleteRoomFromServer(roomId);
+      console.log(response)
       if (response[0]) {
         dispatch(deleteRoom(roomId));
         showToast("Room deleted successfully", "success");
