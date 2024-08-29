@@ -19,7 +19,7 @@ export const initialSingleRoomState:NewRoomType = {
 //   regularPrice: 100.0,
 //   discount: 10.0,
 //   description: "Example description",
-//   image: "example.jpg",
+//   image: "",
 //   capacity: 50,
 // };
 

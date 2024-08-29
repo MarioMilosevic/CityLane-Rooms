@@ -41,7 +41,7 @@ export const deleteRoomFromServer = async (roomId: number) => {
     }
   } catch (error) {
     console.error("Error in deleteRoom function:", error);
-    throw error; 
+    throw error;
   }
 };
 
@@ -56,4 +56,55 @@ export const createNewRoom = async (newRoom: NewRoomType) => {
   }
 
   return data;
+};
+
+// export const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+//   const file = e.target.files[0];
+
+//   if (!file) return;
+
+//   const fileName = `${Date.now()}_${file.name}`;
+
+//   const { data, error } = await supabase.storage
+//     .from("RoomHubBucket")
+//     .upload(`uploads/${fileName}`, file);
+
+//   if (data) {
+//     const { data: publicURL } = supabase.storage
+//       .from("RoomHubBucket")
+//       .getPublicUrl(`uploads/${fileName}`);
+//     return publicURL;
+//   } else {
+//     console.error("Error uploading file: ", error.message);
+//     return null;
+//   }
+// };
+
+
+import React from "react";
+import { supabase } from "./supabaseClient"; // Adjust the import path to where you have your Supabase client setup
+
+export const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const files = e.target.files;
+
+  // Check if files is null or empty
+  if (!files || files.length === 0) return null;
+
+  const file = files[0];
+  const fileName = `${Date.now()}_${file.name}`;
+
+  const { data, error } = await supabase.storage
+    .from("RoomHubBucket")
+    .upload(`uploads/${fileName}`, file);
+
+  if (data) {
+    const { data: publicURL } = supabase.storage
+      .from("RoomHubBucket")
+      .getPublicUrl(`uploads/${fileName}`);
+
+    return publicURL.publicUrl; // Access the publicUrl property
+  } else {
+    console.error("Error uploading file: ", error.message);
+    return null;
+  }
 };

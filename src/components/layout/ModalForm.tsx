@@ -11,12 +11,13 @@ import { createNewRoom } from "../../utils/api";
 import { showToast } from "../../utils/toastNotification";
 import { useDispatch } from "react-redux";
 import { addRoom } from "../../redux/features/roomsSlice";
+import { uploadImage } from "../../utils/api";
 
 const ModalForm = ({
   setIsModalOpen,
   singleRoom,
   setSingleRoom,
-  isEditing
+  isEditing,
 }: ModalFormProps) => {
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalOpen(false)
@@ -25,13 +26,26 @@ const ModalForm = ({
 
   const addNewRoom = async () => {
     try {
+      console.log(singleRoom);
       const data = await createNewRoom(singleRoom);
+      console.log(data[0]);
       dispatch(addRoom(data[0]));
       showToast("Room created successfully!", "success");
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
+    }
+  };
+
+  const handleImage = async (e:React.ChangeEvent<HTMLInputElement>) => {
+    const imageUrl = await uploadImage(e);
+    if (imageUrl) {
+      const { publicUrl } = imageUrl;
+      setSingleRoom((prev) => ({
+        ...prev,
+        image: publicUrl,
+      }));
     }
   };
 
@@ -116,9 +130,9 @@ const ModalForm = ({
           <Label name={"Room photo"} />
           <Input
             name={"Room photo"}
-            value={singleRoom.image}
             type="file"
-            changeHandler={(e) => console.log(e)}
+            changeHandler={handleImage}
+           
           />
         </FormBlock>
         <PrimaryActionButtonWrapper>
