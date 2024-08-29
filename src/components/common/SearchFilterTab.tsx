@@ -1,8 +1,8 @@
 import FilterTab from "./FilterTab";
 import { useState } from "react";
 import SortOption from "./SortOption";
-import { SearchFilterTabProps } from "../../utils/types";
-const SearchFilterTab = ({tabOptions, sortOptions}:SearchFilterTabProps) => {
+import { SearchFilterTabProps } from "../../types/types";
+const SearchFilterTab = ({ tabOptions, sortOptions }: SearchFilterTabProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   return (
@@ -17,10 +17,12 @@ const SearchFilterTab = ({tabOptions, sortOptions}:SearchFilterTabProps) => {
         </FilterTab>
       ))}
       <select className="px-2 py-1 rounded-md">
-        {sortOptions?.map((option, index) => <SortOption key={index} {...option} />)}
+        {sortOptions?.map((option, index) => (
+          <SortOption key={index} {...option} />
+        ))}
       </select>
     </div>
   );
-}
+};
 
-export default SearchFilterTab
+export default SearchFilterTab;

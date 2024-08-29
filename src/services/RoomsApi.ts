@@ -1,13 +1,10 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { Dispatch } from "@reduxjs/toolkit";
-import { NewRoomType, RoomType } from "./types";
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { NewRoomType, RoomType } from "../types/types";
 import supabase from "../config/supabaseClient";
 
 export const fetchAllRooms = async (
   supabase: SupabaseClient,
-  dispatch: Dispatch,
-  setRooms: ActionCreatorWithPayload<RoomType[], "rooms/setRooms">
+  setRooms: React.Dispatch<React.SetStateAction<RoomType[]>>
 ): Promise<void> => {
   try {
     const { data, error } = await supabase
@@ -19,30 +16,12 @@ export const fetchAllRooms = async (
       throw error || new Error("No data received");
     }
 
-    dispatch(setRooms(data));
+    setRooms(data);
   } catch (error) {
-    dispatch(setRooms([]));
+    setRooms([]);
     console.error("Error fetching rooms", error);
   }
 };
-
-// export const deleteRoomFromServer = async (roomId: number) => {
-//   try {
-//     const { data, error } = await supabase
-//       .from("Rooms")
-//       .delete()
-//       .eq("id", roomId)
-//       .select();
-//     if (error) {
-//       throw new Error();
-//     } else {
-//       return data;
-//     }
-//   } catch (error) {
-//     console.error("Error in deleteRoom function:", error);
-//     throw error;
-//   }
-// };
 
 export const deleteRoomFromServer = async (roomId: number) => {
   try {
@@ -57,17 +36,11 @@ export const deleteRoomFromServer = async (roomId: number) => {
     }
 
     const imagePath = roomData?.image;
+
     if (imagePath) {
       const { error: deleteImageError } = await supabase.storage
         .from("RoomHubBucket")
-        .remove([
-          imagePath.replace(
-            `${
-              supabase.storage.from("RoomHubBucket").getPublicUrl("").data
-                .publicUrl
-            }`
-          ),
-        ]);
+        .remove([imagePath]);
 
       if (deleteImageError) {
         throw new Error("Error deleting image from storage");
@@ -111,10 +84,14 @@ export const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
 
   const file = files[0];
   const fileName = `${Date.now()}_${file.name}`;
+  //uuid
 
   const { data, error } = await supabase.storage
     .from("RoomHubBucket")
-    .upload(`uploads/${fileName}`, file);
+    .upload(`uploads/${fileName}`, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
 
   if (data) {
     const { data: publicURL } = supabase.storage

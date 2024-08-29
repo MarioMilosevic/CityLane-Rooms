@@ -1,6 +1,6 @@
-import { TextAreaProps } from "../../utils/types";
+import { TextAreaProps } from "../../types/types";
 
-const TextArea = ({ name, value, changeHandler }:TextAreaProps) => {
+const TextArea = ({ name, value, changeHandler }: TextAreaProps) => {
   return (
     <textarea
       className="w-[400px] p-2 rounded-md border outline-none transition-all duration-200 border-neutral-300 focus:outline-sky-500"

@@ -1,11 +1,11 @@
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegCalendarAlt, FaUsers } from "react-icons/fa";
 import { MdLocalHotel } from "react-icons/md";
-import { NewRoomType } from "./types";
+import { NewRoomType } from "../types/types";
 
 export const initialRoomsState = [];
 
-export const initialSingleRoomState:NewRoomType = {
+export const initialSingleRoomState: NewRoomType = {
   name: "",
   regularPrice: "",
   discount: "0",

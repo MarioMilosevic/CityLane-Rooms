@@ -1,4 +1,4 @@
-import { ContentRowProps } from "../../utils/types";
+import { ContentRowProps } from "../../types/types";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";

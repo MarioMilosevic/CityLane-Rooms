@@ -1,7 +1,9 @@
-import { MainContainerProps } from "../../utils/types";
+import { MainContainerProps } from "../../types/types";
 
 const MainContainer = ({ children }: MainContainerProps) => {
-  return <main className="w-full bg-neutral-100 pl-24 min-h-screen">{children}</main>;
+  return (
+    <main className="w-full bg-neutral-100 pl-24 min-h-screen">{children}</main>
+  );
 };
 
 export default MainContainer;

@@ -1,4 +1,4 @@
-import { ContentHeaderProps } from "../../utils/types";
+import { ContentHeaderProps } from "../../types/types";
 const ContentHeader = ({ title }: ContentHeaderProps) => {
   return (
     <div className="py-4">

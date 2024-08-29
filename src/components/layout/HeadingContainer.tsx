@@ -1,6 +1,6 @@
 import Title from "../common/Title";
 import SearchFilterTab from "../common/SearchFilterTab";
-import { HeadingContainerProps } from "../../utils/types";
+import { HeadingContainerProps } from "../../types/types";
 
 const HeadingContainer = ({
   title,

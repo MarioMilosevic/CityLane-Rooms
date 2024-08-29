@@ -1,24 +1,22 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { setRooms } from "../redux/features/roomsSlice";
-import { fetchAllRooms } from "../utils/api";
+import { fetchAllRooms } from "../services/RoomsApi";
+import { RoomType } from "../types/types";
 import supabase from "../config/supabaseClient";
 
-const useFetchRooms = () => {
-  const dispatch = useDispatch();
-
+const useFetchRooms = (
+  setRooms: React.Dispatch<React.SetStateAction<RoomType[]>>
+) => {
   useEffect(() => {
     const fetchAndSetRooms = async () => {
       try {
-        await fetchAllRooms(supabase, dispatch, setRooms);
+        await fetchAllRooms(supabase, setRooms);
       } catch (error) {
         console.error("Error fetching rooms", error);
-        dispatch(setRooms([]));
+        setRooms([]);
       }
     };
-
     fetchAndSetRooms();
-  }, [dispatch]);
+  }, [setRooms]);
 };
 
 export default useFetchRooms;

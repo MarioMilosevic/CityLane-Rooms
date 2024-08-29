@@ -1,5 +1,8 @@
-import { ModalFormProps } from "../../utils/types";
+import { ModalFormProps } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
+import { createNewRoom } from "../../services/RoomsApi";
+import { showToast } from "../../services/toastNotification";
+import { uploadImage } from "../../services/RoomsApi";
 import useClickOutside from "../../hooks/useClickOutside";
 import FormBlock from "./FormBlock";
 import Label from "./Label";
@@ -7,30 +10,28 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
-import { createNewRoom } from "../../utils/api";
-import { showToast } from "../../utils/toastNotification";
-import { useDispatch } from "react-redux";
-import { addRoom } from "../../redux/features/roomsSlice";
-import { uploadImage } from "../../utils/api";
 import toast from "react-hot-toast";
+import { RoomType } from "../../types/types";
 
 const ModalForm = ({
   setIsModalOpen,
   singleRoom,
   setSingleRoom,
   isEditing,
+  setRooms,
 }: ModalFormProps) => {
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalOpen(false)
   );
-  const dispatch = useDispatch();
+
+  const addRoom = (newRoom: RoomType) => {
+    setRooms((prev) => [...prev, newRoom]);
+  };
 
   const addNewRoom = async () => {
     try {
-      console.log(singleRoom);
       const data = await createNewRoom(singleRoom);
-      console.log(data[0]);
-      dispatch(addRoom(data[0]));
+      addRoom(data[0]);
       showToast("Room created successfully!", "success");
       setIsModalOpen(false);
     } catch (error) {
@@ -43,8 +44,8 @@ const ModalForm = ({
     const uploadPromise = uploadImage(e);
 
     toast.promise(uploadPromise, {
-      loading: "Loading...",
-      success: "Image loaded",
+      loading: "Saving...",
+      success: "Image saved",
       error: "Error saving image",
     });
 

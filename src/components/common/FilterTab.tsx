@@ -1,4 +1,4 @@
-import { FilterTabColors, FilterTabProps } from "../../utils/types";
+import { FilterTabColors, FilterTabProps } from "../../types/types";
 
 const FilterTab = ({ children, color, buttonHandler }: FilterTabProps) => {
   const filterTabColors: FilterTabColors = {

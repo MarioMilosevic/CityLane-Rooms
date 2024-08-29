@@ -1,4 +1,4 @@
-import { LinkProps } from "../../utils/types";
+import { LinkProps } from "../../types/types";
 
 const Link = ({ link, isSelected, clickHandler }: LinkProps) => {
   const buttonBaseClass =

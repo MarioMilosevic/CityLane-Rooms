@@ -1,4 +1,4 @@
-import { RowOptionProps } from "../../utils/types";
+import { RowOptionProps } from "../../types/types";
 
 const RowOption = ({ clickHandler, text, icon: Icon }: RowOptionProps) => {
   return (

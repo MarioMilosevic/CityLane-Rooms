@@ -1,4 +1,4 @@
-import { OptionButtonProps } from "../../utils/types";
+import { OptionButtonProps } from "../../types/types";
 import { forwardRef, Ref } from "react";
 const OptionButton = forwardRef(
   ({ children }: OptionButtonProps, ref: Ref<HTMLDivElement>) => {

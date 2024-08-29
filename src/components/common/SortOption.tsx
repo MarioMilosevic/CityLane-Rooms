@@ -1,11 +1,7 @@
-import { SortOptionType } from "../../utils/types"
+import { SortOptionType } from "../../types/types";
 
-const SortOption = ({value, name}:SortOptionType) => {
-  return (
-    <option value={value}>
-       Sort by {name}
-    </option>
-  )
-}
+const SortOption = ({ value, name }: SortOptionType) => {
+  return <option value={value}>Sort by {name}</option>;
+};
 
-export default SortOption
+export default SortOption;

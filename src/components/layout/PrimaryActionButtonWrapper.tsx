@@ -1,4 +1,4 @@
-import { PrimaryActionButtonWrapperProps } from "../../utils/types";
+import { PrimaryActionButtonWrapperProps } from "../../types/types";
 
 const PrimaryActionButtonWrapper = ({
   children,

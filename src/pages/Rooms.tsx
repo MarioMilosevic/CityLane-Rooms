@@ -5,9 +5,11 @@ import {
 } from "../utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
-import { useRoomsSlice } from "../hooks/useRoomsSlice";
 import { HiDocumentDuplicate } from "react-icons/hi";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
+import { NewRoomType, RoomType } from "../types/types";
+import { showToast } from "../services/toastNotification";
+import { deleteRoomFromServer } from "../services/RoomsApi";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import ContentHeader from "../components/layout/ContentHeader";
 import ContentRow from "../components/layout/ContentRow";
@@ -15,22 +17,23 @@ import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import HeaderContainer from "../components/layout/HeadingContainer";
 import ModalForm from "../components/layout/ModalForm";
 import RowOption from "../components/common/RowOption";
-import { NewRoomType } from "../utils/types";
-import { showToast } from "../utils/toastNotification";
-import { deleteRoomFromServer } from "../utils/api";
-import { deleteRoom } from "../redux/features/roomsSlice";
-import { useDispatch } from "react-redux";
 import ContentHeaderWrapper from "../components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "../components/layout/ContentRowWrapper";
+import useFetchRooms from "../hooks/useFetchRooms";
 
 const Rooms = () => {
-  const { rooms } = useRoomsSlice();
+  const [rooms, setRooms] = useState<RoomType[]>([]);
+
+  useFetchRooms(setRooms);
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [singleRoom, setSingleRoom] = useState<NewRoomType>(
     initialSingleRoomState
   );
-  const [isEditing, setIsEditing] = useState<boolean>(false)
-  const dispatch = useDispatch();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const deleteRoom = (roomId: number) =>
+    setRooms(rooms.filter((room) => room.id !== roomId));
 
   const editHandler = async (roomId: number) => {
     try {
@@ -38,7 +41,7 @@ const Rooms = () => {
       if (room) {
         setSingleRoom(room);
         setIsModalOpen(true);
-        setIsEditing(true)
+        setIsEditing(true);
       }
     } catch (error) {
       showToast("Unexpected error occured, please try again later", "error");
@@ -49,9 +52,8 @@ const Rooms = () => {
   const deleteHandler = async (roomId: number) => {
     try {
       const response = await deleteRoomFromServer(roomId);
-      console.log(response)
       if (response[0]) {
-        dispatch(deleteRoom(roomId));
+        deleteRoom(roomId);
         showToast("Room deleted successfully", "success");
       }
     } catch (error) {
@@ -63,7 +65,7 @@ const Rooms = () => {
   const addNewRoomHandler = () => {
     setIsModalOpen(true);
     setSingleRoom(initialSingleRoomState);
-    setIsEditing(false)
+    setIsEditing(false);
   };
 
   return (
@@ -116,6 +118,7 @@ const Rooms = () => {
             setIsModalOpen={setIsModalOpen}
             setSingleRoom={setSingleRoom}
             isEditing={isEditing}
+            setRooms={setRooms}
           />,
           document.body
         )}
