@@ -29,19 +29,20 @@ const ModalForm = ({
   const form = useForm<newRoomValues>({
     defaultValues: {
       roomName: "",
-      maximumCapacity: 0,
-      regularPrice: 0,
-      discount: 0,
+      maximumCapacity: "0",
+      regularPrice: "0",
+      discount: "0",
       description: "",
       roomPhoto: "",
     },
     resolver: zodResolver(newRoomSchema),
+    mode:"onChange"
   });
 
   const {
     register,
     handleSubmit,
-    formState: { isValid, errors },
+    formState: { errors },
   } = form;
 
   const addRoom = (newRoom: RoomType) => {
@@ -62,9 +63,6 @@ const ModalForm = ({
         addRoom(data[0]);
         showToast("Room created successfully!", "success");
       }
-      // else {
-      //   showToast("Please upload a valid image file.", "error");
-      // }
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
@@ -82,7 +80,7 @@ const ModalForm = ({
           className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200"
           onClick={() => setIsModalOpen(false)}
         />
-        <FormBlock error={errors.roomName}>
+        <FormBlock>
           <Label id={"Room name"} />
           <Input
             id={"Room name"}
@@ -92,9 +90,10 @@ const ModalForm = ({
               setSingleRoom((prev) => ({ ...prev, name: e.target.value }))
             }
             zod={{ ...register("roomName") }}
+            error={errors.roomName}
           />
         </FormBlock>
-        <FormBlock error={errors.maximumCapacity}>
+        <FormBlock>
           <Label id={"Maximum capacity"} />
           <Input
             id={"Maximum capacity"}
@@ -107,9 +106,10 @@ const ModalForm = ({
               }))
             }
             zod={{ ...register("maximumCapacity") }}
+            error={errors.maximumCapacity}
           />
         </FormBlock>
-        <FormBlock error={errors.regularPrice}>
+        <FormBlock>
           <Label id={"Regular price"} />
           <Input
             id={"Regular price"}
@@ -122,9 +122,10 @@ const ModalForm = ({
               }))
             }
             zod={{ ...register("regularPrice") }}
+            error={errors.regularPrice}
           />
         </FormBlock>
-        <FormBlock error={errors.discount}>
+        <FormBlock>
           <Label id={"Discount"} />
           <Input
             id={"Discount"}
@@ -137,23 +138,26 @@ const ModalForm = ({
               }))
             }
             zod={{ ...register("discount") }}
+            error={errors.discount}
           />
         </FormBlock>
-        <FormBlock error={errors.description}>
+        <FormBlock>
           <Label id={"Description for website"} />
           <TextArea
             id={"Description for website"}
             value={singleRoom.description}
-            changeHandler={(e) =>
+            changeHandler={(e) => {
               setSingleRoom((prev) => ({
                 ...prev,
                 description: e.target.value,
-              }))
-            }
+              }));
+              // setValue("description", e.target.value); // Update form value
+            }}
             zod={{ ...register("description") }}
+            error={errors.description}
           />
         </FormBlock>
-        <FormBlock error={errors.roomPhoto}>
+        <FormBlock>
           <Label id={"Room photo"} />
           <Input
             id={"Room photo"}
@@ -165,6 +169,7 @@ const ModalForm = ({
               }
             }}
             zod={{ ...register("roomPhoto") }}
+            error={errors.roomPhoto}
           />
         </FormBlock>
         <PrimaryActionButtonWrapper>
@@ -176,7 +181,9 @@ const ModalForm = ({
           <PrimaryActionButton
             text={`${isEditing ? "Edit room" : "Create new room"}`}
             clickHandler={
-              isEditing ? () => console.log("funkcija za EDIT") : onSubmit
+              isEditing
+                ? () => console.log("funkcija za EDIT")
+                : handleSubmit(onSubmit)
             }
             color="blue"
           />

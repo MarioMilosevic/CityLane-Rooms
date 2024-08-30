@@ -97,7 +97,6 @@ export type SearchFilterTabProps = {
 
 export type FormBlockProps = {
   children: ReactNode;
-  error: FieldError | undefined;
 };
 
 export type OptionButtonProps = {
@@ -122,6 +121,7 @@ export type InputProps = {
   value?: string | number;
   changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   zod: UseFormRegisterReturn;
+  error: FieldError | undefined;
 };
 
 export type TextAreaProps = {
@@ -129,6 +129,7 @@ export type TextAreaProps = {
   id: string;
   changeHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   zod: UseFormRegisterReturn;
+  error: FieldError | undefined;
 };
 
 export type ContentRowWrapperProps = {

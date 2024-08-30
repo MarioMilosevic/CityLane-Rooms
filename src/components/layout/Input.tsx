@@ -1,6 +1,6 @@
 import { InputProps } from "../../types/types";
 
-const Input = ({ id, type, value, changeHandler, zod }: InputProps) => {
+const Input = ({ id, type, value, changeHandler, zod, error }: InputProps) => {
   const { onChange: zodOnchange, ...restZodProps } = zod;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     changeHandler(e);
@@ -10,17 +10,24 @@ const Input = ({ id, type, value, changeHandler, zod }: InputProps) => {
   };
 
   const baseClass =
-    "w-[400px] p-2 rounded-md border outline-none transition-all duration-200 border-neutral-300 focus:outline-sky-500";
+    "w-[400px] p-4 rounded-md border outline-none transition-all duration-200 border-neutral-300 focus:outline-sky-500";
   return (
-    <input
-      id={id}
-      type={type}
-      {...(type !== "file" && { value })}
-      value={value}
-      onChange={handleChange}
-      className={`${baseClass} ${type === "file" && "file_custom"}`}
-      {...restZodProps}
-    />
+    <div className="flex h-full relative">
+      <input
+        id={id}
+        type={type}
+        {...(type !== "file" && { value })}
+        value={value}
+        onChange={handleChange}
+        className={`${baseClass} ${type === "file" && "file_custom"}`}
+        {...restZodProps}
+      />
+      {error && (
+        <p className="text-red-500 absolute -bottom-[28px] left-0">
+          {error.message}
+        </p>
+      )}
+    </div>
   );
 };
 
