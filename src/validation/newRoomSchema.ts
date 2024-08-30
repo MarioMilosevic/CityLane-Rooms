@@ -1,9 +1,5 @@
 import { z } from "zod";
 
-// Custom validation to ensure the file is an instance of File
-const fileSchema = z
-  .instanceof(File, { message: "You must upload a valid image file" })
-  .refine((file) => file.size > 0, { message: "The file cannot be empty" });
 
 export const newRoomSchema = z.object({
   roomName: z
@@ -33,12 +29,9 @@ export const newRoomSchema = z.object({
   ),
 
   description: z
-    .string({ required_error: "Description is required" }).min(1, {message:"Description must be longer"})
-    // .min(5, { message: "Description must be 5 or more characters long" }),
-,
-  roomPhoto: fileSchema.or(
-    z.string({ required_error: "You must upload a photo" })
-  ),
+    .string({ required_error: "Description is required" })
+    .min(5, { message: "Description must be 5 or more characters long" }),
+
 });
 
 export type newRoomValues = z.infer<typeof newRoomSchema>;

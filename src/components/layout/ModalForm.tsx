@@ -33,10 +33,9 @@ const ModalForm = ({
       regularPrice: "0",
       discount: "0",
       description: "",
-      roomPhoto: "",
     },
     resolver: zodResolver(newRoomSchema),
-    mode:"onChange"
+    mode: "onChange",
   });
 
   const {
@@ -51,18 +50,19 @@ const ModalForm = ({
 
   const onSubmit = async () => {
     try {
+      let newRoom;
+
       if (singleRoom.image instanceof File) {
         const imageUrl = await uploadImage(singleRoom.image);
-        const newRoom = {
-          ...singleRoom,
-          image: imageUrl,
-        };
-        setIsModalOpen(false);
-        setSingleRoom(newRoom);
-        const data = await createNewRoom(newRoom);
-        addRoom(data[0]);
-        showToast("Room created successfully!", "success");
+        newRoom = { ...singleRoom, image: imageUrl };
+      } else {
+        newRoom = singleRoom;
       }
+
+      const data = await createNewRoom(newRoom);
+      addRoom(data[0]);
+      showToast("Room created successfully!", "success");
+      setIsModalOpen(false);
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
@@ -168,8 +168,6 @@ const ModalForm = ({
                 setSingleRoom((prev) => ({ ...prev, image: fileList[0] }));
               }
             }}
-            zod={{ ...register("roomPhoto") }}
-            error={errors.roomPhoto}
           />
         </FormBlock>
         <PrimaryActionButtonWrapper>
@@ -194,3 +192,16 @@ const ModalForm = ({
 };
 
 export default ModalForm;
+
+// if (singleRoom.image instanceof File) {
+//   const imageUrl = await uploadImage(singleRoom.image);
+//   const newRoom = {
+//     ...singleRoom,
+//     image: imageUrl,
+//   };
+//   setIsModalOpen(false);
+//   setSingleRoom(newRoom);
+//   const data = await createNewRoom(newRoom);
+//   addRoom(data[0]);
+//   showToast("Room created successfully!", "success");
+// }

@@ -120,8 +120,8 @@ export type InputProps = {
   type: string;
   value?: string | number;
   changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  zod: UseFormRegisterReturn;
-  error: FieldError | undefined;
+  zod?: UseFormRegisterReturn;
+  error?: FieldError | undefined;
 };
 
 export type TextAreaProps = {
