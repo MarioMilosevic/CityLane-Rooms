@@ -29,27 +29,24 @@ const ModalForm = ({
 
   const addNewRoom = async () => {
     try {
-      const imageUrl = await uploadImage(singleRoom.image);
-
-      const newRoom = {
-        ...singleRoom,
-        image: imageUrl,
-      };
-      setIsModalOpen(false);
-      setSingleRoom(newRoom);
-      const data = await createNewRoom(newRoom);
-      addRoom(data[0]);
-      showToast("Room created successfully!", "success");
+      if (singleRoom.image instanceof File) {
+        const imageUrl = await uploadImage(singleRoom.image);
+        const newRoom = {
+          ...singleRoom,
+          image: imageUrl,
+        };
+        setIsModalOpen(false);
+        setSingleRoom(newRoom);
+        const data = await createNewRoom(newRoom);
+        addRoom(data[0]);
+        showToast("Room created successfully!", "success");
+      } else {
+        showToast("Please upload a valid image file.", "error");
+      }
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
     }
-  };
-
-  const handleImage = (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-    setSingleRoom((prev) => ({ ...prev, image: file }));
   };
 
   return (
@@ -134,10 +131,12 @@ const ModalForm = ({
           <Input
             name={"Room photo"}
             type="file"
-            changeHandler={(e) => handleImage(e)}
-            // changeHandler={(e) =>
-            //   setSingleRoom((prev) => ({ ...prev, image: e.target.files[0] }))
-            // }
+            changeHandler={(e) => {
+              const fileList = e.target.files;
+              if (fileList && fileList.length > 0) {
+                setSingleRoom((prev) => ({ ...prev, image: fileList[0] }));
+              }
+            }}
           />
         </FormBlock>
         <PrimaryActionButtonWrapper>

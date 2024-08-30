@@ -17,7 +17,7 @@ export type NewRoomType = {
   regularPrice: string;
   discount: string;
   description: string;
-  image: string;
+  image: string | null | File;
   capacity: string;
 };
 

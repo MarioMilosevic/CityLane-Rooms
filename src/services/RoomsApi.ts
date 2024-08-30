@@ -36,15 +36,21 @@ export const deleteRoomFromServer = async (roomId: number) => {
       throw new Error("Error fetching room data");
     }
 
-    const imagePath = roomData?.image;
+    const imageUrl = roomData?.image;
 
-    if (imagePath) {
-      const { error: deleteImageError } = await supabase.storage
-        .from("RoomHubBucket")
-        .remove([imagePath]);
+    if (imageUrl) {
+      const imagePath = imageUrl.split(
+        "/storage/v1/object/public/RoomHubBucket/"
+      )[1];
 
-      if (deleteImageError) {
-        throw new Error("Error deleting image from storage");
+      if (imagePath) {
+        const { error: deleteImageError } = await supabase.storage
+          .from("RoomHubBucket")
+          .remove([imagePath]);
+
+        if (deleteImageError) {
+          throw new Error("Error deleting image from storage");
+        }
       }
     }
 
@@ -77,20 +83,7 @@ export const createNewRoom = async (newRoom: NewRoomType) => {
   return data;
 };
 
-// export const uploadImage = async (obj) => {
-//   const fileName = `${nanoid()}_${obj.name}`;
-//   console.log(fileName)
-//   return fileName
-//   // const files = e.target.files;
-//   // console.log(files);
-
-//   // if (!files || files.length === 0) return null;
-
-//   // const file = files[0];
-
-// };
-
-export const uploadImage = async (file) => {
+export const uploadImage = async (file: File) => {
   const fileName = `${nanoid()}_${file.name}`;
 
   const { data, error } = await supabase.storage
@@ -111,15 +104,3 @@ export const uploadImage = async (file) => {
     return null;
   }
 };
-
-// const addNewRoom = async (e) => {
-//   try {
-//     const data = await createNewRoom(singleRoom);
-//     addRoom(data[0]);
-//     showToast("Room created successfully!", "success");
-//     setIsModalOpen(false);
-//   } catch (error) {
-//     console.error("Error creating new room:", error);
-//     showToast("Unable to create new room. Please try again later.", "error");
-//   }
-// };
