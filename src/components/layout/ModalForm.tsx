@@ -11,6 +11,9 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
+import { newRoomSchema, newRoomValues } from "../../validation/newRoomSchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ModalForm = ({
   setIsModalOpen,
@@ -23,11 +26,29 @@ const ModalForm = ({
     setIsModalOpen(false)
   );
 
+  const form = useForm<newRoomValues>({
+    defaultValues: {
+      roomName: "",
+      maximumCapacity: 0,
+      regularPrice: 0,
+      discount: 0,
+      description: "",
+      roomPhoto: "",
+    },
+    resolver: zodResolver(newRoomSchema),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, errors },
+  } = form;
+
   const addRoom = (newRoom: RoomType) => {
     setRooms((prev) => [...prev, newRoom]);
   };
 
-  const addNewRoom = async () => {
+  const onSubmit = async () => {
     try {
       if (singleRoom.image instanceof File) {
         const imageUrl = await uploadImage(singleRoom.image);
@@ -40,9 +61,10 @@ const ModalForm = ({
         const data = await createNewRoom(newRoom);
         addRoom(data[0]);
         showToast("Room created successfully!", "success");
-      } else {
-        showToast("Please upload a valid image file.", "error");
       }
+      // else {
+      //   showToast("Please upload a valid image file.", "error");
+      // }
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
@@ -54,27 +76,28 @@ const ModalForm = ({
       <form
         className="flex flex-col bg-neutral-50 z-20 border px-8 py-4 relative"
         ref={modalRef}
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <PiXBold
           className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200"
           onClick={() => setIsModalOpen(false)}
         />
-        <FormBlock>
-          <Label name={"Room name"} />
+        <FormBlock error={errors.roomName}>
+          <Label id={"Room name"} />
           <Input
-            name={"Room name"}
+            id={"Room name"}
             value={singleRoom.name}
             type="text"
             changeHandler={(e) =>
               setSingleRoom((prev) => ({ ...prev, name: e.target.value }))
             }
+            zod={{ ...register("roomName") }}
           />
         </FormBlock>
-        <FormBlock>
-          <Label name={"Maximum capacity"} />
+        <FormBlock error={errors.maximumCapacity}>
+          <Label id={"Maximum capacity"} />
           <Input
-            name={"Maximum capacity"}
+            id={"Maximum capacity"}
             value={singleRoom.capacity}
             type="number"
             changeHandler={(e) =>
@@ -83,12 +106,13 @@ const ModalForm = ({
                 capacity: e.target.value,
               }))
             }
+            zod={{ ...register("maximumCapacity") }}
           />
         </FormBlock>
-        <FormBlock>
-          <Label name={"Regular price"} />
+        <FormBlock error={errors.regularPrice}>
+          <Label id={"Regular price"} />
           <Input
-            name={"Regular price"}
+            id={"Regular price"}
             value={singleRoom.regularPrice}
             type="number"
             changeHandler={(e) =>
@@ -97,12 +121,13 @@ const ModalForm = ({
                 regularPrice: e.target.value,
               }))
             }
+            zod={{ ...register("regularPrice") }}
           />
         </FormBlock>
-        <FormBlock>
-          <Label name={"Discount"} />
+        <FormBlock error={errors.discount}>
+          <Label id={"Discount"} />
           <Input
-            name={"Discount"}
+            id={"Discount"}
             value={singleRoom.discount}
             type="number"
             changeHandler={(e) =>
@@ -111,12 +136,13 @@ const ModalForm = ({
                 discount: e.target.value,
               }))
             }
+            zod={{ ...register("discount") }}
           />
         </FormBlock>
-        <FormBlock>
-          <Label name={"Description for website"} />
+        <FormBlock error={errors.description}>
+          <Label id={"Description for website"} />
           <TextArea
-            name={"Description for website"}
+            id={"Description for website"}
             value={singleRoom.description}
             changeHandler={(e) =>
               setSingleRoom((prev) => ({
@@ -124,12 +150,13 @@ const ModalForm = ({
                 description: e.target.value,
               }))
             }
+            zod={{ ...register("description") }}
           />
         </FormBlock>
-        <FormBlock>
-          <Label name={"Room photo"} />
+        <FormBlock error={errors.roomPhoto}>
+          <Label id={"Room photo"} />
           <Input
-            name={"Room photo"}
+            id={"Room photo"}
             type="file"
             changeHandler={(e) => {
               const fileList = e.target.files;
@@ -137,6 +164,7 @@ const ModalForm = ({
                 setSingleRoom((prev) => ({ ...prev, image: fileList[0] }));
               }
             }}
+            zod={{ ...register("roomPhoto") }}
           />
         </FormBlock>
         <PrimaryActionButtonWrapper>
@@ -148,10 +176,9 @@ const ModalForm = ({
           <PrimaryActionButton
             text={`${isEditing ? "Edit room" : "Create new room"}`}
             clickHandler={
-              isEditing ? () => console.log("funkcija za EDIT") : addNewRoom
+              isEditing ? () => console.log("funkcija za EDIT") : onSubmit
             }
             color="blue"
-            disabled={!singleRoom.image}
           />
         </PrimaryActionButtonWrapper>
       </form>

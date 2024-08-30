@@ -1,4 +1,5 @@
 import { ReactNode, MouseEventHandler, Dispatch, SetStateAction } from "react";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 import { IconType } from "react-icons";
 
 export type RoomType = {
@@ -75,7 +76,6 @@ export type PrimaryActionButtonProps = {
   text: string;
   color: keyof buttonColorOptions;
   clickHandler: () => void;
-  disabled?:boolean
 };
 
 export type HeadingContainerProps = {
@@ -97,6 +97,7 @@ export type SearchFilterTabProps = {
 
 export type FormBlockProps = {
   children: ReactNode;
+  error: FieldError | undefined;
 };
 
 export type OptionButtonProps = {
@@ -112,20 +113,22 @@ export type ModalFormProps = {
 };
 
 export type LabelProps = {
-  name: string;
+  id: string;
 };
 
 export type InputProps = {
-  name: string;
+  id: string;
   type: string;
   value?: string | number;
   changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  zod: UseFormRegisterReturn;
 };
 
 export type TextAreaProps = {
   value: string;
-  name: string;
+  id: string;
   changeHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  zod: UseFormRegisterReturn;
 };
 
 export type ContentRowWrapperProps = {

@@ -32,11 +32,8 @@ const Rooms = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const deleteRoom = (roomId: number) => {
-    console.log(roomId)
-    console.log(rooms)
     setRooms(rooms.filter((room) => room.id !== roomId));
-  
-  }
+  };
 
   const editHandler = async (roomId: number) => {
     try {
@@ -55,7 +52,6 @@ const Rooms = () => {
   const deleteHandler = async (roomId: number) => {
     try {
       const response = await deleteRoomFromServer(roomId);
-      console.log(response)
       if (response[0]) {
         deleteRoom(roomId);
         showToast("Room deleted successfully", "success");
