@@ -11,8 +11,8 @@ const Settings = () => {
       <ContentWrapper>
         {settingsFormFields.map((form, index) => (
           <FormBlock key={index}>
-            <Label name={form.name} />
-            <Input name={form.name} type={form.type} />
+            <Label id={form.name} />
+            <Input id={form.name} type={form.type} />
           </FormBlock>
         ))}
       </ContentWrapper>

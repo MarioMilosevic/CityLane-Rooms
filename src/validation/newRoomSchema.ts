@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-
 export const newRoomSchema = z.object({
   roomName: z
     .string({ required_error: "Room name is required" })
@@ -31,7 +30,6 @@ export const newRoomSchema = z.object({
   description: z
     .string({ required_error: "Description is required" })
     .min(5, { message: "Description must be 5 or more characters long" }),
-
 });
 
 export type newRoomValues = z.infer<typeof newRoomSchema>;

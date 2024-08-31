@@ -38,7 +38,7 @@ export type MainContainerProps = {
 };
 
 export type FilterTabProps = {
-  children: ReactNode;
+  text: string;
   color: keyof FilterTabColors;
   buttonHandler: () => void;
 };

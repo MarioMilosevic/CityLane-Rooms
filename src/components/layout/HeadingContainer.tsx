@@ -7,12 +7,13 @@ const HeadingContainer = ({
   isVisible,
   tabOptions,
   sortOptions,
+  activeIndex
 }: HeadingContainerProps) => {
   return (
     <header className="flex justify-between py-8">
       <Title title={title} />
       {isVisible && (
-        <SearchFilterTab tabOptions={tabOptions} sortOptions={sortOptions} />
+        <SearchFilterTab tabOptions={tabOptions} sortOptions={sortOptions} activeIndex={activeIndex } />
       )}
     </header>
   );

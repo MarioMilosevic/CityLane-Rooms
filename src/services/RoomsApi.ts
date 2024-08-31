@@ -4,9 +4,8 @@ import { nanoid } from "nanoid";
 import supabase from "../config/supabaseClient";
 
 export const fetchAllRooms = async (
-  supabase: SupabaseClient,
-  setRooms: React.Dispatch<React.SetStateAction<RoomType[]>>
-): Promise<void> => {
+  supabase: SupabaseClient
+): Promise<RoomType[]> => {
   try {
     const { data, error } = await supabase
       .from("Rooms")
@@ -16,11 +15,10 @@ export const fetchAllRooms = async (
     if (error || !data) {
       throw error || new Error("No data received");
     }
-
-    setRooms(data);
+    return data;
   } catch (error) {
-    setRooms([]);
     console.error("Error fetching rooms", error);
+    throw Error;
   }
 };
 

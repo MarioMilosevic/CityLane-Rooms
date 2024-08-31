@@ -1,8 +1,4 @@
-import {
-  roomsTabs,
-  roomsSortOptions,
-  initialSingleRoomState,
-} from "../utils/constants";
+import { roomsSortOptions, initialSingleRoomState } from "../utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
 import { HiDocumentDuplicate } from "react-icons/hi";
@@ -23,13 +19,41 @@ import useFetchRooms from "../hooks/useFetchRooms";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
-  useFetchRooms(setRooms);
+  const [renderedRooms, setRenderedRooms] = useState<RoomType[]>([]);
+  useFetchRooms(setRooms, setRenderedRooms);
+
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [singleRoom, setSingleRoom] = useState<NewRoomType>(
     initialSingleRoomState
   );
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
+console.log('render')
+  const roomsTabs = [
+    {
+      text: "All",
+      clickHandler: () => {
+        setActiveIndex(0);
+        setRenderedRooms(rooms);
+      },
+    },
+    {
+      text: "No discount",
+      clickHandler: () => {
+        setActiveIndex(1);
+        setRenderedRooms(rooms.filter((room) => room.discount > 0));
+      },
+    },
+    {
+      text: "With discount",
+      clickHandler: () => {
+        setActiveIndex(2);
+        setRenderedRooms(rooms.filter((room) => room.discount === 0));
+      },
+    },
+  ];
 
   const deleteRoom = (roomId: number) => {
     setRooms(rooms.filter((room) => room.id !== roomId));
@@ -75,6 +99,7 @@ const Rooms = () => {
         isVisible={true}
         tabOptions={roomsTabs}
         sortOptions={roomsSortOptions}
+        activeIndex={activeIndex}
       />
       <ContentWrapper>
         <ContentHeaderWrapper>
@@ -85,7 +110,7 @@ const Rooms = () => {
           <ContentHeader title="Discount" />
         </ContentHeaderWrapper>
         <ContentRowWrapper>
-          {rooms.map((room) => (
+          {renderedRooms.map((room) => (
             <ContentRow key={room.id} room={room}>
               <RowOption
                 text="Duplicate"

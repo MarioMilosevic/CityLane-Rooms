@@ -35,7 +35,6 @@ export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
 
 // Rooms
 
-export const roomsTabs = ["All", "No discount", "With discount"];
 export const roomsSortOptions = [
   {
     name: "name (A-Z)",

@@ -1,6 +1,6 @@
 import { FilterTabColors, FilterTabProps } from "../../types/types";
 
-const FilterTab = ({ children, color, buttonHandler }: FilterTabProps) => {
+const FilterTab = ({text, color, buttonHandler }: FilterTabProps) => {
   const filterTabColors: FilterTabColors = {
     blue: "bg-sky-600 text-sky-100",
     neutral: "bg-neutral-50 text-neutral-950",
@@ -11,7 +11,7 @@ const FilterTab = ({ children, color, buttonHandler }: FilterTabProps) => {
       className={`px-2 py-1 rounded-md transition duration-300 ${filterTabColors[color]}`}
       onClick={buttonHandler}
     >
-      {children}
+      {text}
     </button>
   );
 };
