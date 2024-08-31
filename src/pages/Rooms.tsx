@@ -16,21 +16,20 @@ import RowOption from "../components/common/RowOption";
 import ContentHeaderWrapper from "../components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "../components/layout/ContentRowWrapper";
 import useFetchRooms from "../hooks/useFetchRooms";
+import SearchFilterTab from "../components/common/SearchFilterTab";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
   const [renderedRooms, setRenderedRooms] = useState<RoomType[]>([]);
   useFetchRooms(setRooms, setRenderedRooms);
-
   const [activeIndex, setActiveIndex] = useState<number>(0);
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [singleRoom, setSingleRoom] = useState<NewRoomType>(
     initialSingleRoomState
   );
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-console.log('render')
+
   const roomsTabs = [
     {
       text: "All",
@@ -43,17 +42,18 @@ console.log('render')
       text: "No discount",
       clickHandler: () => {
         setActiveIndex(1);
-        setRenderedRooms(rooms.filter((room) => room.discount > 0));
+        setRenderedRooms(rooms.filter((room) => room.discount === 0));
       },
     },
     {
       text: "With discount",
       clickHandler: () => {
         setActiveIndex(2);
-        setRenderedRooms(rooms.filter((room) => room.discount === 0));
+        setRenderedRooms(rooms.filter((room) => room.discount > 0));
       },
     },
   ];
+
 
   const deleteRoom = (roomId: number) => {
     setRooms(rooms.filter((room) => room.id !== roomId));
@@ -94,13 +94,15 @@ console.log('render')
 
   return (
     <>
-      <HeaderContainer
-        title="All rooms"
-        isVisible={true}
-        tabOptions={roomsTabs}
-        sortOptions={roomsSortOptions}
-        activeIndex={activeIndex}
-      />
+      <HeaderContainer title="All rooms">
+        <SearchFilterTab
+          tabOptions={roomsTabs}
+          sortOptions={roomsSortOptions}
+          activeIndex={activeIndex}
+          rendered={renderedRooms}
+          setRendered={setRenderedRooms}
+        />
+      </HeaderContainer>
       <ContentWrapper>
         <ContentHeaderWrapper>
           <ContentHeader title="" />

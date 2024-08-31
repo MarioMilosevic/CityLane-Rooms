@@ -80,19 +80,21 @@ export type PrimaryActionButtonProps = {
 
 export type HeadingContainerProps = {
   title: string;
-  isVisible: boolean;
-  tabOptions?: string[];
-  sortOptions?: SortOptionType[];
+  children?: ReactNode;
 };
 
 export type SortOptionType = {
-  name: string;
-  value: string;
+  option: string;
 };
 
+
+
 export type SearchFilterTabProps = {
-  tabOptions?: string[];
-  sortOptions?: SortOptionType[];
+  tabOptions: {text: string; clickHandler: () => void; }[];
+  sortOptions: string[];
+  activeIndex: number;
+  rendered: RoomType[];
+  setRendered: Dispatch<SetStateAction<RoomType[]>>;
 };
 
 export type FormBlockProps = {
@@ -107,8 +109,8 @@ export type ModalFormProps = {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   singleRoom: NewRoomType;
   setSingleRoom: Dispatch<SetStateAction<NewRoomType>>;
-  isEditing: boolean
-  setRooms:Dispatch<SetStateAction<RoomType[]>>
+  isEditing: boolean;
+  setRooms: Dispatch<SetStateAction<RoomType[]>>;
 };
 
 export type LabelProps = {

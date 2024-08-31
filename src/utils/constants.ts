@@ -36,34 +36,12 @@ export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
 // Rooms
 
 export const roomsSortOptions = [
-  {
-    name: "name (A-Z)",
-    value: "name-asc",
-  },
-  {
-    name: "name (Z-A)",
-    value: "name-desc",
-  },
-  {
-    name: "price (low first)",
-    value: "name-desc",
-  },
-  {
-    name: "price (high-first)",
-    value: "name-asc",
-  },
-  {
-    name: "name (A-Z)",
-    value: "name-asc",
-  },
-  {
-    name: "capacity (low-first)",
-    value: "capacity-desc",
-  },
-  {
-    name: "capacity (high-first)",
-    value: "capacity-asc",
-  },
+  "name (A-Z)",
+  "name (Z-A)",
+  "price (low first)",
+  "price (high-first)",
+  "capacity (low-first)",
+  "capacity (high-first)",
 ];
 
 // Users
