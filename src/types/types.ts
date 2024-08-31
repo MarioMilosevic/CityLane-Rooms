@@ -87,14 +87,19 @@ export type SortOptionType = {
   option: string;
 };
 
-
+export type filterAndSortType = {
+  filter: string;
+  sort: string;
+};
 
 export type SearchFilterTabProps = {
-  tabOptions: {text: string; clickHandler: () => void; }[];
+  tabOptions: { text: string; clickHandler: () => void }[];
   sortOptions: string[];
   activeIndex: number;
   rendered: RoomType[];
   setRendered: Dispatch<SetStateAction<RoomType[]>>;
+  filterAndSort: filterAndSortType;
+  setFilterAndSort: Dispatch<SetStateAction<filterAndSortType>>;
 };
 
 export type FormBlockProps = {

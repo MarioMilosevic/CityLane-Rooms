@@ -5,6 +5,7 @@ export const updateRooms = (
   filter: string,
   sort: string
 ): RoomType[] => {
+  console.log(filter)
   let roomsCopy = [...rooms];
 
   switch (filter) {

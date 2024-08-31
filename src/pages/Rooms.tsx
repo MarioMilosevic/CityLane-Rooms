@@ -29,16 +29,18 @@ const Rooms = () => {
     initialSingleRoomState
   );
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [filter, setFilter] = useState("All");
-  const [sort, setSort] = useState("name (A-Z)");
+  const [filterAndSort, setFilterAndSort] = useState({filter:"All", sort:"name (A-Z)"})  
 
   const roomsTabs = [
     {
       text: "All",
       clickHandler: () => {
         setActiveIndex(0);
-        const filteredRooms = updateRooms(rooms, "All", sort);
-        setFilter("All");
+        const filteredRooms = updateRooms(rooms, "All", filterAndSort.sort);
+        setFilterAndSort((prev) => ({
+          ...prev, 
+          filter:"All"
+        }))
         setRenderedRooms(filteredRooms);
       },
     },
@@ -46,8 +48,11 @@ const Rooms = () => {
       text: "No discount",
       clickHandler: () => {
         setActiveIndex(1);
-        const filteredRooms = updateRooms(rooms, "No discount", sort);
-        setFilter("No discount");
+        const filteredRooms = updateRooms(rooms, "No discount", filterAndSort.sort);
+         setFilterAndSort((prev) => ({
+           ...prev,
+           filter: "No discount",
+         }));
         setRenderedRooms(filteredRooms);
       },
     },
@@ -55,8 +60,11 @@ const Rooms = () => {
       text: "With discount",
       clickHandler: () => {
         setActiveIndex(2);
-        const filteredRooms = updateRooms(rooms, "With discount", sort);
-        setFilter("With discount");
+        const filteredRooms = updateRooms(rooms, "With discount", filterAndSort.sort);
+         setFilterAndSort((prev) => ({
+           ...prev,
+           filter: "With discount",
+         }));
         setRenderedRooms(filteredRooms);
       },
     },
@@ -108,10 +116,8 @@ const Rooms = () => {
           activeIndex={activeIndex}
           rendered={renderedRooms}
           setRendered={setRenderedRooms}
-          filter={filter}
-          setFilter={setFilter}
-          sort={sort}
-          setSort={setSort}
+          filterAndSort={filterAndSort}
+          setFilterAndSort={setFilterAndSort}
         />
       </HeaderContainer>
       <ContentWrapper>
