@@ -39,9 +39,9 @@ export const roomsSortOptions = [
   "name (A-Z)",
   "name (Z-A)",
   "price (low first)",
-  "price (high-first)",
-  "capacity (low-first)",
-  "capacity (high-first)",
+  "price (high first)",
+  "capacity (low first)",
+  "capacity (high first)",
 ];
 
 // Users

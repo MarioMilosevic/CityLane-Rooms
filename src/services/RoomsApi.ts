@@ -10,7 +10,7 @@ export const fetchAllRooms = async (
     const { data, error } = await supabase
       .from("Rooms")
       .select("*")
-      .order("created_at", { ascending: true });
+      .order("name", { ascending: true });
 
     if (error || !data) {
       throw error || new Error("No data received");
