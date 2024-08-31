@@ -1,6 +1,7 @@
 import FilterTab from "./FilterTab";
 import SortOption from "./SortOption";
-import { sortRooms } from "../../utils/helpers";
+import { sortRooms, updateRooms } from "../../utils/helpers";
+
 import { SearchFilterTabProps } from "../../types/types";
 const SearchFilterTab = ({
   tabOptions,
@@ -8,10 +9,15 @@ const SearchFilterTab = ({
   activeIndex,
   rendered,
   setRendered,
+  filter,
+  setFilter,
+  sort,
+  setSort
 }: SearchFilterTabProps) => {
 
   const sortRendered = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const sorted = sortRooms(rendered, e.target.value);
+    setSort(e.target.value)
+    const sorted = updateRooms(rendered, filter, e.target.value);
     setRendered(sorted);
   };
 

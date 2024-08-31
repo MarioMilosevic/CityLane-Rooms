@@ -17,6 +17,7 @@ import ContentHeaderWrapper from "../components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "../components/layout/ContentRowWrapper";
 import useFetchRooms from "../hooks/useFetchRooms";
 import SearchFilterTab from "../components/common/SearchFilterTab";
+import { updateRooms } from "../utils/helpers";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
@@ -28,32 +29,38 @@ const Rooms = () => {
     initialSingleRoomState
   );
   const [isEditing, setIsEditing] = useState<boolean>(false);
-
+  const [filter, setFilter] = useState("All");
+  const [sort, setSort] = useState("name (A-Z)");
 
   const roomsTabs = [
     {
       text: "All",
       clickHandler: () => {
         setActiveIndex(0);
-        setRenderedRooms(rooms);
+        const filteredRooms = updateRooms(rooms, "All", sort);
+        setFilter("All");
+        setRenderedRooms(filteredRooms);
       },
     },
     {
       text: "No discount",
       clickHandler: () => {
         setActiveIndex(1);
-        setRenderedRooms(rooms.filter((room) => room.discount === 0));
+        const filteredRooms = updateRooms(rooms, "No discount", sort);
+        setFilter("No discount");
+        setRenderedRooms(filteredRooms);
       },
     },
     {
       text: "With discount",
       clickHandler: () => {
         setActiveIndex(2);
-        setRenderedRooms(rooms.filter((room) => room.discount > 0));
+        const filteredRooms = updateRooms(rooms, "With discount", sort);
+        setFilter("With discount");
+        setRenderedRooms(filteredRooms);
       },
     },
   ];
-
 
   const deleteRoom = (roomId: number) => {
     setRooms(rooms.filter((room) => room.id !== roomId));
@@ -101,6 +108,10 @@ const Rooms = () => {
           activeIndex={activeIndex}
           rendered={renderedRooms}
           setRendered={setRenderedRooms}
+          filter={filter}
+          setFilter={setFilter}
+          sort={sort}
+          setSort={setSort}
         />
       </HeaderContainer>
       <ContentWrapper>
