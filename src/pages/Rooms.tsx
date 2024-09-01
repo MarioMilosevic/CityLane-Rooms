@@ -119,6 +119,7 @@ const Rooms = () => {
             <ContentRow
               key={room.id}
               room={room}
+              rooms={rooms}
               setRooms={setRooms}
               setRenderedRooms={setRenderedRooms}
               isModalFormOpen={isModalFormOpen}

@@ -10,7 +10,7 @@ import { createPortal } from "react-dom";
 import { showToast } from "../../services/toastNotification";
 import { deleteRoomFromServer } from "../../services/RoomsApi";
 
-const ContentRow = ({ room, setRooms, setRenderedRooms }: ContentRowProps) => {
+const ContentRow = ({ room,rooms, setRooms, setRenderedRooms }: ContentRowProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
 
@@ -20,7 +20,13 @@ const ContentRow = ({ room, setRooms, setRenderedRooms }: ContentRowProps) => {
   );
   const { image, name, regularPrice, discount, capacity } = room;
 
+const deleteRoom = (roomId: number) => {
+  setRooms(rooms.filter((room) => room.id !== roomId));
+  setRenderedRooms(rooms.filter((room) => room.id !== roomId));
+};
+
   const deleteHandler = async (roomId: number) => {
+    console.log(roomId)
     try {
       const response = await deleteRoomFromServer(roomId);
       if (response[0]) {
@@ -69,8 +75,8 @@ const ContentRow = ({ room, setRooms, setRenderedRooms }: ContentRowProps) => {
             <RowOption
               text="Delete"
               icon={MdDelete}
-              clickHandler={() => console.log("treba da izbrise sobu")}
-              // clickHandler={() => deleteHandler(room.id)}
+              // clickHandler={() => console.log("treba da izbrise sobu")}
+              clickHandler={() => deleteHandler(room.id)}
             />
           </OptionButton>
         )}

@@ -1,4 +1,4 @@
-import { ModalFormProps } from "../../types/types";
+import { ModalFormProps, NewRoomType } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
 import { createNewRoom } from "../../services/RoomsApi";
 import { showToast } from "../../services/toastNotification";
@@ -25,48 +25,37 @@ const ModalForm = ({
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalFormOpen(false)
   );
-const isEditingSession = room ? true : false;
-  
+  const isEditingSession = room ? true : false;
 
-const form = useForm<newRoomValues>({
-  defaultValues: {
-    name: room?.name || "",
-    capacity: room?.capacity || "",
-    regularPrice: room?.regularPrice || "",
-    discount: room?.discount || "",
-    description: room?.description || "",
-    image:room?.image || ""
-  },
-  resolver: zodResolver(newRoomSchema),
-  mode: "onChange",
-});
-const {
-  register,
-  handleSubmit,
-  formState: { errors },
-} = form;
+  const form = useForm<newRoomValues>({
+    defaultValues: {
+      name: room?.name || "",
+      capacity: room?.capacity || "",
+      regularPrice: room?.regularPrice || "",
+      discount: room?.discount || "",
+      description: room?.description || "",
+      image: room?.image || "",
+    },
+    resolver: zodResolver(newRoomSchema),
+    mode: "onChange",
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = form;
 
-const addRoom = (newRoom: RoomType) => {
-  setRooms((prev) => [...prev, newRoom]);
+  const addRoom = (newRoom: RoomType) => {
+    setRooms((prev) => [...prev, newRoom]);
     setRenderedRooms((prev) => [...prev, newRoom]);
   };
 
-  const onSubmit = async (formData:RoomType) => {
-    console.log(formData)
+  const onSubmit = async (formData: NewRoomType) => {
     try {
-      // let newRoom;
-      const imageUrl = await uploadImage(formData.image[0])
-      console.log(imageUrl)
-      const newRoom = { ...formData, image: imageUrl }
-      console.log(newRoom)
-      // addRoom
-      // if (singleRoom.image instanceof File) {
-      //   const imageUrl = await uploadImage(singleRoom.image);
-      //   newRoom = { ...singleRoom, image: imageUrl };
-      // } else {
-      //   newRoom = singleRoom;
-      // }
-
+      const imageUrl = await uploadImage(formData.image[0]);
+      console.log(imageUrl);
+      const newRoom = { ...formData, image: imageUrl };
+      console.log(newRoom);
       const data = await createNewRoom(newRoom);
       addRoom(data[0]);
       showToast("Room created successfully!", "success");
@@ -137,7 +126,7 @@ const addRoom = (newRoom: RoomType) => {
           <Input
             id={"Room photo"}
             type="file"
-            zod={{...register('image')}}
+            zod={{ ...register("image") }}
             // changeHandler={(e) => {
             //   const fileList = e.target.files;
             //  console.log(fileList)
