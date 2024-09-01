@@ -81,7 +81,7 @@ const ContentRow = ({
             <RowOption
               text="Edit"
               icon={MdModeEditOutline}
-              clickHandler={() => setIsModalFormOpen(room)}
+              clickHandler={() => setIsModalFormOpen(true)}
               // clickHandler={() => setIsModalFormOpen(true)}
               // clickHandler={() => editHandler(room.id)}
             />

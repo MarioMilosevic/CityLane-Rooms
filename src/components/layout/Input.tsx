@@ -10,6 +10,7 @@ const Input: React.FC<InputProps> = ({
   error,
 }) => {
   const { onChange: zodOnChange, ...restZodProps } = zod || {};
+console.log(value);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (changeHandler) {

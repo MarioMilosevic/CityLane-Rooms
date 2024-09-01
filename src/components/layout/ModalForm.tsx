@@ -30,11 +30,11 @@ const ModalForm = ({
 
   const form = useForm<newRoomValues>({
     defaultValues: {
-      roomName: "",
-      maximumCapacity: "0",
-      regularPrice: "0",
-      discount: "0",
-      description: "",
+      roomName: isEditing ? room.name : "",
+      maximumCapacity: isEditing ? room.capacity : "0",
+      regularPrice: isEditing ? room.regularPrice : "0",
+      discount:isEditing ?  room.discount : "0",
+      description: isEditing ? room.description : "" ,
     },
     resolver: zodResolver(newRoomSchema),
     mode: "onChange",
