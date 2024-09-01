@@ -30,8 +30,8 @@ const isEditingSession = room ? true : false;
 
 const form = useForm<newRoomValues>({
   defaultValues: {
-    roomName: room?.name || "",
-    maximumCapacity: room?.capacity || "",
+    name: room?.name || "",
+    capacity: room?.capacity || "",
     regularPrice: room?.regularPrice || "",
     discount: room?.discount || "",
     description: room?.description || "",
@@ -55,7 +55,11 @@ const addRoom = (newRoom: RoomType) => {
     console.log(formData)
     try {
       // let newRoom;
-
+      const imageUrl = await uploadImage(formData.image[0])
+      console.log(imageUrl)
+      const newRoom = { ...formData, image: imageUrl }
+      console.log(newRoom)
+      // addRoom
       // if (singleRoom.image instanceof File) {
       //   const imageUrl = await uploadImage(singleRoom.image);
       //   newRoom = { ...singleRoom, image: imageUrl };
@@ -63,7 +67,7 @@ const addRoom = (newRoom: RoomType) => {
       //   newRoom = singleRoom;
       // }
 
-      const data = await createNewRoom(formData);
+      const data = await createNewRoom(newRoom);
       addRoom(data[0]);
       showToast("Room created successfully!", "success");
       setIsModalFormOpen(false);
@@ -89,8 +93,8 @@ const addRoom = (newRoom: RoomType) => {
           <Input
             id={"Room name"}
             type="text"
-            zod={{ ...register("roomName") }}
-            error={errors.roomName}
+            zod={{ ...register("name") }}
+            error={errors.name}
           />
         </FormBlock>
         <FormBlock>
@@ -98,8 +102,8 @@ const addRoom = (newRoom: RoomType) => {
           <Input
             id={"Maximum capacity"}
             type="number"
-            zod={{ ...register("maximumCapacity") }}
-            error={errors.maximumCapacity}
+            zod={{ ...register("capacity") }}
+            error={errors.capacity}
           />
         </FormBlock>
         <FormBlock>

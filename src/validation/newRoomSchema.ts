@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const newRoomSchema = z.object({
-  roomName: z.string().min(2, {
+  name: z.string().min(2, {
     message: "Room name must be 2 or more characters long",
   }),
 
-  maximumCapacity: z
+  capacity: z
     .string({ required_error: "Maximum capacity is required" })
     .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
       message: "Maximum capacity must be bigger than 0",

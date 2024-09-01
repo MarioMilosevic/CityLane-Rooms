@@ -3,6 +3,7 @@ import { InputProps } from "../../types/types";
 const Input = ({ id, type, zod, error }:InputProps) => {
   
   const { onChange: zodOnChange, ...restZodProps } = zod || {};
+
   return (
     <div className="relative w-full max-w-xs">
       <input
