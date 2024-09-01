@@ -15,11 +15,11 @@ export type RoomType = {
 
 export type NewRoomType = {
   name: string;
+  capacity: string;
   regularPrice: string;
   discount: string;
   description: string;
-  image: string | null | File;
-  capacity: string;
+  image?: FileList | null | string
 };
 
 export type RoomsState = {
@@ -64,7 +64,9 @@ export type RowOptionProps = {
 
 export type ContentRowProps = {
   room: RoomType;
-  children: ReactNode;
+  rooms: RoomType[];
+  setRooms: Dispatch<SetStateAction<RoomType[]>>;
+  setRenderedRooms: Dispatch<SetStateAction<RoomType[]>>;
 };
 
 export type buttonColorOptions = {
@@ -111,10 +113,8 @@ export type OptionButtonProps = {
 };
 
 export type ModalFormProps = {
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  singleRoom: NewRoomType;
-  setSingleRoom: Dispatch<SetStateAction<NewRoomType>>;
-  isEditing: boolean;
+  room?: RoomType;
+  setIsModalFormOpen:Dispatch<SetStateAction<boolean>>
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
   setRenderedRooms: Dispatch<SetStateAction<RoomType[]>>;
 };

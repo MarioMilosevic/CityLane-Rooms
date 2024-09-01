@@ -3,8 +3,6 @@ import { createPortal } from "react-dom";
 import { useState } from "react";
 import { updateRooms } from "../utils/helpers";
 import { RoomType } from "../types/types";
-import { showToast } from "../services/toastNotification";
-import { deleteRoomFromServer } from "../services/RoomsApi";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import ContentHeader from "../components/layout/ContentHeader";
 import ContentRow from "../components/layout/ContentRow";
@@ -74,24 +72,6 @@ const Rooms = () => {
     },
   ];
 
-  const deleteRoom = (roomId: number) => {
-    setRooms(rooms.filter((room) => room.id !== roomId));
-    setRenderedRooms(rooms.filter((room) => room.id !== roomId));
-  };
-
-
-  // const deleteHandler = async (roomId: number) => {
-  //   try {
-  //     const response = await deleteRoomFromServer(roomId);
-  //     if (response[0]) {
-  //       deleteRoom(roomId);
-  //       showToast("Room deleted successfully", "success");
-  //     }
-  //   } catch (error) {
-  //     showToast("Error deleting room");
-  //     console.error("Error deleting room :", error);
-  //   }
-  // };
 
   return (
     <>
@@ -122,8 +102,6 @@ const Rooms = () => {
               rooms={rooms}
               setRooms={setRooms}
               setRenderedRooms={setRenderedRooms}
-              isModalFormOpen={isModalFormOpen}
-              setIsModalFormOpen={setIsModalFormOpen}
             >
             </ContentRow>
           ))}
@@ -137,7 +115,6 @@ const Rooms = () => {
       {isModalFormOpen &&
         createPortal(
           <ModalForm
-            isModalFormOpen={isModalFormOpen}
             setIsModalFormOpen={setIsModalFormOpen}
             setRooms={setRooms}
             setRenderedRooms={setRenderedRooms}

@@ -21,7 +21,6 @@ const ModalForm = ({
   setRooms,
   setRenderedRooms,
 }: ModalFormProps) => {
-  // console.log(room)
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalFormOpen(false)
   );
@@ -52,14 +51,20 @@ const ModalForm = ({
 
   const onSubmit = async (formData: NewRoomType) => {
     try {
-      const imageUrl = await uploadImage(formData.image[0]);
-      console.log(imageUrl);
-      const newRoom = { ...formData, image: imageUrl };
-      console.log(newRoom);
-      const data = await createNewRoom(newRoom);
-      addRoom(data[0]);
-      showToast("Room created successfully!", "success");
-      setIsModalFormOpen(false);
+      if (
+        formData.image &&
+        formData.image instanceof FileList &&
+        formData.image.length > 0
+      ) {
+        const imageUrl = await uploadImage(formData.image[0]);
+        const newRoom = { ...formData, image: imageUrl };
+        const data = await createNewRoom(newRoom);
+        addRoom(data[0]);
+        showToast("Room created successfully!", "success");
+        setIsModalFormOpen(false);
+      } else {
+        throw new Error("No image file provided");
+      }
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
@@ -155,16 +160,3 @@ const ModalForm = ({
 };
 
 export default ModalForm;
-
-// if (singleRoom.image instanceof File) {
-//   const imageUrl = await uploadImage(singleRoom.image);
-//   const newRoom = {
-//     ...singleRoom,
-//     image: imageUrl,
-//   };
-//   setIsModalFormOpen(false);
-//   setSingleRoom(newRoom);
-//   const data = await createNewRoom(newRoom);
-//   addRoom(data[0]);
-//   showToast("Room created successfully!", "success");
-// }
