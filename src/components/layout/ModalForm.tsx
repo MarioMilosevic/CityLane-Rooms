@@ -16,14 +16,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const ModalForm = ({
-  setIsModalOpen,
-  singleRoom,
-  setSingleRoom,
+  room,
+  setIsModalFormOpen,
   isEditing,
   setRooms,
+  setRenderedRooms,
+  isModalFormOpen,
 }: ModalFormProps) => {
+  console.log(room);
   const modalRef = useClickOutside<HTMLFormElement>(() =>
-    setIsModalOpen(false)
+    setIsModalFormOpen(false)
   );
 
   const form = useForm<newRoomValues>({
@@ -46,6 +48,7 @@ const ModalForm = ({
 
   const addRoom = (newRoom: RoomType) => {
     setRooms((prev) => [...prev, newRoom]);
+    setRenderedRooms((prev) => [...prev, newRoom]);
   };
 
   const onSubmit = async () => {
@@ -62,7 +65,7 @@ const ModalForm = ({
       const data = await createNewRoom(newRoom);
       addRoom(data[0]);
       showToast("Room created successfully!", "success");
-      setIsModalOpen(false);
+      setIsModalFormOpen(false);
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
@@ -78,17 +81,19 @@ const ModalForm = ({
       >
         <PiXBold
           className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200"
-          onClick={() => setIsModalOpen(false)}
+          onClick={() => setIsModalFormOpen(false)}
         />
         <FormBlock>
           <Label id={"Room name"} />
           <Input
             id={"Room name"}
-            value={singleRoom.name}
+            // value={""}
+            value={isEditing ? room.name : ""}
             type="text"
-            changeHandler={(e) =>
-              setSingleRoom((prev) => ({ ...prev, name: e.target.value }))
-            }
+            changeHandler={() => console.log("nesto")}
+            // changeHandler={(e) =>
+            //   setSingleRoom((prev) => ({ ...prev, name: e.target.value }))
+            // }
             zod={{ ...register("roomName") }}
             error={errors.roomName}
           />
@@ -97,14 +102,16 @@ const ModalForm = ({
           <Label id={"Maximum capacity"} />
           <Input
             id={"Maximum capacity"}
-            value={singleRoom.capacity}
+            value={isEditing ? room.capacity : ""}
+            // value={""}
             type="number"
-            changeHandler={(e) =>
-              setSingleRoom((prev) => ({
-                ...prev,
-                capacity: e.target.value,
-              }))
-            }
+            changeHandler={() => console.log("nesto")}
+            // changeHandler={(e) =>
+            //   setSingleRoom((prev) => ({
+            //     ...prev,
+            //     capacity: e.target.value,
+            //   }))
+            // }
             zod={{ ...register("maximumCapacity") }}
             error={errors.maximumCapacity}
           />
@@ -113,14 +120,16 @@ const ModalForm = ({
           <Label id={"Regular price"} />
           <Input
             id={"Regular price"}
-            value={singleRoom.regularPrice}
+            value={isEditing ? room.regularPrice : ""}
+            // value={""}
             type="number"
-            changeHandler={(e) =>
-              setSingleRoom((prev) => ({
-                ...prev,
-                regularPrice: e.target.value,
-              }))
-            }
+            changeHandler={() => console.log("nesto")}
+            // changeHandler={(e) =>
+            //   setSingleRoom((prev) => ({
+            //     ...prev,
+            //     regularPrice: e.target.value,
+            //   }))
+            // }
             zod={{ ...register("regularPrice") }}
             error={errors.regularPrice}
           />
@@ -129,14 +138,16 @@ const ModalForm = ({
           <Label id={"Discount"} />
           <Input
             id={"Discount"}
-            value={singleRoom.discount}
+            value={isEditing ? room.discount : ""}
+            // value={""}
             type="number"
-            changeHandler={(e) =>
-              setSingleRoom((prev) => ({
-                ...prev,
-                discount: e.target.value,
-              }))
-            }
+            changeHandler={() => console.log("nesto")}
+            // changeHandler={(e) =>
+            //   setSingleRoom((prev) => ({
+            //     ...prev,
+            //     discount: e.target.value,
+            //   }))
+            // }
             zod={{ ...register("discount") }}
             error={errors.discount}
           />
@@ -145,14 +156,16 @@ const ModalForm = ({
           <Label id={"Description for website"} />
           <TextArea
             id={"Description for website"}
-            value={singleRoom.description}
-            changeHandler={(e) => {
-              setSingleRoom((prev) => ({
-                ...prev,
-                description: e.target.value,
-              }));
-              // setValue("description", e.target.value); // Update form value
-            }}
+            value={isEditing ? room.description : ""}
+            // value={""}
+            changeHandler={() => console.log("nesto")}
+            // changeHandler={(e) => {
+            //   setSingleRoom((prev) => ({
+            //     ...prev,
+            //     description: e.target.value,
+            //   }));
+            //   // setValue("description", e.target.value); // Update form value
+            // }}
             zod={{ ...register("description") }}
             error={errors.description}
           />
@@ -162,18 +175,19 @@ const ModalForm = ({
           <Input
             id={"Room photo"}
             type="file"
-            changeHandler={(e) => {
-              const fileList = e.target.files;
-              if (fileList && fileList.length > 0) {
-                setSingleRoom((prev) => ({ ...prev, image: fileList[0] }));
-              }
-            }}
+            changeHandler={() => console.log("nesto")}
+            // changeHandler={(e) => {
+            //   const fileList = e.target.files;
+            //   if (fileList && fileList.length > 0) {
+            //     setSingleRoom((prev) => ({ ...prev, image: fileList[0] }));
+            //   }
+            // }}
           />
         </FormBlock>
         <PrimaryActionButtonWrapper>
           <PrimaryActionButton
             text="Cancel"
-            clickHandler={() => setIsModalOpen(false)}
+            clickHandler={() => setIsModalFormOpen(false)}
             color="white"
           />
           <PrimaryActionButton
@@ -199,9 +213,12 @@ export default ModalForm;
 //     ...singleRoom,
 //     image: imageUrl,
 //   };
-//   setIsModalOpen(false);
+//   setIsModalFormOpen(false);
 //   setSingleRoom(newRoom);
 //   const data = await createNewRoom(newRoom);
 //   addRoom(data[0]);
 //   showToast("Room created successfully!", "success");
 // }
+
+
+

@@ -1,8 +1,6 @@
 import { roomsSortOptions, initialSingleRoomState } from "../utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
-import { HiDocumentDuplicate } from "react-icons/hi";
-import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { NewRoomType, RoomType } from "../types/types";
 import { showToast } from "../services/toastNotification";
 import { deleteRoomFromServer } from "../services/RoomsApi";
@@ -12,7 +10,6 @@ import ContentRow from "../components/layout/ContentRow";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import HeaderContainer from "../components/layout/HeadingContainer";
 import ModalForm from "../components/layout/ModalForm";
-import RowOption from "../components/common/RowOption";
 import ContentHeaderWrapper from "../components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "../components/layout/ContentRowWrapper";
 import useFetchRooms from "../hooks/useFetchRooms";
@@ -24,12 +21,11 @@ const Rooms = () => {
   const [renderedRooms, setRenderedRooms] = useState<RoomType[]>([]);
   useFetchRooms(setRooms, setRenderedRooms);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [singleRoom, setSingleRoom] = useState<NewRoomType>(
-    initialSingleRoomState
-  );
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [filterAndSort, setFilterAndSort] = useState({filter:"All", sort:"name (A-Z)"})  
+  const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
+  const [filterAndSort, setFilterAndSort] = useState({
+    filter: "All",
+    sort: "name (A-Z)",
+  });
 
   const roomsTabs = [
     {
@@ -38,9 +34,9 @@ const Rooms = () => {
         setActiveIndex(0);
         const filteredRooms = updateRooms(rooms, "All", filterAndSort.sort);
         setFilterAndSort((prev) => ({
-          ...prev, 
-          filter:"All"
-        }))
+          ...prev,
+          filter: "All",
+        }));
         setRenderedRooms(filteredRooms);
       },
     },
@@ -48,11 +44,15 @@ const Rooms = () => {
       text: "No discount",
       clickHandler: () => {
         setActiveIndex(1);
-        const filteredRooms = updateRooms(rooms, "No discount", filterAndSort.sort);
-         setFilterAndSort((prev) => ({
-           ...prev,
-           filter: "No discount",
-         }));
+        const filteredRooms = updateRooms(
+          rooms,
+          "No discount",
+          filterAndSort.sort
+        );
+        setFilterAndSort((prev) => ({
+          ...prev,
+          filter: "No discount",
+        }));
         setRenderedRooms(filteredRooms);
       },
     },
@@ -60,11 +60,15 @@ const Rooms = () => {
       text: "With discount",
       clickHandler: () => {
         setActiveIndex(2);
-        const filteredRooms = updateRooms(rooms, "With discount", filterAndSort.sort);
-         setFilterAndSort((prev) => ({
-           ...prev,
-           filter: "With discount",
-         }));
+        const filteredRooms = updateRooms(
+          rooms,
+          "With discount",
+          filterAndSort.sort
+        );
+        setFilterAndSort((prev) => ({
+          ...prev,
+          filter: "With discount",
+        }));
         setRenderedRooms(filteredRooms);
       },
     },
@@ -72,15 +76,16 @@ const Rooms = () => {
 
   const deleteRoom = (roomId: number) => {
     setRooms(rooms.filter((room) => room.id !== roomId));
+    setRenderedRooms(rooms.filter((room) => room.id !== roomId));
   };
 
   const editHandler = async (roomId: number) => {
     try {
       const room = rooms.find((room) => room.id === roomId);
       if (room) {
-        setSingleRoom(room);
-        setIsModalOpen(true);
-        setIsEditing(true);
+        // setSingleRoom(room);
+        setIsModalFormOpen(true);
+        // setIsEditing(true);
       }
     } catch (error) {
       showToast("Unexpected error occured, please try again later", "error");
@@ -102,9 +107,9 @@ const Rooms = () => {
   };
 
   const addNewRoomHandler = () => {
-    setIsModalOpen(true);
-    setSingleRoom(initialSingleRoomState);
-    setIsEditing(false);
+    setIsModalFormOpen(true);
+    // setSingleRoom(initialSingleRoomState);
+    // setIsEditing(false);
   };
 
   return (
@@ -130,13 +135,15 @@ const Rooms = () => {
         </ContentHeaderWrapper>
         <ContentRowWrapper>
           {renderedRooms.map((room) => (
-            <ContentRow key={room.id} room={room}>
-              <RowOption
-                text="Duplicate"
-                icon={HiDocumentDuplicate}
-                clickHandler={() => console.log("duplicate je iz ROOMSA")}
-              />
-              <RowOption
+            <ContentRow
+              key={room.id}
+              room={room}
+              setRooms={setRooms}
+              setRenderedRooms={setRenderedRooms}
+              setIsModalFormOpen={setIsModalFormOpen}
+              isModalFormOpen={isModalFormOpen}
+            >
+              {/* <RowOption
                 text="Edit"
                 icon={MdModeEditOutline}
                 clickHandler={() => editHandler(room.id)}
@@ -145,7 +152,7 @@ const Rooms = () => {
                 text="Delete"
                 icon={MdDelete}
                 clickHandler={() => deleteHandler(room.id)}
-              />
+              /> */}
             </ContentRow>
           ))}
         </ContentRowWrapper>
@@ -155,14 +162,14 @@ const Rooms = () => {
           clickHandler={addNewRoomHandler}
         />
       </ContentWrapper>
-      {isModalOpen &&
+      {isModalFormOpen &&
         createPortal(
           <ModalForm
-            singleRoom={singleRoom}
-            setIsModalOpen={setIsModalOpen}
-            setSingleRoom={setSingleRoom}
-            isEditing={isEditing}
+            isModalFormOpen={isModalFormOpen}
+            setIsModalFormOpen={setIsModalFormOpen}
             setRooms={setRooms}
+            setRenderedRooms={setRenderedRooms}
+            isEditing={false}
           />,
           document.body
         )}

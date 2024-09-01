@@ -20,7 +20,6 @@ export const updateRooms = (
       break;
   }
 
-  // Apply sort using switch
   switch (sort) {
     case "name (A-Z)":
       roomsCopy.sort((a, b) => a.name.localeCompare(b.name));
@@ -41,7 +40,6 @@ export const updateRooms = (
       roomsCopy.sort((a, b) => Number(b.capacity) - Number(a.capacity));
       break;
     default:
-      // If no valid sort option is provided, return as is
       break;
   }
 

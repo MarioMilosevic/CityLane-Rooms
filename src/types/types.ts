@@ -116,6 +116,7 @@ export type ModalFormProps = {
   setSingleRoom: Dispatch<SetStateAction<NewRoomType>>;
   isEditing: boolean;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
+  setRenderedRooms: Dispatch<SetStateAction<RoomType[]>>;
 };
 
 export type LabelProps = {
@@ -150,3 +151,6 @@ export type ContentHeaderWrapperProps = {
 export type PrimaryActionButtonWrapperProps = {
   children: ReactNode;
 };
+
+
+
