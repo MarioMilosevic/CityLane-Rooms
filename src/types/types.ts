@@ -126,16 +126,12 @@ export type LabelProps = {
 export type InputProps = {
   id: string;
   type: string;
-  value?: string | number;
-  changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   zod?: UseFormRegisterReturn;
   error?: FieldError | undefined;
 };
 
 export type TextAreaProps = {
-  value: string;
   id: string;
-  changeHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   zod: UseFormRegisterReturn;
   error: FieldError | undefined;
 };

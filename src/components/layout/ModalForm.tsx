@@ -18,51 +18,52 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const ModalForm = ({
   room,
   setIsModalFormOpen,
-  isEditing,
   setRooms,
   setRenderedRooms,
-  isModalFormOpen,
 }: ModalFormProps) => {
-  console.log(room);
+  // console.log(room)
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalFormOpen(false)
   );
+const isEditingSession = room ? true : false;
+  
 
-  const form = useForm<newRoomValues>({
-    defaultValues: {
-      roomName: isEditing ? room.name : "",
-      maximumCapacity: isEditing ? room.capacity : "0",
-      regularPrice: isEditing ? room.regularPrice : "0",
-      discount:isEditing ?  room.discount : "0",
-      description: isEditing ? room.description : "" ,
-    },
-    resolver: zodResolver(newRoomSchema),
-    mode: "onChange",
-  });
+const form = useForm<newRoomValues>({
+  defaultValues: {
+    roomName: room?.name || "",
+    maximumCapacity: room?.capacity || "",
+    regularPrice: room?.regularPrice || "",
+    discount: room?.discount || "",
+    description: room?.description || "",
+    image:room?.image || ""
+  },
+  resolver: zodResolver(newRoomSchema),
+  mode: "onChange",
+});
+const {
+  register,
+  handleSubmit,
+  formState: { errors },
+} = form;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = form;
-
-  const addRoom = (newRoom: RoomType) => {
-    setRooms((prev) => [...prev, newRoom]);
+const addRoom = (newRoom: RoomType) => {
+  setRooms((prev) => [...prev, newRoom]);
     setRenderedRooms((prev) => [...prev, newRoom]);
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (formData:RoomType) => {
+    console.log(formData)
     try {
-      let newRoom;
+      // let newRoom;
 
-      if (singleRoom.image instanceof File) {
-        const imageUrl = await uploadImage(singleRoom.image);
-        newRoom = { ...singleRoom, image: imageUrl };
-      } else {
-        newRoom = singleRoom;
-      }
+      // if (singleRoom.image instanceof File) {
+      //   const imageUrl = await uploadImage(singleRoom.image);
+      //   newRoom = { ...singleRoom, image: imageUrl };
+      // } else {
+      //   newRoom = singleRoom;
+      // }
 
-      const data = await createNewRoom(newRoom);
+      const data = await createNewRoom(formData);
       addRoom(data[0]);
       showToast("Room created successfully!", "success");
       setIsModalFormOpen(false);
@@ -87,13 +88,7 @@ const ModalForm = ({
           <Label id={"Room name"} />
           <Input
             id={"Room name"}
-            // value={""}
-            value={isEditing ? room.name : ""}
             type="text"
-            changeHandler={() => console.log("nesto")}
-            // changeHandler={(e) =>
-            //   setSingleRoom((prev) => ({ ...prev, name: e.target.value }))
-            // }
             zod={{ ...register("roomName") }}
             error={errors.roomName}
           />
@@ -102,16 +97,7 @@ const ModalForm = ({
           <Label id={"Maximum capacity"} />
           <Input
             id={"Maximum capacity"}
-            value={isEditing ? room.capacity : ""}
-            // value={""}
             type="number"
-            changeHandler={() => console.log("nesto")}
-            // changeHandler={(e) =>
-            //   setSingleRoom((prev) => ({
-            //     ...prev,
-            //     capacity: e.target.value,
-            //   }))
-            // }
             zod={{ ...register("maximumCapacity") }}
             error={errors.maximumCapacity}
           />
@@ -120,16 +106,7 @@ const ModalForm = ({
           <Label id={"Regular price"} />
           <Input
             id={"Regular price"}
-            value={isEditing ? room.regularPrice : ""}
-            // value={""}
             type="number"
-            changeHandler={() => console.log("nesto")}
-            // changeHandler={(e) =>
-            //   setSingleRoom((prev) => ({
-            //     ...prev,
-            //     regularPrice: e.target.value,
-            //   }))
-            // }
             zod={{ ...register("regularPrice") }}
             error={errors.regularPrice}
           />
@@ -138,16 +115,7 @@ const ModalForm = ({
           <Label id={"Discount"} />
           <Input
             id={"Discount"}
-            value={isEditing ? room.discount : ""}
-            // value={""}
             type="number"
-            changeHandler={() => console.log("nesto")}
-            // changeHandler={(e) =>
-            //   setSingleRoom((prev) => ({
-            //     ...prev,
-            //     discount: e.target.value,
-            //   }))
-            // }
             zod={{ ...register("discount") }}
             error={errors.discount}
           />
@@ -156,16 +124,6 @@ const ModalForm = ({
           <Label id={"Description for website"} />
           <TextArea
             id={"Description for website"}
-            value={isEditing ? room.description : ""}
-            // value={""}
-            changeHandler={() => console.log("nesto")}
-            // changeHandler={(e) => {
-            //   setSingleRoom((prev) => ({
-            //     ...prev,
-            //     description: e.target.value,
-            //   }));
-            //   // setValue("description", e.target.value); // Update form value
-            // }}
             zod={{ ...register("description") }}
             error={errors.description}
           />
@@ -175,12 +133,10 @@ const ModalForm = ({
           <Input
             id={"Room photo"}
             type="file"
-            changeHandler={() => console.log("nesto")}
+            zod={{...register('image')}}
             // changeHandler={(e) => {
             //   const fileList = e.target.files;
-            //   if (fileList && fileList.length > 0) {
-            //     setSingleRoom((prev) => ({ ...prev, image: fileList[0] }));
-            //   }
+            //  console.log(fileList)
             // }}
           />
         </FormBlock>
@@ -191,9 +147,9 @@ const ModalForm = ({
             color="white"
           />
           <PrimaryActionButton
-            text={`${isEditing ? "Edit room" : "Create new room"}`}
+            text={`${isEditingSession ? "Edit room" : "Create new room"}`}
             clickHandler={
-              isEditing
+              isEditingSession
                 ? () => console.log("funkcija za EDIT")
                 : handleSubmit(onSubmit)
             }
@@ -219,6 +175,3 @@ export default ModalForm;
 //   addRoom(data[0]);
 //   showToast("Room created successfully!", "success");
 // }
-
-
-

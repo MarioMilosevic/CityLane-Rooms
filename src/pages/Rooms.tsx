@@ -1,7 +1,8 @@
-import { roomsSortOptions, initialSingleRoomState } from "../utils/constants";
+import { roomsSortOptions } from "../utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
-import { NewRoomType, RoomType } from "../types/types";
+import { updateRooms } from "../utils/helpers";
+import { RoomType } from "../types/types";
 import { showToast } from "../services/toastNotification";
 import { deleteRoomFromServer } from "../services/RoomsApi";
 import ContentWrapper from "../components/layout/ContentWrapper";
@@ -14,7 +15,6 @@ import ContentHeaderWrapper from "../components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "../components/layout/ContentRowWrapper";
 import useFetchRooms from "../hooks/useFetchRooms";
 import SearchFilterTab from "../components/common/SearchFilterTab";
-import { updateRooms } from "../utils/helpers";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
@@ -79,38 +79,19 @@ const Rooms = () => {
     setRenderedRooms(rooms.filter((room) => room.id !== roomId));
   };
 
-  const editHandler = async (roomId: number) => {
-    try {
-      const room = rooms.find((room) => room.id === roomId);
-      if (room) {
-        // setSingleRoom(room);
-        setIsModalFormOpen(true);
-        // setIsEditing(true);
-      }
-    } catch (error) {
-      showToast("Unexpected error occured, please try again later", "error");
-      console.error("Error fetching single room: ", error);
-    }
-  };
 
-  const deleteHandler = async (roomId: number) => {
-    try {
-      const response = await deleteRoomFromServer(roomId);
-      if (response[0]) {
-        deleteRoom(roomId);
-        showToast("Room deleted successfully", "success");
-      }
-    } catch (error) {
-      showToast("Error deleting room");
-      console.error("Error deleting room :", error);
-    }
-  };
-
-  const addNewRoomHandler = () => {
-    setIsModalFormOpen(true);
-    // setSingleRoom(initialSingleRoomState);
-    // setIsEditing(false);
-  };
+  // const deleteHandler = async (roomId: number) => {
+  //   try {
+  //     const response = await deleteRoomFromServer(roomId);
+  //     if (response[0]) {
+  //       deleteRoom(roomId);
+  //       showToast("Room deleted successfully", "success");
+  //     }
+  //   } catch (error) {
+  //     showToast("Error deleting room");
+  //     console.error("Error deleting room :", error);
+  //   }
+  // };
 
   return (
     <>
@@ -140,26 +121,16 @@ const Rooms = () => {
               room={room}
               setRooms={setRooms}
               setRenderedRooms={setRenderedRooms}
-              setIsModalFormOpen={setIsModalFormOpen}
               isModalFormOpen={isModalFormOpen}
+              setIsModalFormOpen={setIsModalFormOpen}
             >
-              {/* <RowOption
-                text="Edit"
-                icon={MdModeEditOutline}
-                clickHandler={() => editHandler(room.id)}
-              />
-              <RowOption
-                text="Delete"
-                icon={MdDelete}
-                clickHandler={() => deleteHandler(room.id)}
-              /> */}
             </ContentRow>
           ))}
         </ContentRowWrapper>
         <PrimaryActionButton
           text="Add new room"
           color="blue"
-          clickHandler={addNewRoomHandler}
+          clickHandler={() => setIsModalFormOpen(true)}
         />
       </ContentWrapper>
       {isModalFormOpen &&
@@ -169,7 +140,6 @@ const Rooms = () => {
             setIsModalFormOpen={setIsModalFormOpen}
             setRooms={setRooms}
             setRenderedRooms={setRenderedRooms}
-            isEditing={false}
           />,
           document.body
         )}

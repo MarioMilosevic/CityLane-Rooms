@@ -6,36 +6,19 @@ import useClickOutside from "../../hooks/useClickOutside";
 import OptionButton from "./OptionButton";
 import RowOption from "../common/RowOption";
 import ModalForm from "./ModalForm";
+import { createPortal } from "react-dom";
+import { showToast } from "../../services/toastNotification";
+import { deleteRoomFromServer } from "../../services/RoomsApi";
 
-// promjenit u single room komponentu
-// stavit opcije unutar njega
-// edit button neka otvara formu sa propom room
-
-const ContentRow = ({
-  room,
-  setRooms,
-  setRenderedRooms,
-}: ContentRowProps) => {
+const ContentRow = ({ room, setRooms, setRenderedRooms }: ContentRowProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
+
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsModalOpen(false),
     isModalOpen
   );
   const { image, name, regularPrice, discount, capacity } = room;
-  // const editHandler = async (roomId: number) => {
-  //   try {
-  //     const room = rooms.find((room) => room.id === roomId);
-  //     if (room) {
-  //       // setSingleRoom(room);
-  //       setIsModalFormOpen(true);
-  //       // setIsEditing(true);
-  //     }
-  //   } catch (error) {
-  //     showToast("Unexpected error occured, please try again later", "error");
-  //     console.error("Error fetching single room: ", error);
-  //   }
-  // };
 
   const deleteHandler = async (roomId: number) => {
     try {
@@ -82,8 +65,6 @@ const ContentRow = ({
               text="Edit"
               icon={MdModeEditOutline}
               clickHandler={() => setIsModalFormOpen(true)}
-              // clickHandler={() => setIsModalFormOpen(true)}
-              // clickHandler={() => editHandler(room.id)}
             />
             <RowOption
               text="Delete"
@@ -94,17 +75,29 @@ const ContentRow = ({
           </OptionButton>
         )}
       </div>
-      {isModalFormOpen && (
-        <ModalForm
-          room={room}
-          setRooms={setRooms}
-          setRenderedRooms={setRenderedRooms}
-          setIsModalFormOpen={setIsModalFormOpen}
-          isEditing={true}
-        />
-      )}
+      {isModalFormOpen &&
+        createPortal(
+          <ModalForm
+            room={room}
+            setRooms={setRooms}
+            setRenderedRooms={setRenderedRooms}
+            setIsModalFormOpen={setIsModalFormOpen}
+          />,
+          document.body
+        )}
     </li>
   );
 };
 
 export default ContentRow;
+// {isModalFormOpen &&
+//   createPortal(
+//     <ModalForm
+//       isModalFormOpen={isModalFormOpen}
+//       setIsModalFormOpen={setIsModalFormOpen}
+//       setRooms={setRooms}
+//       setRenderedRooms={setRenderedRooms}
+//       isEditing={false}
+//     />,
+//     document.body
+//   )}
