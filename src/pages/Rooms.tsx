@@ -100,6 +100,7 @@ const Rooms = () => {
               key={room.id}
               room={room}
               rooms={rooms}
+              filterAndSort={filterAndSort}
               setRooms={setRooms}
               setRenderedRooms={setRenderedRooms}
             >

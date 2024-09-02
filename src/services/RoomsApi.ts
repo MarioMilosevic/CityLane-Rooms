@@ -103,8 +103,20 @@ export const uploadImage = async (file: File) => {
   }
 };
 
-export const editRoom = async (roomId:number) => {
-  console.log(roomId)
-}
-
-
+export const editRoomServer = async (roomId: number, updatedRoom: NewRoomType) => {
+  try {
+    const { data, error } = await supabase
+      .from("Rooms")
+      .update(updatedRoom)
+      .eq("id", roomId)
+      .select();
+    if (error) {
+      console.log('Error updating room:', error);
+      
+      return error;
+    } 
+    return data
+  } catch (error) {
+    console.error("Error occured when trying to edit room", error);
+  }
+};

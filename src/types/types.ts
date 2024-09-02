@@ -19,7 +19,7 @@ export type NewRoomType = {
   regularPrice: number;
   discount: number;
   description: string;
-  image?: FileList | null | string
+  image?: FileList | null | string;
 };
 
 export type RoomsState = {
@@ -77,8 +77,9 @@ export type buttonColorOptions = {
 export type PrimaryActionButtonProps = {
   text: string;
   color: keyof buttonColorOptions;
-  clickHandler: () => void;
-  isLoading?:boolean
+  type?: "submit" | "button";
+  clickHandler?: () => void;
+  isLoading?: boolean;
 };
 
 export type HeadingContainerProps = {
@@ -115,7 +116,8 @@ export type OptionButtonProps = {
 
 export type ModalFormProps = {
   room?: RoomType;
-  setIsModalFormOpen:Dispatch<SetStateAction<boolean>>
+  rooms?: RoomType[];
+  setIsModalFormOpen: Dispatch<SetStateAction<boolean>>;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
   setRenderedRooms: Dispatch<SetStateAction<RoomType[]>>;
 };
@@ -148,6 +150,3 @@ export type ContentHeaderWrapperProps = {
 export type PrimaryActionButtonWrapperProps = {
   children: ReactNode;
 };
-
-
-

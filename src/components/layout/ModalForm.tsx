@@ -1,10 +1,13 @@
 import { ModalFormProps, NewRoomType } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
-import { createNewRoom } from "../../services/RoomsApi";
+import { createNewRoom, editRoomServer } from "../../services/RoomsApi";
 import { showToast } from "../../services/toastNotification";
 import { uploadImage } from "../../services/RoomsApi";
 import { RoomType } from "../../types/types";
 import { useState } from "react";
+import { newRoomSchema, newRoomValues } from "../../validation/newRoomSchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import useClickOutside from "../../hooks/useClickOutside";
 import FormBlock from "./FormBlock";
 import Label from "./Label";
@@ -12,12 +15,12 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
-import { newRoomSchema, newRoomValues } from "../../validation/newRoomSchema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { updateRooms } from "../../utils/helpers";
 
 const ModalForm = ({
   room,
+  rooms,
+  filterAndSort,
   setIsModalFormOpen,
   setRooms,
   setRenderedRooms,
@@ -25,7 +28,7 @@ const ModalForm = ({
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalFormOpen(false)
   );
-  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false)
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const isEditingSession = room ? true : false;
 
   const form = useForm<newRoomValues>({
@@ -51,6 +54,17 @@ const ModalForm = ({
     setRenderedRooms((prev) => [...prev, newRoom]);
   };
 
+  const editRoom = (roomId: number, updatedRoom: RoomType) => {
+    if (rooms) {   
+      const newRooms = rooms.map((room) =>
+        room.id === roomId ? updatedRoom : room
+      );
+     const updatedRooms = updateRooms(newRooms, filterAndSort.filter, filterAndSort.sort)
+    setRooms(newRooms);
+    setRenderedRooms(updatedRooms);
+  }
+  };
+
   const addNewRoom = async (formData: NewRoomType) => {
     try {
       if (
@@ -58,22 +72,38 @@ const ModalForm = ({
         formData.image instanceof FileList &&
         formData.image.length > 0
       ) {
-        setIsButtonLoading(true)
+        setIsButtonLoading(true);
         const imageUrl = await uploadImage(formData.image[0]);
         const newRoom = { ...formData, image: imageUrl };
         const data = await createNewRoom(newRoom);
         addRoom(data[0]);
         showToast("Room created successfully!", "success");
-        setIsModalFormOpen(false);
       } else {
         throw new Error("No image file provided");
       }
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
-    } 
-    finally {
-      setIsButtonLoading(false)
+    } finally {
+      setIsButtonLoading(false);
+      setIsModalFormOpen(false);
+    }
+  };
+
+  const editCurrentRoom = async (formData: NewRoomType) => {
+    try {
+      if (room) {
+        setIsButtonLoading(true);
+        const response = await editRoomServer(room.id, formData);
+        if (response && Array.isArray(response)) {
+          editRoom(room.id, response[0]);
+        }
+      }
+    } catch (error) {
+      console.error("Error occured: ", error);
+    } finally {
+      setIsButtonLoading(false);
+      setIsModalFormOpen(false);
     }
   };
 
@@ -82,7 +112,7 @@ const ModalForm = ({
       <form
         className="flex flex-col bg-neutral-50 z-20 border px-8 py-4 relative"
         ref={modalRef}
-        onSubmit={handleSubmit(addNewRoom)}
+        onSubmit={handleSubmit(isEditingSession ? editCurrentRoom : addNewRoom)}
       >
         <PiXBold
           className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200"
@@ -134,26 +164,17 @@ const ModalForm = ({
         </FormBlock>
         <FormBlock>
           <Label id={"Room photo"} />
-          <Input
-            id={"Room photo"}
-            type="file"
-            zod={{ ...register("image") }}
-          />
+          <Input id={"Room photo"} type="file" zod={{ ...register("image") }} />
         </FormBlock>
         <PrimaryActionButtonWrapper>
           <PrimaryActionButton
             text="Cancel"
             clickHandler={() => setIsModalFormOpen(false)}
             color="white"
-            
           />
           <PrimaryActionButton
-            text={`${isEditingSession ? "Edit room" : "Create new room"}`}
-            clickHandler={
-              isEditingSession
-                ? () => console.log("funkcija za EDIT")
-                : handleSubmit(addNewRoom)
-            }
+            text={`${isEditingSession ?  "Edit room" : "Create new room"}`}
+            type="submit"
             color="blue"
             isLoading={isButtonLoading}
           />

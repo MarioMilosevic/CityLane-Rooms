@@ -2,17 +2,18 @@ import { ContentRowProps } from "../../types/types";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
+import { showToast } from "../../services/toastNotification";
+import { createPortal } from "react-dom";
+import { deleteRoomFromServer } from "../../services/RoomsApi";
 import useClickOutside from "../../hooks/useClickOutside";
 import OptionButton from "./OptionButton";
 import RowOption from "../common/RowOption";
 import ModalForm from "./ModalForm";
-import { createPortal } from "react-dom";
-import { showToast } from "../../services/toastNotification";
-import { deleteRoomFromServer } from "../../services/RoomsApi";
 
 const ContentRow = ({
   room,
   rooms,
+  filterAndSort,
   setRooms,
   setRenderedRooms,
 }: ContentRowProps) => {
@@ -42,7 +43,6 @@ const ContentRow = ({
       console.error("Error deleting room :", error);
     }
   };
-
 
   return (
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative">
@@ -89,6 +89,8 @@ const ContentRow = ({
         createPortal(
           <ModalForm
             room={room}
+            rooms={rooms}
+            filterAndSort={filterAndSort}
             setRooms={setRooms}
             setRenderedRooms={setRenderedRooms}
             setIsModalFormOpen={setIsModalFormOpen}
@@ -100,4 +102,3 @@ const ContentRow = ({
 };
 
 export default ContentRow;
-
