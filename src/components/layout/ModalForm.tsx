@@ -4,6 +4,7 @@ import { createNewRoom } from "../../services/RoomsApi";
 import { showToast } from "../../services/toastNotification";
 import { uploadImage } from "../../services/RoomsApi";
 import { RoomType } from "../../types/types";
+import { useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import FormBlock from "./FormBlock";
 import Label from "./Label";
@@ -24,6 +25,7 @@ const ModalForm = ({
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalFormOpen(false)
   );
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false)
   const isEditingSession = room ? true : false;
 
   const form = useForm<newRoomValues>({
@@ -49,13 +51,14 @@ const ModalForm = ({
     setRenderedRooms((prev) => [...prev, newRoom]);
   };
 
-  const onSubmit = async (formData: NewRoomType) => {
+  const addNewRoom = async (formData: NewRoomType) => {
     try {
       if (
         formData.image &&
         formData.image instanceof FileList &&
         formData.image.length > 0
       ) {
+        setIsButtonLoading(true)
         const imageUrl = await uploadImage(formData.image[0]);
         const newRoom = { ...formData, image: imageUrl };
         const data = await createNewRoom(newRoom);
@@ -68,6 +71,9 @@ const ModalForm = ({
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later.", "error");
+    } 
+    finally {
+      setIsButtonLoading(false)
     }
   };
 
@@ -76,7 +82,7 @@ const ModalForm = ({
       <form
         className="flex flex-col bg-neutral-50 z-20 border px-8 py-4 relative"
         ref={modalRef}
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(addNewRoom)}
       >
         <PiXBold
           className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200"
@@ -132,10 +138,6 @@ const ModalForm = ({
             id={"Room photo"}
             type="file"
             zod={{ ...register("image") }}
-            // changeHandler={(e) => {
-            //   const fileList = e.target.files;
-            //  console.log(fileList)
-            // }}
           />
         </FormBlock>
         <PrimaryActionButtonWrapper>
@@ -143,15 +145,17 @@ const ModalForm = ({
             text="Cancel"
             clickHandler={() => setIsModalFormOpen(false)}
             color="white"
+            
           />
           <PrimaryActionButton
             text={`${isEditingSession ? "Edit room" : "Create new room"}`}
             clickHandler={
               isEditingSession
                 ? () => console.log("funkcija za EDIT")
-                : handleSubmit(onSubmit)
+                : handleSubmit(addNewRoom)
             }
             color="blue"
+            isLoading={isButtonLoading}
           />
         </PrimaryActionButtonWrapper>
       </form>

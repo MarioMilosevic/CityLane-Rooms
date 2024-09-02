@@ -43,6 +43,7 @@ const ContentRow = ({
     }
   };
 
+
   return (
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative">
       <div className="h-[60px]">
@@ -79,7 +80,6 @@ const ContentRow = ({
             <RowOption
               text="Delete"
               icon={MdDelete}
-              // clickHandler={() => console.log("treba da izbrise sobu")}
               clickHandler={() => deleteHandler(room.id)}
             />
           </OptionButton>
@@ -100,14 +100,4 @@ const ContentRow = ({
 };
 
 export default ContentRow;
-// {isModalFormOpen &&
-//   createPortal(
-//     <ModalForm
-//       isModalFormOpen={isModalFormOpen}
-//       setIsModalFormOpen={setIsModalFormOpen}
-//       setRooms={setRooms}
-//       setRenderedRooms={setRenderedRooms}
-//       isEditing={false}
-//     />,
-//     document.body
-//   )}
+

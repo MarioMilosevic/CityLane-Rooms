@@ -103,4 +103,8 @@ export const uploadImage = async (file: File) => {
   }
 };
 
+export const editRoom = async (roomId:number) => {
+  console.log(roomId)
+}
+
 
