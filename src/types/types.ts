@@ -4,20 +4,20 @@ import { IconType } from "react-icons";
 
 export type RoomType = {
   name: string;
-  regularPrice: string;
-  discount: string;
+  regularPrice: number;
+  discount: number;
   description: string;
   image: string;
-  capacity: string;
+  capacity: number;
   id: number;
   created_at: string;
 };
 
 export type NewRoomType = {
   name: string;
-  capacity: string;
-  regularPrice: string;
-  discount: string;
+  capacity: number;
+  regularPrice: number;
+  discount: number;
   description: string;
   image?: FileList | null | string
 };

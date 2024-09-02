@@ -31,9 +31,9 @@ const ModalForm = ({
   const form = useForm<newRoomValues>({
     defaultValues: {
       name: room?.name || "",
-      capacity: room?.capacity || "",
-      regularPrice: room?.regularPrice || "",
-      discount: room?.discount || "",
+      capacity: room?.capacity || undefined,
+      regularPrice: room?.regularPrice || undefined,
+      discount: room?.discount || undefined,
       description: room?.description || "",
       image: room?.image || "",
     },
