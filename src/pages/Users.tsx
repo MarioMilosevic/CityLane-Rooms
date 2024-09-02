@@ -9,12 +9,12 @@ import PrimaryActionButtonWrapper from "../components/layout/PrimaryActionButton
 const Users = () => {
   return (
     <>
-      <HeaderContainer isVisible={false} title={"Create a new user"} />
+      <HeaderContainer  title={"Create a new user"} />
       <ContentWrapper>
         {usersFormFields.map((user, index) => (
           <FormBlock key={index}>
-            <Label name={user.name} />
-            <Input name={user.name} type={user.type} value="" />
+            <Label id={user.name} />
+            <Input id={user.name} type={user.type}  />
           </FormBlock>
         ))}
         <PrimaryActionButtonWrapper>

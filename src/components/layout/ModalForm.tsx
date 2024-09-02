@@ -55,14 +55,20 @@ const ModalForm = ({
   };
 
   const editRoom = (roomId: number, updatedRoom: RoomType) => {
-    if (rooms) {   
+    if (rooms) {
       const newRooms = rooms.map((room) =>
         room.id === roomId ? updatedRoom : room
       );
-     const updatedRooms = updateRooms(newRooms, filterAndSort.filter, filterAndSort.sort)
-    setRooms(newRooms);
-    setRenderedRooms(updatedRooms);
-  }
+      if (filterAndSort) {
+        const updatedRooms = updateRooms(
+          newRooms,
+          filterAndSort.filter,
+          filterAndSort.sort
+        );
+        setRooms(newRooms);
+        setRenderedRooms(updatedRooms);
+      }
+    }
   };
 
   const addNewRoom = async (formData: NewRoomType) => {
@@ -173,7 +179,7 @@ const ModalForm = ({
             color="white"
           />
           <PrimaryActionButton
-            text={`${isEditingSession ?  "Edit room" : "Create new room"}`}
+            text={`${isEditingSession ? "Edit room" : "Create new room"}`}
             type="submit"
             color="blue"
             isLoading={isButtonLoading}

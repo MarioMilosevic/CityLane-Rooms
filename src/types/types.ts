@@ -65,6 +65,7 @@ export type RowOptionProps = {
 export type ContentRowProps = {
   room: RoomType;
   rooms: RoomType[];
+  filterAndSort: filterAndSortType;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
   setRenderedRooms: Dispatch<SetStateAction<RoomType[]>>;
 };
@@ -117,6 +118,7 @@ export type OptionButtonProps = {
 export type ModalFormProps = {
   room?: RoomType;
   rooms?: RoomType[];
+  filterAndSort?: filterAndSortType;
   setIsModalFormOpen: Dispatch<SetStateAction<boolean>>;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
   setRenderedRooms: Dispatch<SetStateAction<RoomType[]>>;
