@@ -13,7 +13,6 @@ export type RoomType = {
   created_at: string;
 };
 
-
 export type RoomsState = {
   rooms: RoomType[];
 };
@@ -142,4 +141,15 @@ export type ContentHeaderWrapperProps = {
 
 export type PrimaryActionButtonWrapperProps = {
   children: ReactNode;
+};
+
+// /////////////////////////////////////////////////// SETTINGS
+
+export type SettingsType = {
+  breakfastPrice: number;
+  created_at: string;
+  id: number;
+  maxGuests: number;
+  maxNights: number;
+  minNights: number;
 };

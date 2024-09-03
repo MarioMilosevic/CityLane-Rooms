@@ -33,12 +33,12 @@ const ModalForm = ({
   console.log(isEditingSession);
   const form = useForm<newRoomValues>({
     defaultValues: {
-      name: room?.name || "",
+      name: room?.name || undefined,
       capacity: room?.capacity || undefined,
       regularPrice: room?.regularPrice || undefined,
       discount: room?.discount || undefined,
-      description: room?.description || "",
-      image: room?.image || "",
+      description: room?.description || undefined,
+      image: room?.image || undefined,
     },
     resolver: zodResolver(newRoomSchema),
     mode: "onChange",
@@ -48,6 +48,8 @@ const ModalForm = ({
     handleSubmit,
     formState: { errors },
   } = form;
+
+  console.log(errors)
 
   const addRoom = (newRoom: RoomType) => {
     setRooms((prev) => [...prev, newRoom]);

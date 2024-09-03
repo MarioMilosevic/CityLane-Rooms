@@ -1,11 +1,9 @@
-import { SupabaseClient } from "@supabase/supabase-js";
 import { RoomType } from "../types/types";
 import { nanoid } from "nanoid";
 import supabase from "../config/supabaseClient";
 
 export const fetchAllRooms = async (
-  supabase: SupabaseClient
-): Promise<RoomType[]> => {
+) => {
   try {
     const { data, error } = await supabase
       .from("Rooms")

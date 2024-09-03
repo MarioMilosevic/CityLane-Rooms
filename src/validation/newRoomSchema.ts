@@ -4,7 +4,6 @@ export const newRoomSchema = z.object({
   name: z.string().min(2, {
     message: "Room name must be 2 or more characters long",
   }),
-
   capacity: z.coerce
     .number({ required_error: "Maximum capacity is required" })
     .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {

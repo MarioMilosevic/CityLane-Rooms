@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom";
 const SharedLayout = () => {
   return (
     <>
-      <Toaster/>
+      <Toaster />
       <Sidebar />
       <div className="w-full">
         <Navigation />

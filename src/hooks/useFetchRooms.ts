@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { fetchAllRooms } from "../services/RoomsApi";
 import { RoomType } from "../types/types";
-import supabase from "../config/supabaseClient";
 
 const useFetchRooms = (
   setRooms: React.Dispatch<React.SetStateAction<RoomType[]>>,
@@ -10,7 +9,7 @@ const useFetchRooms = (
   useEffect(() => {
     const fetchAndSetRooms = async () => {
       try {
-        const data = await fetchAllRooms(supabase);
+        const data = await fetchAllRooms();
         setRooms(data)
         setRenderedRooms(data)
       } catch (error) {
@@ -23,3 +22,5 @@ const useFetchRooms = (
 };
 
 export default useFetchRooms;
+
+

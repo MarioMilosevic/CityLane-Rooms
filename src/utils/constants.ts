@@ -42,6 +42,15 @@ export const settingsFormFields = [
   { name: "Breakfast price", type: "number" },
 ];
 
+export const initialSettingsState = {
+  id: 0,
+  breakfastPrice: 0,
+  created_at: "",
+  maxGuests: 0,
+  maxNights: 0,
+  minNights: 0,
+};
+
 // u slucaju da mi nestane rooms
 /*
 const rooms = []
