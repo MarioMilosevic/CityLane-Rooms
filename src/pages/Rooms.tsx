@@ -13,11 +13,12 @@ import ContentHeaderWrapper from "../components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "../components/layout/ContentRowWrapper";
 import useFetchRooms from "../hooks/useFetchRooms";
 import SearchFilterTab from "../components/common/SearchFilterTab";
+import LoadingSpinner from "../components/layout/LoadingSpinner";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
   const [renderedRooms, setRenderedRooms] = useState<RoomType[]>([]);
-  useFetchRooms(setRooms, setRenderedRooms);
+  const loading = useFetchRooms(setRooms, setRenderedRooms);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
   const [filterAndSort, setFilterAndSort] = useState({
@@ -72,6 +73,8 @@ const Rooms = () => {
     },
   ];
 
+  if (loading) return <LoadingSpinner />;
+
   return (
     <>
       <HeaderContainer title="All rooms">
@@ -101,8 +104,7 @@ const Rooms = () => {
               filterAndSort={filterAndSort}
               setRooms={setRooms}
               setRenderedRooms={setRenderedRooms}
-            >
-            </SingleRoom>
+            ></SingleRoom>
           ))}
         </ContentRowWrapper>
         <PrimaryActionButton
