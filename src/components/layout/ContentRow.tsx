@@ -12,7 +12,6 @@ import ModalForm from "./ModalForm";
 
 const ContentRow = ({
   room,
-  rooms,
   filterAndSort,
   setRooms,
   setRenderedRooms,
@@ -27,16 +26,16 @@ const ContentRow = ({
   const { image, name, regularPrice, discount, capacity } = room;
 
   const deleteRoom = (roomId: number) => {
-    setRooms(rooms.filter((room) => room.id !== roomId));
-    setRenderedRooms(rooms.filter((room) => room.id !== roomId));
+    setRooms((prev) => prev.filter((room) => room.id !== roomId));
+    setRenderedRooms((prev) => prev.filter((room) => room.id !== roomId));
   };
 
   const deleteHandler = async (roomId: number) => {
     try {
       const response = await deleteRoomFromServer(roomId);
-      if (response[0]) {
+      if (response) {
         deleteRoom(roomId);
-        showToast("Room deleted successfully", "success");
+        showToast("Room deleted sucessfully", "success");
       }
     } catch (error) {
       showToast("Error deleting room");
@@ -89,7 +88,6 @@ const ContentRow = ({
         createPortal(
           <ModalForm
             room={room}
-            rooms={rooms}
             filterAndSort={filterAndSort}
             setRooms={setRooms}
             setRenderedRooms={setRenderedRooms}

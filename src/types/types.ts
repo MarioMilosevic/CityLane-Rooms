@@ -7,20 +7,12 @@ export type RoomType = {
   regularPrice: number;
   discount: number;
   description: string;
-  image: string;
+  image: FileList | string;
   capacity: number;
   id: number;
   created_at: string;
 };
 
-export type NewRoomType = {
-  name: string;
-  capacity: number;
-  regularPrice: number;
-  discount: number;
-  description: string;
-  image?: FileList | null | string;
-};
 
 export type RoomsState = {
   rooms: RoomType[];
@@ -64,7 +56,6 @@ export type RowOptionProps = {
 
 export type ContentRowProps = {
   room: RoomType;
-  rooms: RoomType[];
   filterAndSort: filterAndSortType;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
   setRenderedRooms: Dispatch<SetStateAction<RoomType[]>>;

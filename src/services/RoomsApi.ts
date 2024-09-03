@@ -1,5 +1,5 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { NewRoomType, RoomType } from "../types/types";
+import { RoomType } from "../types/types";
 import { nanoid } from "nanoid";
 import supabase from "../config/supabaseClient";
 
@@ -36,32 +36,28 @@ export const deleteRoomFromServer = async (roomId: number) => {
 
     const imageUrl = roomData?.image;
 
-    if (imageUrl) {
-      const imagePath = imageUrl.split(
-        "/storage/v1/object/public/RoomHubBucket/"
-      )[1];
+    const imagePath = imageUrl.split(
+      "/storage/v1/object/public/RoomHubBucket/"
+    )[1];
 
-      if (imagePath) {
-        const { error: deleteImageError } = await supabase.storage
-          .from("RoomHubBucket")
-          .remove([imagePath]);
+    const { error: deleteImageError } = await supabase.storage
+      .from("RoomHubBucket")
+      .remove([imagePath]);
 
-        if (deleteImageError) {
-          throw new Error("Error deleting image from storage");
-        }
-      }
+    if (deleteImageError) {
+      throw new Error("Error deleting image from storage");
     }
 
     const { data, error: deleteRoomError } = await supabase
       .from("Rooms")
       .delete()
       .eq("id", roomId)
-      .select();
+      .select()
+      .single();
 
     if (deleteRoomError) {
       throw new Error("Error deleting room from database");
     }
-
     return data;
   } catch (error) {
     console.error("Error in deleteRoomFromServer function:", error);
@@ -69,11 +65,12 @@ export const deleteRoomFromServer = async (roomId: number) => {
   }
 };
 
-export const createNewRoom = async (newRoom: NewRoomType) => {
+export const createNewRoom = async (newRoom: RoomType) => {
   const { data, error } = await supabase
     .from("Rooms")
     .insert([newRoom])
-    .select();
+    .select()
+    .single();
   if (error) {
     console.error("Error inserting row:", error);
     throw error;
@@ -103,19 +100,20 @@ export const uploadImage = async (file: File) => {
   }
 };
 
-export const editRoomServer = async (roomId: number, updatedRoom: NewRoomType) => {
+export const editRoomServer = async (roomId: number, updatedRoom: RoomType) => {
   try {
     const { data, error } = await supabase
       .from("Rooms")
       .update(updatedRoom)
       .eq("id", roomId)
-      .select();
+      .select()
+      .single();
     if (error) {
-      console.log('Error updating room:', error);
-      
+      console.log("Error updating room:", error);
       return error;
-    } 
-    return data
+    }
+    console.log(data);
+    return data;
   } catch (error) {
     console.error("Error occured when trying to edit room", error);
   }

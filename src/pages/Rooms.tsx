@@ -72,7 +72,6 @@ const Rooms = () => {
     },
   ];
 
-
   return (
     <>
       <HeaderContainer title="All rooms">
@@ -99,7 +98,6 @@ const Rooms = () => {
             <ContentRow
               key={room.id}
               room={room}
-              rooms={rooms}
               filterAndSort={filterAndSort}
               setRooms={setRooms}
               setRenderedRooms={setRenderedRooms}
