@@ -35,12 +35,7 @@ export const usersFormFields = [
 ];
 
 // Settings
-export const settingsFormFields = [
-  { name: "Minimum nights/booking", type: "number" },
-  { name: "Maximum nights/booking", type: "number" },
-  { name: "Maximum guests/booking", type: "number" },
-  { name: "Breakfast price", type: "number" },
-];
+
 
 export const initialSettingsState = {
   id: 0,

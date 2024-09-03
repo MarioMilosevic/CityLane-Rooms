@@ -8,6 +8,7 @@ import { useState } from "react";
 import { newRoomSchema, newRoomValues } from "../../validation/newRoomSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { updateRooms } from "../../utils/helpers";
 import useClickOutside from "../../hooks/useClickOutside";
 import FormBlock from "./FormBlock";
 import Label from "./Label";
@@ -15,7 +16,6 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
-import { updateRooms } from "../../utils/helpers";
 
 const ModalForm = ({
   room,
@@ -30,7 +30,6 @@ const ModalForm = ({
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
 
   const isEditingSession = room ? true : false;
-  console.log(isEditingSession);
   const form = useForm<newRoomValues>({
     defaultValues: {
       name: room?.name || undefined,
@@ -49,7 +48,6 @@ const ModalForm = ({
     formState: { errors },
   } = form;
 
-  console.log(errors)
 
   const addRoom = (newRoom: RoomType) => {
     setRooms((prev) => [...prev, newRoom]);

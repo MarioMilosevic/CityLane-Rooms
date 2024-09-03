@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const newRoomSchema = z.object({
+export const settingsFormSchema = z.object({
   minNights: z.coerce
     .number()
     .positive({ message: "There must be at least 1 night" }),
@@ -18,4 +18,4 @@ export const newRoomSchema = z.object({
     .positive({ message: "Breakfast can't be free" }),
 });
 
-export type newRoomValues = z.infer<typeof newRoomSchema>;
+export type settingsFormValues = z.infer<typeof settingsFormSchema>;
