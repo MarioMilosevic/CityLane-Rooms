@@ -12,13 +12,13 @@ import {
   settingsFormSchema,
   settingsFormValues,
 } from "../validation/settingsFormSchema";
+import LoadingSpinner from "../components/layout/LoadingSpinner";
 import useFetchSettings from "../hooks/useFetchSettings";
 const Settings = () => {
   const [settings, setSettings] = useState<SettingsType>(initialSettingsState);
-  useFetchSettings(setSettings);
+const loading = useFetchSettings(setSettings);
 
   const { maxGuests, maxNights, minNights, breakfastPrice } = settings;
-  console.log(minNights, maxNights, )
 
   const form = useForm<settingsFormValues>({
     defaultValues: {
@@ -27,6 +27,7 @@ const Settings = () => {
       breakfastPrice,
       maxGuests,
     },
+    values: settings,
     resolver: zodResolver(settingsFormSchema),
     mode: "onChange",
   });
@@ -35,48 +36,57 @@ const Settings = () => {
     handleSubmit,
     formState: { errors },
   } = form;
+
+  const onSubmit = () => {
+    console.log("da submituje");
+  };
+
+  if (loading) return <LoadingSpinner />;
+
   return (
     <>
       <HeaderContainer title="Update hotel settings" />
       <ContentWrapper>
-        <FormBlock>
-          <Label id={"Minimum nights/booking"} />
-          <Input
-            id={"Minimum nights/booking"}
-            type="number"
-            zod={{ ...register("minNights") }}
-            error={errors.minNights}
-          />
-        </FormBlock>
-        <FormBlock>
-          <Label id={"Maximum nights/booking"} />
-          <Input
-            id={"Maximum nights/booking"}
-            type="number"
-            zod={{ ...register("maxNights") }}
-            error={errors.maxNights}
-          />
-        </FormBlock>
-        <FormBlock>
-          <Label id={"Maximum guests/booking"} />
-          <Input
-            id={"Maximum guests/booking"}
-            type="number"
-            zod={{
-              ...register("maxGuests"),
-            }}
-            error={errors.maxGuests}
-          />
-        </FormBlock>
-        <FormBlock>
-          <Label id={"Breakfast price"} />
-          <Input
-            id={"Breakfast price"}
-            type="number"
-            zod={{ ...register("breakfastPrice") }}
-            error={errors.breakfastPrice}
-          />
-        </FormBlock>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormBlock>
+            <Label id={"Minimum nights/booking"} />
+            <Input
+              id={"Minimum nights/booking"}
+              type="number"
+              zod={{ ...register("minNights") }}
+              error={errors.minNights}
+            />
+          </FormBlock>
+          <FormBlock>
+            <Label id={"Maximum nights/booking"} />
+            <Input
+              id={"Maximum nights/booking"}
+              type="number"
+              zod={{ ...register("maxNights") }}
+              error={errors.maxNights}
+            />
+          </FormBlock>
+          <FormBlock>
+            <Label id={"Maximum guests/booking"} />
+            <Input
+              id={"Maximum guests/booking"}
+              type="number"
+              zod={{
+                ...register("maxGuests"),
+              }}
+              error={errors.maxGuests}
+            />
+          </FormBlock>
+          <FormBlock>
+            <Label id={"Breakfast price"} />
+            <Input
+              id={"Breakfast price"}
+              type="number"
+              zod={{ ...register("breakfastPrice") }}
+              error={errors.breakfastPrice}
+            />
+          </FormBlock>
+        </form>
       </ContentWrapper>
     </>
   );
