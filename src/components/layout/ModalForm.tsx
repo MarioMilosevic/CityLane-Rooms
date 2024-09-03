@@ -1,4 +1,4 @@
-import { ModalFormProps, NewRoomType } from "../../types/types";
+import { ModalFormProps } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
 import { createNewRoom, editRoomServer } from "../../services/RoomsApi";
 import { showToast } from "../../services/toastNotification";
@@ -19,7 +19,6 @@ import { updateRooms } from "../../utils/helpers";
 
 const ModalForm = ({
   room,
-  // room = {},
   filterAndSort,
   setIsModalFormOpen,
   setRooms,
@@ -29,8 +28,9 @@ const ModalForm = ({
     setIsModalFormOpen(false)
   );
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
-  const isEditingSession = room ? true : false;
 
+  const isEditingSession = room ? true : false;
+  console.log(isEditingSession);
   const form = useForm<newRoomValues>({
     defaultValues: {
       name: room?.name || "",
@@ -55,19 +55,27 @@ const ModalForm = ({
   };
 
   const editRoom = (roomId: number, updatedRoom: RoomType) => {
-    setRooms((prev) => prev.map((room) => room.id === roomId ? updatedRoom : room))
+    setRooms((prev) =>
+      prev.map((room) => (room.id === roomId ? updatedRoom : room))
+    );
     setRenderedRooms((prev) => {
-      const newRooms = prev.map((room) => room.id === roomId ? updatedRoom : room)
-      const updatedRooms = updateRooms(newRooms, filterAndSort?.filter, filterAndSort?.sort)
-      return updatedRooms
-    })
+      const newRooms = prev.map((room) =>
+        room.id === roomId ? updatedRoom : room
+      );
+      const updatedRooms = updateRooms(
+        newRooms,
+        filterAndSort?.filter as string,
+        filterAndSort?.sort as string
+      );
+      return updatedRooms;
+    });
   };
 
   const addNewRoom = async (formData: RoomType) => {
     try {
       setIsButtonLoading(true);
       const imageUrl = await uploadImage(formData.image[0] as File);
-      const newRoom = { ...formData, image: imageUrl as string};
+      const newRoom = { ...formData, image: imageUrl as string };
       const data = await createNewRoom(newRoom);
       addRoom(data);
       showToast("Room created successfully!", "success");
@@ -80,7 +88,7 @@ const ModalForm = ({
     }
   };
 
-  const editCurrentRoom = async (formData: NewRoomType) => {
+  const editCurrentRoom = async (formData: RoomType) => {
     try {
       setIsButtonLoading(true);
       const response = await editRoomServer(room.id, formData);

@@ -112,7 +112,6 @@ export const editRoomServer = async (roomId: number, updatedRoom: RoomType) => {
       console.log("Error updating room:", error);
       return error;
     }
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error occured when trying to edit room", error);

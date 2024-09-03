@@ -10,7 +10,7 @@ import OptionButton from "./OptionButton";
 import RowOption from "../common/RowOption";
 import ModalForm from "./ModalForm";
 
-const ContentRow = ({
+const SingleRoom = ({
   room,
   filterAndSort,
   setRooms,
@@ -47,8 +47,8 @@ const ContentRow = ({
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative">
       <div className="h-[60px]">
         <img
-          src={image}
-          alt={image}
+          src={image as string}
+          alt={image as string}
           className="object-cover w-full h-full rounded-sm"
         />
       </div>
@@ -99,4 +99,4 @@ const ContentRow = ({
   );
 };
 
-export default ContentRow;
+export default SingleRoom;

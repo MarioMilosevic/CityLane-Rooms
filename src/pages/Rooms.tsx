@@ -5,7 +5,7 @@ import { updateRooms } from "../utils/helpers";
 import { RoomType } from "../types/types";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import ContentHeader from "../components/layout/ContentHeader";
-import ContentRow from "../components/layout/ContentRow";
+import SingleRoom from "../components/layout/SingleRoom";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import HeaderContainer from "../components/layout/HeadingContainer";
 import ModalForm from "../components/layout/ModalForm";
@@ -95,14 +95,14 @@ const Rooms = () => {
         </ContentHeaderWrapper>
         <ContentRowWrapper>
           {renderedRooms.map((room) => (
-            <ContentRow
+            <SingleRoom
               key={room.id}
               room={room}
               filterAndSort={filterAndSort}
               setRooms={setRooms}
               setRenderedRooms={setRenderedRooms}
             >
-            </ContentRow>
+            </SingleRoom>
           ))}
         </ContentRowWrapper>
         <PrimaryActionButton
