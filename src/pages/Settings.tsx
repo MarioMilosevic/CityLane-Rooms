@@ -4,7 +4,7 @@ import ContentWrapper from "../components/layout/ContentWrapper";
 import Label from "../components/layout/Label";
 import Input from "../components/layout/Input";
 import { SettingsType } from "../types/types";
-import { initialSettingsState, settingsFormFields } from "../utils/constants";
+import { initialSettingsState } from "../utils/constants";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +18,7 @@ const Settings = () => {
   useFetchSettings(setSettings);
 
   const { maxGuests, maxNights, minNights, breakfastPrice } = settings;
+  console.log(minNights, maxNights, )
 
   const form = useForm<settingsFormValues>({
     defaultValues: {
@@ -40,19 +41,41 @@ const Settings = () => {
       <ContentWrapper>
         <FormBlock>
           <Label id={"Minimum nights/booking"} />
-          <Input id={"Minimum nights/booking"} type="number" />
+          <Input
+            id={"Minimum nights/booking"}
+            type="number"
+            zod={{ ...register("minNights") }}
+            error={errors.minNights}
+          />
         </FormBlock>
         <FormBlock>
           <Label id={"Maximum nights/booking"} />
-          <Input id={"Maximum nights/booking"} type="number" />
+          <Input
+            id={"Maximum nights/booking"}
+            type="number"
+            zod={{ ...register("maxNights") }}
+            error={errors.maxNights}
+          />
         </FormBlock>
         <FormBlock>
           <Label id={"Maximum guests/booking"} />
-          <Input id={"Maximum guests/booking"} type="number" />
+          <Input
+            id={"Maximum guests/booking"}
+            type="number"
+            zod={{
+              ...register("maxGuests"),
+            }}
+            error={errors.maxGuests}
+          />
         </FormBlock>
         <FormBlock>
           <Label id={"Breakfast price"} />
-          <Input id={"Breakfast price"} type="number" />
+          <Input
+            id={"Breakfast price"}
+            type="number"
+            zod={{ ...register("breakfastPrice") }}
+            error={errors.breakfastPrice}
+          />
         </FormBlock>
       </ContentWrapper>
     </>
