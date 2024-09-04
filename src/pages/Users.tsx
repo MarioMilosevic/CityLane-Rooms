@@ -7,12 +7,9 @@ import Input from "../components/layout/Input";
 import PrimaryActionButtonWrapper from "../components/layout/PrimaryActionButtonWrapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { UserType } from "../types/types";
-import { newUserSchema } from "../validation/newUserSchema";
+import { createNewUser } from "../services/UsersApi";
+import { newUserSchema, userFormValues } from "../validation/newUserSchema";
 const Users = () => {
-  const [user, setUser] = useState<UserType>();
-
   const form = useForm({
     defaultValues: {
       fullName: "",
@@ -26,11 +23,19 @@ const Users = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty },
+    formState: { errors },
+    reset,
   } = form;
 
-  const onSubmit = async () => {
-    console.log("submit");
+  const onSubmit = async (formData: userFormValues) => {
+    try {
+      const { repeatPassword, ...correctFormData } = formData;
+      await createNewUser(correctFormData);
+    } catch (error) {
+      console.error("Error creating new user: ", error);
+    }
+
+    reset();
   };
 
   return (
@@ -77,7 +82,7 @@ const Users = () => {
           <PrimaryActionButtonWrapper>
             <PrimaryActionButton
               text="Cancel"
-              clickHandler={() => console.log("kasnije")}
+              clickHandler={reset}
               color="white"
             />
             <PrimaryActionButton
