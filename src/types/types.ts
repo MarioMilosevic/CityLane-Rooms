@@ -143,7 +143,7 @@ export type PrimaryActionButtonWrapperProps = {
   children: ReactNode;
 };
 
-// /////////////////////////////////////////////////// SETTINGS
+////////////////////////////////////////////////////// SETTINGS
 
 export type SettingsType = {
   breakfastPrice: number;
@@ -153,3 +153,9 @@ export type SettingsType = {
   maxNights: number;
   minNights: number;
 };
+
+export type UserType = {
+  fullName: string;
+  emailAddress: string;
+  password: string;
+}

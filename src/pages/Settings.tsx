@@ -20,23 +20,16 @@ const Settings = () => {
   const [settings, setSettings] = useState<SettingsType>(initialSettingsState);
   const loading = useFetchSettings(setSettings);
 
-  const { maxGuests, maxNights, minNights, breakfastPrice } = settings;
-
   const form = useForm<settingsFormValues>({
-    defaultValues: {
-      minNights,
-      maxNights,
-      breakfastPrice,
-      maxGuests,
-    },
     values: settings,
     resolver: zodResolver(settingsFormSchema),
     mode: "onChange",
   });
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = form;
 
   const onSubmit = async (formData: settingsFormValues) => {
@@ -89,7 +82,13 @@ const Settings = () => {
               error={errors.breakfastPrice}
             />
           </FormBlock>
-          <PrimaryActionButton text="Save changes" color="blue" type="submit" />
+          {isDirty && (
+            <PrimaryActionButton
+              text="Save changes"
+              color="blue"
+              type="submit"
+            />
+          )}
         </form>
       </ContentWrapper>
     </>

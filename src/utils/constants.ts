@@ -27,12 +27,7 @@ export const roomsSortOptions = [
 
 // Users
 
-export const usersFormFields = [
-  { name: "Full name", type: "text" },
-  { name: "Email address", type: "email" },
-  { name: "Password (min 8 characters)", type: "password" },
-  { name: "Repeat password", type: "password" },
-];
+
 
 // Settings
 
