@@ -14,9 +14,11 @@ import {
 } from "../validation/settingsFormSchema";
 import LoadingSpinner from "../components/layout/LoadingSpinner";
 import useFetchSettings from "../hooks/useFetchSettings";
+import PrimaryActionButton from "../components/common/PrimaryActionButton";
+import { updateSettings } from "../services/SettingsApi";
 const Settings = () => {
   const [settings, setSettings] = useState<SettingsType>(initialSettingsState);
-const loading = useFetchSettings(setSettings);
+  const loading = useFetchSettings(setSettings);
 
   const { maxGuests, maxNights, minNights, breakfastPrice } = settings;
 
@@ -37,8 +39,9 @@ const loading = useFetchSettings(setSettings);
     formState: { errors },
   } = form;
 
-  const onSubmit = () => {
-    console.log("da submituje");
+  const onSubmit = async (formData: settingsFormValues) => {
+    const response = await updateSettings(formData);
+    setSettings(response);
   };
 
   if (loading) return <LoadingSpinner />;
@@ -86,6 +89,7 @@ const loading = useFetchSettings(setSettings);
               error={errors.breakfastPrice}
             />
           </FormBlock>
+          <PrimaryActionButton text="Save changes" color="blue" type="submit" />
         </form>
       </ContentWrapper>
     </>

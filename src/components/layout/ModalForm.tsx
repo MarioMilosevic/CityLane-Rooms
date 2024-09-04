@@ -30,6 +30,7 @@ const ModalForm = ({
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
 
   const isEditingSession = room ? true : false;
+
   const form = useForm<newRoomValues>({
     defaultValues: {
       name: room?.name || undefined,
@@ -47,7 +48,6 @@ const ModalForm = ({
     handleSubmit,
     formState: { errors },
   } = form;
-
 
   const addRoom = (newRoom: RoomType) => {
     setRooms((prev) => [...prev, newRoom]);
