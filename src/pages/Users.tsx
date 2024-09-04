@@ -82,7 +82,7 @@ const Users = () => {
             />
             <PrimaryActionButton
               text="Create new user"
-              clickHandler={() => console.log("kasnije")}
+              type="submit"
               color="blue"
             />
           </PrimaryActionButtonWrapper>
