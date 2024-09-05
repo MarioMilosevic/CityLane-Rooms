@@ -38,6 +38,7 @@ const Users = () => {
     reset();
   };
 
+
   return (
     <>
       <HeaderContainer title={"Create a new user"} />
@@ -82,7 +83,7 @@ const Users = () => {
           <PrimaryActionButtonWrapper>
             <PrimaryActionButton
               text="Cancel"
-              clickHandler={reset}
+              clickHandler={() => reset()}
               color="white"
             />
             <PrimaryActionButton

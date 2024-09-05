@@ -1,35 +1,44 @@
 import { ModalFormProps } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
-import { createNewRoom, editRoomServer } from "../../services/RoomsApi";
+import {
+  createNewRoom,
+  editRoomServer,
+  getImage,
+  replaceExistingFile,
+} from "../../services/RoomsApi";
 import { showToast } from "../../services/toastNotification";
 import { uploadImage } from "../../services/RoomsApi";
 import { RoomType } from "../../types/types";
 import { useState } from "react";
 import { newRoomSchema, newRoomValues } from "../../validation/newRoomSchema";
-import { useForm } from "react-hook-form";
+import { FieldError, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateRooms } from "../../utils/helpers";
-import useClickOutside from "../../hooks/useClickOutside";
+// import useClickOutside from "../../hooks/useClickOutside";
 import FormBlock from "./FormBlock";
 import Label from "./Label";
 import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
+import { DevTool } from "@hookform/devtools";
 
 const ModalForm = ({
   room,
   filterAndSort,
+  downloadedImage,
   setIsModalFormOpen,
   setRooms,
   setRenderedRooms,
 }: ModalFormProps) => {
-  const modalRef = useClickOutside<HTMLFormElement>(() =>
-    setIsModalFormOpen(false)
-  );
+  // const modalRef = useClickOutside<HTMLFormElement>(() =>
+  //   setIsModalFormOpen(false)
+  // );
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
 
   const isEditingSession = room ? true : false;
+
+  console.log(room);
 
   const form = useForm<newRoomValues>({
     defaultValues: {
@@ -39,12 +48,14 @@ const ModalForm = ({
       discount: room?.discount || undefined,
       description: room?.description || undefined,
       image: room?.image || undefined,
+      // image: downloadedImage || undefined,
     },
     resolver: zodResolver(newRoomSchema),
     mode: "onChange",
   });
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = form;
@@ -52,23 +63,6 @@ const ModalForm = ({
   const addRoom = (newRoom: RoomType) => {
     setRooms((prev) => [...prev, newRoom]);
     setRenderedRooms((prev) => [...prev, newRoom]);
-  };
-
-  const editRoom = (roomId: number, updatedRoom: RoomType) => {
-    setRooms((prev) =>
-      prev.map((room) => (room.id === roomId ? updatedRoom : room))
-    );
-    setRenderedRooms((prev) => {
-      const newRooms = prev.map((room) =>
-        room.id === roomId ? updatedRoom : room
-      );
-      const updatedRooms = updateRooms(
-        newRooms,
-        filterAndSort?.filter as string,
-        filterAndSort?.sort as string
-      );
-      return updatedRooms;
-    });
   };
 
   const addNewRoom = async (formData: RoomType) => {
@@ -88,26 +82,46 @@ const ModalForm = ({
     }
   };
 
+  const editRoom = (roomId: number, updatedRoom: RoomType) => {
+    setRooms((prev) =>
+      prev.map((room) => (room.id === roomId ? updatedRoom : room))
+    );
+    setRenderedRooms((prev) => {
+      const newRooms = prev.map((room) =>
+        room.id === roomId ? updatedRoom : room
+      );
+      const updatedRooms = updateRooms(
+        newRooms,
+        filterAndSort?.filter as string,
+        filterAndSort?.sort as string
+      );
+      return updatedRooms;
+    });
+  };
+
   const editCurrentRoom = async (formData: RoomType) => {
-    try {
-      setIsButtonLoading(true);
-      const response = await editRoomServer(room.id, formData);
-      if (response) {
-        editRoom(room.id, response);
-      }
-    } catch (error) {
-      console.error("Error occured: ", error);
-    } finally {
-      setIsButtonLoading(false);
-      setIsModalFormOpen(false);
-    }
+    console.log(formData)
+    // try {
+    //   setIsButtonLoading(true);
+    //   replaceExistingFile()
+    //   const response = await editRoomServer(room.id, formData);
+    //   console.log(response);
+    //   // if (response) {
+    //   //   editRoom(room.id, response);
+    //   // }
+    // } catch (error) {
+    //   console.error("Error occured: ", error);
+    // } finally {
+    //   setIsButtonLoading(false);
+    //   setIsModalFormOpen(false);
+    // }
   };
 
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
       <form
         className="flex flex-col bg-neutral-50 z-20 border px-8 py-4 relative"
-        ref={modalRef}
+        // ref={modalRef}
         onSubmit={handleSubmit(isEditingSession ? editCurrentRoom : addNewRoom)}
       >
         <PiXBold
@@ -160,7 +174,12 @@ const ModalForm = ({
         </FormBlock>
         <FormBlock>
           <Label id={"Room photo"} />
-          <Input id={"Room photo"} type="file" zod={{ ...register("image") }} />
+          <Input
+            id={"Room photo"}
+            type="file"
+            zod={{ ...register("image") }}
+            error={errors.image as FieldError}
+          />
         </FormBlock>
         <PrimaryActionButtonWrapper>
           <PrimaryActionButton
@@ -176,6 +195,7 @@ const ModalForm = ({
           />
         </PrimaryActionButtonWrapper>
       </form>
+      <DevTool control={control} />
     </div>
   );
 };

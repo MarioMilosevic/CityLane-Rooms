@@ -45,3 +45,10 @@ export const updateRooms = (
   return roomsCopy;
 };
 
+export const getRoomImagePath = (imageUrl:string) => {
+   const imagePath = imageUrl.split(
+     "/storage/v1/object/public/RoomHubBucket/"
+  )[1];
+  return imagePath
+}
+
