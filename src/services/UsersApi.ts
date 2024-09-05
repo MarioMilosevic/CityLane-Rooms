@@ -4,7 +4,7 @@ import { showToast } from "./toastNotification";
 
 export const createNewUser = async (user: UserType) => {
   try {
-    const { error } = await supabase.from("Use").insert(user);
+    const { error } = await supabase.from("Users").insert(user);
     if (error) {
       showToast("Unexpected error occured, please try again", "error");
       return error;

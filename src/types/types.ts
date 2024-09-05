@@ -154,6 +154,12 @@ export type SettingsType = {
   minNights: number;
 };
 
+export type SettingsFormProps = {
+  settings: SettingsType;
+  setSettings: Dispatch<SetStateAction<SettingsType>>
+
+}
+
 export type UserType = {
   fullName: string;
   emailAddress: string;

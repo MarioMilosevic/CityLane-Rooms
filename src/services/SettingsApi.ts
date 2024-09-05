@@ -25,8 +25,7 @@ export const updateSettings = async (updatedSettings: settingsFormValues) => {
       .single();
 
     if (error) {
-      console.log("Error updating room:", error);
-      return error;
+      return;
     }
     return data;
   } catch (error) {
