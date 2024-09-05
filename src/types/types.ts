@@ -125,6 +125,10 @@ export type InputProps = {
   error?: FieldError | undefined;
 };
 
+export type FileInputProps = {
+  
+}
+
 export type TextAreaProps = {
   id: string;
   zod: UseFormRegisterReturn;

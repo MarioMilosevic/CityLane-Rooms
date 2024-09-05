@@ -19,7 +19,7 @@ const SingleRoom = ({
 }: ContentRowProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
-  const [downloadedImage, setDownloadedImage] = useState<Blob>()  
+  const [fetchedFile, setFetchedFile] = useState<Blob>()  
 
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsModalOpen(false),
@@ -47,9 +47,22 @@ const SingleRoom = ({
 
     const openModalAndGetImage = async () => {
       try {
-        const downloadedFile = await downloadImage(image);
-        console.log(downloadedFile);
-        setDownloadedImage(downloadedFile)
+        const downloadedBlob = await downloadImage(image);
+        downloadedBlob.name = 'image/jpeg'
+        downloadedBlob.lastModified = new Date()
+        const myFile = new File([downloadedBlob], 'image.jpeg', {
+          type:downloadedBlob.type
+        })
+        // console.log("my file", myFile)
+        setFetchedFile(myFile)
+        // const dataTransfer = new DataTransfer()
+        // dataTransfer.items.add(myFile)
+        // const fileList = dataTransfer.files;
+        // setFetchedFile(fileList)
+        // console.log("fileList", fileList)
+
+        // room.image = fileList[0]
+        // setDownloadedImage(downloadedBlob)
         setIsModalFormOpen(true);
       } catch (error) {
         console.error("Error occured", error);
@@ -101,7 +114,7 @@ const SingleRoom = ({
         createPortal(
           <ModalForm
             room={room}
-            downloadedImage={downloadedImage}
+            fetchedFile={fetchedFile}
             filterAndSort={filterAndSort}
             setRooms={setRooms}
             setRenderedRooms={setRenderedRooms}

@@ -36,11 +36,6 @@ export const deleteRoomFromServer = async (roomId: number) => {
     const imageUrl = roomData?.image;
     const imagePath = getRoomImagePath(imageUrl);
 
-    console.log('da testiram je li sve ok')
-    // const imagePath = imageUrl.split(
-    //   "/storage/v1/object/public/RoomHubBucket/"
-    // )[1];
-
     const { error: deleteImageError } = await supabase.storage
       .from("RoomHubBucket")
       .remove([imagePath]);
@@ -88,7 +83,6 @@ export const uploadImage = async (file: File) => {
       cacheControl: "3600",
       upsert: false,
     });
-    console.log(data)
   
   if (data) {
     const { data: publicURL } = supabase.storage
@@ -103,15 +97,15 @@ export const uploadImage = async (file: File) => {
 };
 
 export const downloadImage = async (fileName: string) => {
-  console.log(fileName);
+  // console.log(fileName);
   try {
     const imagePath = getRoomImagePath(fileName)
-    console.log(imagePath)
+    // console.log(imagePath)
    const { data, error } = await supabase.storage
      .from("RoomHubBucket")
      .download(imagePath);
 
-      console.log("iz API", data)
+      // console.log("iz API", data)
       if (error) {
         return error;
       }

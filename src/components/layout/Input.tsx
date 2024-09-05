@@ -1,7 +1,6 @@
 import { InputProps } from "../../types/types";
 
-const Input = ({ id, type, zod, error }:InputProps) => {
-  
+const Input = ({ id, type, zod, error }: InputProps) => {
   const { onChange: zodOnChange, ...restZodProps } = zod || {};
 
   return (

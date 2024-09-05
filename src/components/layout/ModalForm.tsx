@@ -9,12 +9,12 @@ import {
 import { showToast } from "../../services/toastNotification";
 import { uploadImage } from "../../services/RoomsApi";
 import { RoomType } from "../../types/types";
-import { useState } from "react";
+import { useState} from "react";
 import { newRoomSchema, newRoomValues } from "../../validation/newRoomSchema";
 import { FieldError, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateRooms } from "../../utils/helpers";
-// import useClickOutside from "../../hooks/useClickOutside";
+import useClickOutside from "../../hooks/useClickOutside";
 import FormBlock from "./FormBlock";
 import Label from "./Label";
 import Input from "./Input";
@@ -22,23 +22,24 @@ import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
 import { DevTool } from "@hookform/devtools";
+import FileInput from "./FileInput";
 
 const ModalForm = ({
   room,
   filterAndSort,
-  downloadedImage,
+  fetchedFile,
   setIsModalFormOpen,
   setRooms,
   setRenderedRooms,
 }: ModalFormProps) => {
-  // const modalRef = useClickOutside<HTMLFormElement>(() =>
-  //   setIsModalFormOpen(false)
-  // );
+  const modalRef = useClickOutside<HTMLFormElement>(() =>
+    setIsModalFormOpen(false)
+  );
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
 
   const isEditingSession = room ? true : false;
-
-  console.log(room);
+  // console.log("MODAL FORM SOBA", room);
+  // console.log("MODAL FORM FILE", fetchedFile);
 
   const form = useForm<newRoomValues>({
     defaultValues: {
@@ -47,8 +48,7 @@ const ModalForm = ({
       regularPrice: room?.regularPrice || undefined,
       discount: room?.discount || undefined,
       description: room?.description || undefined,
-      image: room?.image || undefined,
-      // image: downloadedImage || undefined,
+      image: fetchedFile || undefined,
     },
     resolver: zodResolver(newRoomSchema),
     mode: "onChange",
@@ -66,6 +66,7 @@ const ModalForm = ({
   };
 
   const addNewRoom = async (formData: RoomType) => {
+    console.log(formData);
     try {
       setIsButtonLoading(true);
       const imageUrl = await uploadImage(formData.image[0] as File);
@@ -100,28 +101,28 @@ const ModalForm = ({
   };
 
   const editCurrentRoom = async (formData: RoomType) => {
-    console.log(formData)
-    // try {
-    //   setIsButtonLoading(true);
-    //   replaceExistingFile()
-    //   const response = await editRoomServer(room.id, formData);
-    //   console.log(response);
-    //   // if (response) {
-    //   //   editRoom(room.id, response);
-    //   // }
-    // } catch (error) {
-    //   console.error("Error occured: ", error);
-    // } finally {
-    //   setIsButtonLoading(false);
-    //   setIsModalFormOpen(false);
-    // }
+    console.log(formData);
+    try {
+      setIsButtonLoading(true);
+      // replaceExistingFile()
+      const response = await editRoomServer(room.id, formData);
+      console.log(response);
+      // if (response) {
+      //   editRoom(room.id, response);
+      // }
+    } catch (error) {
+      console.error("Error occured: ", error);
+    } finally {
+      setIsButtonLoading(false);
+      setIsModalFormOpen(false);
+    }
   };
 
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
       <form
         className="flex flex-col bg-neutral-50 z-20 border px-8 py-4 relative"
-        // ref={modalRef}
+        ref={modalRef}
         onSubmit={handleSubmit(isEditingSession ? editCurrentRoom : addNewRoom)}
       >
         <PiXBold
@@ -129,18 +130,18 @@ const ModalForm = ({
           onClick={() => setIsModalFormOpen(false)}
         />
         <FormBlock>
-          <Label id={"Room name"} />
+          <Label id="Room name" />
           <Input
-            id={"Room name"}
+            id="Room name"
             type="text"
             zod={{ ...register("name") }}
             error={errors.name}
           />
         </FormBlock>
         <FormBlock>
-          <Label id={"Maximum capacity"} />
+          <Label id="Maximum capacity" />
           <Input
-            id={"Maximum capacity"}
+            id="Maximum capacity"
             type="number"
             zod={{ ...register("capacity") }}
             error={errors.capacity}
@@ -156,30 +157,36 @@ const ModalForm = ({
           />
         </FormBlock>
         <FormBlock>
-          <Label id={"Discount"} />
+          <Label id="Discount" />
           <Input
-            id={"Discount"}
+            id="Discount"
             type="number"
             zod={{ ...register("discount") }}
             error={errors.discount}
           />
         </FormBlock>
         <FormBlock>
-          <Label id={"Description for website"} />
+          <Label id="Description for website" />
           <TextArea
-            id={"Description for website"}
+            id="Description for website"
             zod={{ ...register("description") }}
             error={errors.description}
           />
         </FormBlock>
         <FormBlock>
-          <Label id={"Room photo"} />
-          <Input
+          <Label id="Room photo" />
+          <FileInput
+            id="Room photo"
+            file={fetchedFile}
+            zod={{ ...register("image") }}
+            error={errors.image}
+          />
+          {/* <Input
             id={"Room photo"}
             type="file"
             zod={{ ...register("image") }}
             error={errors.image as FieldError}
-          />
+          /> */}
         </FormBlock>
         <PrimaryActionButtonWrapper>
           <PrimaryActionButton
