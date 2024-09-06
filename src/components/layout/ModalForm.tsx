@@ -127,7 +127,7 @@ const ModalForm = ({
           className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200"
           onClick={() => setIsModalFormOpen(false)}
         />
-        <FormBlock>
+        <FormBlock size="big" direction="row">
           <Label id="Room name" />
           <Input
             id="Room name"
@@ -136,7 +136,7 @@ const ModalForm = ({
             error={errors.name}
           />
         </FormBlock>
-        <FormBlock>
+        <FormBlock size="big" direction="row">
           <Label id="Maximum capacity" />
           <Input
             id="Maximum capacity"
@@ -145,7 +145,7 @@ const ModalForm = ({
             error={errors.capacity}
           />
         </FormBlock>
-        <FormBlock>
+        <FormBlock size="big" direction="row">
           <Label id={"Regular price"} />
           <Input
             id={"Regular price"}
@@ -154,7 +154,7 @@ const ModalForm = ({
             error={errors.regularPrice}
           />
         </FormBlock>
-        <FormBlock>
+        <FormBlock size="big" direction="row">
           <Label id="Discount" />
           <Input
             id="Discount"
@@ -163,7 +163,7 @@ const ModalForm = ({
             error={errors.discount}
           />
         </FormBlock>
-        <FormBlock>
+        <FormBlock size="big" direction="row">
           <Label id="Description for website" />
           <TextArea
             id="Description for website"
@@ -171,7 +171,7 @@ const ModalForm = ({
             error={errors.description}
           />
         </FormBlock>
-        <FormBlock>
+        <FormBlock size="big" direction="row">
           <Label id="Room photo" />
           <Input
             id="Room photo"
