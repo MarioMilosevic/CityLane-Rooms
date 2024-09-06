@@ -63,6 +63,7 @@ export type ContentRowProps = {
 export type buttonColorOptions = {
   white: string;
   blue: string;
+  yellow: string;
 };
 
 export type PrimaryActionButtonProps = {
@@ -99,7 +100,13 @@ export type SearchFilterTabProps = {
 
 export type FormBlockProps = {
   children: ReactNode;
+  size: keyof FormBlockSizeOptions
 };
+
+export type FormBlockSizeOptions = {
+  small: string;
+  big: string;
+}
 
 export type OptionButtonProps = {
   children: ReactNode;

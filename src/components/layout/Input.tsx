@@ -9,8 +9,8 @@ const Input = ({ id, type, zod, error }: InputProps) => {
         id={id}
         type={type}
         onChange={zodOnChange}
-        className={`w-full p-4 rounded-md border outline-none transition-all duration-200 border-neutral-300 focus:outline-sky-500 ${
-          type === "file" ? "file_custom" : ""
+        className={`w-full p-3 rounded-md border outline-none transition-all duration-200 border-neutral-300 focus:outline-sky-500 ${
+          type === "file" && "file_custom"
         }`}
         {...restZodProps}
       />

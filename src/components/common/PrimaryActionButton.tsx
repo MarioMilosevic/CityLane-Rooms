@@ -11,11 +11,13 @@ const PrimaryActionButton = ({
     blue: "bg-sky-500 enabled:hover:bg-sky-600 text-sky-100 enabled:hover:text-sky-50",
     white:
       "border border-neutral-400 bg-neutral-50 enabled:hover:bg-neutral-200 text-neutral-800 enabled:hover:text-neutral-900",
+    yellow:
+      "bg-yellow-500 enabled:hover:bg-yellow-600 text-yellow-100 enabled:hover:text-yellow-50",
   };
   return (
     <button
       className={`
-       ${buttonColorOptions[color]} flex items-center gap-4 mt-8 font-medium text-lg px-4 py-2 rounded-md transition-all duration-200`}
+       ${buttonColorOptions[color]} flex items-center justify-center gap-4 mt-8 font-medium text-lg text-center px-4 py-2 rounded-md transition-all duration-200`}
       type={type}
       {...(type !== "submit" && { onClick: clickHandler })}
     >
