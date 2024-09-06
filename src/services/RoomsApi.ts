@@ -75,6 +75,7 @@ export const createNewRoom = async (newRoom: RoomType) => {
 };
 
 export const uploadImage = async (file: File) => {
+  console.log(file)
   const fileName = `${nanoid()}_${file.name}`;
 
   const { data, error } = await supabase.storage
@@ -98,6 +99,8 @@ export const uploadImage = async (file: File) => {
 
 export const downloadImage = async (fileName: string) => {
   // console.log(fileName);
+// const fileName = mario.split("/").pop().slice(22);
+
   try {
     const imagePath = getRoomImagePath(fileName)
     // console.log(imagePath)

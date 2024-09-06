@@ -2,14 +2,15 @@ import { useEffect, useRef } from "react";
 
 const FileInput = ({ id, zod, error, file }) => {
   const { onChange: zodOnChange, ...restZodProps } = zod || {};
+  
   const fileInputRef = useRef(null);
-
+  
   useEffect(() => {
-      if (file instanceof File && fileInputRef.current) {
-          const dataTransfer = new DataTransfer()
-          dataTransfer.items.add(file)
+    if (file instanceof File && fileInputRef.current) {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
 
-          fileInputRef.current.files = dataTransfer.files
+      fileInputRef.current.files = dataTransfer.files;
       console.log(
         "File input ref initialized after mount:",
         fileInputRef.current
@@ -39,3 +40,5 @@ const FileInput = ({ id, zod, error, file }) => {
 };
 
 export default FileInput;
+
+

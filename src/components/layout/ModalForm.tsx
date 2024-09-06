@@ -9,7 +9,7 @@ import {
 import { showToast } from "../../services/toastNotification";
 import { uploadImage } from "../../services/RoomsApi";
 import { RoomType } from "../../types/types";
-import { useState} from "react";
+import { useState } from "react";
 import { newRoomSchema, newRoomValues } from "../../validation/newRoomSchema";
 import { FieldError, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,7 +21,6 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
-import { DevTool } from "@hookform/devtools";
 import FileInput from "./FileInput";
 
 const ModalForm = ({
@@ -38,8 +37,6 @@ const ModalForm = ({
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
 
   const isEditingSession = room ? true : false;
-  // console.log("MODAL FORM SOBA", room);
-  // console.log("MODAL FORM FILE", fetchedFile);
 
   const form = useForm<newRoomValues>({
     defaultValues: {
@@ -55,7 +52,6 @@ const ModalForm = ({
   });
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = form;
@@ -118,6 +114,8 @@ const ModalForm = ({
     }
   };
 
+  console.log(fetchedFile);
+
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
       <form
@@ -175,18 +173,21 @@ const ModalForm = ({
         </FormBlock>
         <FormBlock>
           <Label id="Room photo" />
-          <FileInput
-            id="Room photo"
-            file={fetchedFile}
-            zod={{ ...register("image") }}
-            error={errors.image}
-          />
-          {/* <Input
-            id={"Room photo"}
-            type="file"
-            zod={{ ...register("image") }}
-            error={errors.image as FieldError}
-          /> */}
+          {fetchedFile ? (
+            <FileInput
+              id="Room photo"
+              file={fetchedFile}
+              zod={{ ...register("image") }}
+              error={errors.image}
+            />
+          ) : (
+            <Input
+              id="Room photo"
+              type="file"
+              zod={{ ...register("image") }}
+              error={errors.image as FieldError}
+            />
+          )}
         </FormBlock>
         <PrimaryActionButtonWrapper>
           <PrimaryActionButton
@@ -202,7 +203,6 @@ const ModalForm = ({
           />
         </PrimaryActionButtonWrapper>
       </form>
-      <DevTool control={control} />
     </div>
   );
 };
