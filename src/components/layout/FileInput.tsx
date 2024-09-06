@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
+import { FileInputProps } from "../../types/types";
 
-const FileInput = ({ id, zod, error, file }) => {
+const FileInput = ({ id, zod, error, file }: FileInputProps) => {
   const { onChange: zodOnChange, ...restZodProps } = zod || {};
-  
-  const fileInputRef = useRef(null);
-  
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (file instanceof File && fileInputRef.current) {
       const dataTransfer = new DataTransfer();
@@ -18,7 +19,7 @@ const FileInput = ({ id, zod, error, file }) => {
     } else {
       console.log("File input ref still null after mount");
     }
-  }, [file]); // Only runs after the component mounts
+  }, [file]);
 
   return (
     <div className="relative w-full max-w-xs">
@@ -30,7 +31,7 @@ const FileInput = ({ id, zod, error, file }) => {
         {...restZodProps}
         ref={fileInputRef}
       />
-      {error && (
+      {error  && (
         <p className="text-red-500 absolute -bottom-6 left-0 text-sm">
           {error.message}
         </p>
@@ -40,5 +41,3 @@ const FileInput = ({ id, zod, error, file }) => {
 };
 
 export default FileInput;
-
-

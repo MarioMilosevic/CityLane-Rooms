@@ -47,18 +47,15 @@ const SingleRoom = ({
 
     const openModalAndGetImage = async () => {
       try {
-        console.log(image)
         const fileName = image.split("/").pop().slice(22);
-        console.log(fileName)
-
-        // const downloadedBlob = await downloadImage(image);
-        // downloadedBlob.name = 'image/jpeg'
-        // downloadedBlob.lastModified = new Date()
-        // const myFile = new File([downloadedBlob], 'image.jpeg', {
-        //   type:downloadedBlob.type
-        // })
-        // setFetchedFile(myFile)
-        // setIsModalFormOpen(true);
+        const downloadedBlob = await downloadImage(image);
+        downloadedBlob.name = fileName
+        downloadedBlob.lastModified = new Date()
+        const myFile = new File([downloadedBlob], fileName, {
+          type:downloadedBlob.type
+        })
+        setFetchedFile(myFile)
+        setIsModalFormOpen(true);
       } catch (error) {
         console.error("Error occured", error);
       }

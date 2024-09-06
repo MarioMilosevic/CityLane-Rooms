@@ -126,8 +126,11 @@ export type InputProps = {
 };
 
 export type FileInputProps = {
-  
-}
+  id:string;
+  zod: UseFormRegisterReturn;
+  error: FieldError | undefined;
+  file : File;
+};
 
 export type TextAreaProps = {
   id: string;
