@@ -68,6 +68,7 @@ const ModalForm = ({
       const imageUrl = await uploadImage(formData.image[0] as File);
       const newRoom = { ...formData, image: imageUrl as string };
       const data = await createNewRoom(newRoom);
+      console.log(data);
       addRoom(data);
       showToast("Room created successfully!", "success");
     } catch (error) {
@@ -98,11 +99,12 @@ const ModalForm = ({
 
   const editCurrentRoom = async (formData: RoomType) => {
     console.log(formData);
+    console.log(fetchedFile);
     try {
       setIsButtonLoading(true);
-      // replaceExistingFile()
-      const response = await editRoomServer(room.id, formData);
-      console.log(response);
+      await replaceExistingFile(fetchedFile.name, formData.image);
+      // const response = await editRoomServer(room.id, formData);
+      // console.log(response);
       // if (response) {
       //   editRoom(room.id, response);
       // }
@@ -113,8 +115,6 @@ const ModalForm = ({
       setIsModalFormOpen(false);
     }
   };
-
-  console.log(fetchedFile);
 
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
@@ -173,12 +173,18 @@ const ModalForm = ({
         </FormBlock>
         <FormBlock>
           <Label id="Room photo" />
-          {fetchedFile ? (
+          <Input
+            id="Room photo"
+            type="file"
+            zod={{ ...register("image") }}
+            error={errors.image as FieldError}
+          />
+          {/* {fetchedFile ? (
             <FileInput
               id="Room photo"
               file={fetchedFile}
               zod={{ ...register("image") }}
-              error={errors.image}
+              error={errors.image as FieldError}
             />
           ) : (
             <Input
@@ -187,7 +193,7 @@ const ModalForm = ({
               zod={{ ...register("image") }}
               error={errors.image as FieldError}
             />
-          )}
+          )} */}
         </FormBlock>
         <PrimaryActionButtonWrapper>
           <PrimaryActionButton

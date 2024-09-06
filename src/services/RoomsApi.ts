@@ -3,7 +3,6 @@ import { nanoid } from "nanoid";
 import supabase from "../config/supabaseClient";
 import { getRoomImagePath } from "../utils/helpers";
 
-
 export const fetchAllRooms = async () => {
   try {
     const { data, error } = await supabase
@@ -62,6 +61,7 @@ export const deleteRoomFromServer = async (roomId: number) => {
 };
 
 export const createNewRoom = async (newRoom: RoomType) => {
+  // console.log(newRoom);
   const { data, error } = await supabase
     .from("Rooms")
     .insert([newRoom])
@@ -75,7 +75,6 @@ export const createNewRoom = async (newRoom: RoomType) => {
 };
 
 export const uploadImage = async (file: File) => {
-  console.log(file)
   const fileName = `${nanoid()}_${file.name}`;
 
   const { data, error } = await supabase.storage
@@ -84,7 +83,8 @@ export const uploadImage = async (file: File) => {
       cacheControl: "3600",
       upsert: false,
     });
-  
+  // console.log(data);
+
   if (data) {
     const { data: publicURL } = supabase.storage
       .from("RoomHubBucket")
@@ -98,46 +98,43 @@ export const uploadImage = async (file: File) => {
 };
 
 export const downloadImage = async (fileName: string) => {
-  // console.log(fileName);
-// const fileName = mario.split("/").pop().slice(22);
-
   try {
-    const imagePath = getRoomImagePath(fileName)
-    // console.log(imagePath)
-   const { data, error } = await supabase.storage
-     .from("RoomHubBucket")
-     .download(imagePath);
+    const imagePath = getRoomImagePath(fileName);
+    const { data, error } = await supabase.storage
+      .from("RoomHubBucket")
+      .download(imagePath);
 
-      // console.log("iz API", data)
-      if (error) {
-        return error;
-      }
-      return data
-    } catch (error) {
-      console.error('Error occured when getting image', error)
+    if (error) {
+      return error;
     }
+    return data;
+  } catch (error) {
+    console.error("Error occured when getting image", error);
+  }
 };
 
-export const replaceExistingFile = async (file) => {
+export const replaceExistingFile = async (oldFileName, newFile) => {
+  console.log(oldFileName);
+  console.log(newFile);
   try {
     const { data, error } = await supabase.storage
       .from("RoomHubBucket")
-      .update("images/avatar1.png", file, {
+      .update(`images/${oldFileName}`, newFile, {
         cacheControl: "3600",
         upsert: true,
       });
     if (error) {
-      console.log(error)
-      return
+      console.log(error);
+      return;
     }
-    console.log(data)
+    console.log(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-}
+};
 
 export const editRoomServer = async (roomId: number, updatedRoom: RoomType) => {
+  console.log(updatedRoom)
   try {
     const { data, error } = await supabase
       .from("Rooms")
@@ -146,7 +143,6 @@ export const editRoomServer = async (roomId: number, updatedRoom: RoomType) => {
       .select()
       .single();
     if (error) {
-      console.log("Error updating room:", error);
       return error;
     }
     return data;
@@ -155,6 +151,4 @@ export const editRoomServer = async (roomId: number, updatedRoom: RoomType) => {
   }
 };
 
-// export const replaceImage = async () => {
 
-// }

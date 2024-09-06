@@ -47,7 +47,10 @@ const SingleRoom = ({
 
     const openModalAndGetImage = async () => {
       try {
-        const fileName = image.split("/").pop().slice(22);
+        console.log(image)
+        // OVO ISPOD AKO BIH HTIO DA MI STOJI TAJ NAZIV SLIKE U CHOSEN FILE
+        // const fileName = image.split("/").pop().slice(22);
+        const fileName = image.split("/").pop();
         const downloadedBlob = await downloadImage(image);
         downloadedBlob.name = fileName
         downloadedBlob.lastModified = new Date()

@@ -4,20 +4,15 @@ import { FileInputProps } from "../../types/types";
 const FileInput = ({ id, zod, error, file }: FileInputProps) => {
   const { onChange: zodOnChange, ...restZodProps } = zod || {};
 
+  console.log('RENDEROVAN FILE INPUT KOMPONENTA')
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (file instanceof File && fileInputRef.current) {
+      console.log('uslo')
       const dataTransfer = new DataTransfer();
       dataTransfer.items.add(file);
-
       fileInputRef.current.files = dataTransfer.files;
-      console.log(
-        "File input ref initialized after mount:",
-        fileInputRef.current
-      );
-    } else {
-      console.log("File input ref still null after mount");
     }
   }, [file]);
 
@@ -31,7 +26,7 @@ const FileInput = ({ id, zod, error, file }: FileInputProps) => {
         {...restZodProps}
         ref={fileInputRef}
       />
-      {error  && (
+      {error && (
         <p className="text-red-500 absolute -bottom-6 left-0 text-sm">
           {error.message}
         </p>
