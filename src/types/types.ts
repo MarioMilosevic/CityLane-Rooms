@@ -100,13 +100,19 @@ export type SearchFilterTabProps = {
 
 export type FormBlockProps = {
   children: ReactNode;
-  size: keyof FormBlockSizeOptions
+  size: keyof FormBlockSizeOptions;
+  direction:keyof FormBlockDirectionOptions
+};
+
+export type FormBlockDirectionOptions = {
+  column: string;
+  row: string;
 };
 
 export type FormBlockSizeOptions = {
   small: string;
   big: string;
-}
+};
 
 export type OptionButtonProps = {
   children: ReactNode;
@@ -133,10 +139,10 @@ export type InputProps = {
 };
 
 export type FileInputProps = {
-  id:string;
+  id: string;
   zod: UseFormRegisterReturn;
   error: FieldError | undefined;
-  file : File;
+  file: File;
 };
 
 export type TextAreaProps = {
@@ -170,12 +176,11 @@ export type SettingsType = {
 
 export type SettingsFormProps = {
   settings: SettingsType;
-  setSettings: Dispatch<SetStateAction<SettingsType>>
-
-}
+  setSettings: Dispatch<SetStateAction<SettingsType>>;
+};
 
 export type UserType = {
   fullName: string;
   emailAddress: string;
   password: string;
-}
+};

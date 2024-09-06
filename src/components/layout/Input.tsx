@@ -4,7 +4,7 @@ const Input = ({ id, type, zod, error }: InputProps) => {
   const { onChange: zodOnChange, ...restZodProps } = zod || {};
 
   return (
-    <div className="relative w-full max-w-xs">
+    <div className="relative w-full">
       <input
         id={id}
         type={type}
