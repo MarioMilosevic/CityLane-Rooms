@@ -3,7 +3,12 @@ import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import FormBlock from "../components/layout/FormBlock";
 import Input from "../components/layout/Input";
 import Label from "../components/layout/Label";
-import PrimaryActionButtonWrapper from "../components/layout/PrimaryActionButtonWrapper";
+import { loginUser } from "./LoginApi";
+import { FieldError, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+
+
 const Login = () => {
   return (
     <main className="flex flex-col items-center w-full pt-36">
@@ -16,7 +21,7 @@ const Login = () => {
         <h2 className="text-2xl text-yellow-800 text-center">ROOMHUB</h2>
         <h1 className="text-4xl font-medium">Log into your account</h1>
       </div>
-      <form className="w-[600px] pt-12 flex flex-col ">
+      <form className="w-[600px] pt-24 flex flex-col ">
         <FormBlock size="small">
           <Label id="Email address" />
           <Input id="Email address" type="email" />
@@ -25,7 +30,7 @@ const Login = () => {
           <Label id="Password" />
           <Input id="Password" type="password" />
         </FormBlock>
-        <PrimaryActionButton text="Log in" color="yellow" />
+        <PrimaryActionButton text="Log in" color="yellow" type="submit"/>
       </form>
     </main>
   );

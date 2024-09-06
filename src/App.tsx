@@ -4,7 +4,7 @@ import Settings from "./pages/Settings";
 import Rooms from "./pages/Rooms";
 import Users from "./pages/Users";
 import SharedLayout from "./components/layout/SharedLayout";
-import Login from "./auth/Login";
+import Login from "./authentication/Login";
 import ErrorRoute from "./pages/ErrorRoute";
 
 function App() {
@@ -12,8 +12,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<ErrorRoute />} />
-          <Route index element={<Navigate to="/login" replace />} />
-          <Route path="login" element={<Login />} />
+        <Route index element={<Navigate to="/login" replace />} />
+        <Route path="login" element={<Login />} />
         <Route path="/" element={<SharedLayout />}>
           {/* <Route index element={<Navigate to="/settings" replace />} /> */}
           <Route path="bookings" element={<Bookings />} />
