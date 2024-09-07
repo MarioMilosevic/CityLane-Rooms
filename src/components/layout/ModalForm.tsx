@@ -98,16 +98,16 @@ const ModalForm = ({
   };
 
   const editCurrentRoom = async (formData: RoomType) => {
-    console.log(formData);
-    console.log(fetchedFile);
+    // console.log("FORM DATA",formData);
     try {
       setIsButtonLoading(true);
-      await replaceExistingFile(fetchedFile.name, formData.image);
-      // const response = await editRoomServer(room.id, formData);
-      // console.log(response);
-      // if (response) {
-      //   editRoom(room.id, response);
-      // }
+      // const pathsObject = await replaceExistingFile(formData);
+      // console.log(pathsObject)
+      const response = await editRoomServer(room.id, {...formData, image:formData.image[0]});
+      console.log(response);
+      if (response) {
+        editRoom(room.id, response);
+      }
     } catch (error) {
       console.error("Error occured: ", error);
     } finally {
