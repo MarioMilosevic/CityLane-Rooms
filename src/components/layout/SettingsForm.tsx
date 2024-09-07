@@ -48,7 +48,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormBlock>
+      <FormBlock size="big" direction="row">
         <Label id={"Minimum nights/booking"} />
         <Input
           id={"Minimum nights/booking"}
@@ -57,7 +57,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
           error={errors.minNights}
         />
       </FormBlock>
-      <FormBlock>
+      <FormBlock size="big" direction="row">
         <Label id={"Maximum nights/booking"} />
         <Input
           id={"Maximum nights/booking"}
@@ -66,7 +66,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
           error={errors.maxNights}
         />
       </FormBlock>
-      <FormBlock>
+      <FormBlock size="big" direction="row">
         <Label id={"Maximum guests/booking"} />
         <Input
           id={"Maximum guests/booking"}
@@ -77,7 +77,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
           error={errors.maxGuests}
         />
       </FormBlock>
-      <FormBlock>
+      <FormBlock size="big" direction="row">
         <Label id={"Breakfast price"} />
         <Input
           id={"Breakfast price"}
@@ -93,7 +93,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
             color="white"
             clickHandler={() => reset()}
           />
-          <PrimaryActionButton text="Save changes" color="blue" type="submit" />
+          <PrimaryActionButton text="Save changes" color="yellow" type="submit" />
         </PrimaryActionButtonWrapper>
       )}
     </form>

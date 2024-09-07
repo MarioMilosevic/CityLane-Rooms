@@ -119,7 +119,7 @@ const ModalForm = ({
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
       <form
-        className="flex flex-col bg-neutral-50 z-20 border px-8 py-4 relative"
+        className="overflow-scroll w-[800px] max-h-[80vh] flex flex-col bg-neutral-50 z-20 border px-8 py-8 relative"
         ref={modalRef}
         onSubmit={handleSubmit(isEditingSession ? editCurrentRoom : addNewRoom)}
       >
@@ -204,7 +204,7 @@ const ModalForm = ({
           <PrimaryActionButton
             text={`${isEditingSession ? "Edit room" : "Create new room"}`}
             type="submit"
-            color="blue"
+            color="yellow"
             isLoading={isButtonLoading}
           />
         </PrimaryActionButtonWrapper>

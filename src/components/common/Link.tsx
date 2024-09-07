@@ -4,12 +4,16 @@ const Link = ({ link, isSelected, clickHandler }: LinkProps) => {
   const buttonBaseClass =
     "group flex items-center gap-2 text-xl rounded-xl p-2 cursor-pointer transition-colors duration-200 hover:bg-neutral-800";
 
-  const buttonClass = isSelected ? "bg-neutral-800" : "bg-neutral-50";
+  const buttonClass = isSelected ? "bg-neutral-900" : "bg-neutral-50";
 
-  const spanClass = isSelected ? "text-sky-500" : "group-hover:text-sky-500";
+  const spanClass = isSelected ? "text-yellow-500" : "group-hover:text-yellow-500";
   const h2Class = isSelected
     ? "text-neutral-50"
     : "group-hover:text-neutral-50";
+  // const spanClass = isSelected ? "text-sky-500" : "group-hover:text-sky-500";
+  // const h2Class = isSelected
+  //   ? "text-neutral-50"
+  //   : "group-hover:text-neutral-50";
 
   return (
     <button

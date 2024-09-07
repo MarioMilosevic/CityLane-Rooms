@@ -12,12 +12,11 @@ const SearchFilterTab = ({
   filterAndSort,
   setFilterAndSort,
 }: SearchFilterTabProps) => {
-
   const sortRendered = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilterAndSort((prev) => ({
-      ...prev, 
-      sort:e.target.value
-    }))
+      ...prev,
+      sort: e.target.value,
+    }));
     const sorted = updateRooms(rendered, filterAndSort.filter, e.target.value);
     setRendered(sorted);
   };
@@ -27,13 +26,13 @@ const SearchFilterTab = ({
       {tabOptions?.map((tab, index) => (
         <FilterTab
           key={index}
-          color={activeIndex === index ? "blue" : "neutral"}
+          color={activeIndex === index ? "yellow" : "neutral"}
           buttonHandler={tab.clickHandler}
           text={tab.text}
         />
       ))}
       <select
-        className="px-2 py-1 rounded-md"
+        className="px-2 py-2 rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         onChange={(e) => sortRendered(e)}
       >
         {sortOptions?.map((option, index) => (

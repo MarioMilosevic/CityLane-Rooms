@@ -12,8 +12,12 @@
 }
 
 .file_custom::file-selector-button {
-  background-color: #0ea5e9;
-  color: #e0f2fe;
+  /* sky 500 */
+  /* background-color: #0ea5e9; */
+  /* sky 100 */
+  /* color: #e0f2fe; */
+  background-color: #eab308;
+  color: #fef9c3;
   padding: 0.5rem;
   border-radius: 5px;
   border: none;
@@ -23,6 +27,10 @@
 }
 
 .file_custom::file-selector-button:hover {
-  background-color: #0284c7;
-  color: #f0f9ff;
+  /* sky 600 */
+  /* background-color: #0284c7; */
+  /* sky 50 */
+  /* color: #f0f9ff; */
+  background-color: #ca8a04;
+  color: #fefce8;
 }

@@ -4,6 +4,7 @@ const FilterTab = ({text, color, buttonHandler }: FilterTabProps) => {
   const filterTabColors: FilterTabColors = {
     blue: "bg-sky-600 text-sky-100",
     neutral: "bg-neutral-50 text-neutral-950",
+    yellow:"bg-yellow-500 text-yellow-50"
   };
 
   return (

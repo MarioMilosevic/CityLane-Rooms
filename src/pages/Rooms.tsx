@@ -109,7 +109,7 @@ const Rooms = () => {
         </ContentRowWrapper>
         <PrimaryActionButton
           text="Add new room"
-          color="blue"
+          color="yellow"
           clickHandler={() => setIsModalFormOpen(true)}
         />
       </ContentWrapper>

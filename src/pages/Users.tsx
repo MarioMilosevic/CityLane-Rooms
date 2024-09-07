@@ -44,7 +44,7 @@ const Users = () => {
       <HeaderContainer title={"Create a new user"} />
       <ContentWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormBlock>
+          <FormBlock size="big" direction="row">
             <Label id="Full name" />
             <Input
               id="Full name"
@@ -53,7 +53,7 @@ const Users = () => {
               error={errors.fullName}
             />
           </FormBlock>
-          <FormBlock>
+          <FormBlock size="big" direction="row">
             <Label id="Email address" />
             <Input
               id="Email address"
@@ -62,7 +62,7 @@ const Users = () => {
               error={errors.emailAddress}
             />
           </FormBlock>
-          <FormBlock>
+          <FormBlock size="big" direction="row">
             <Label id="Password" />
             <Input
               id="Password"
@@ -71,7 +71,7 @@ const Users = () => {
               error={errors.password}
             />
           </FormBlock>
-          <FormBlock>
+          <FormBlock size="big" direction="row">
             <Label id="Repeat password" />
             <Input
               id="Repeat password"
@@ -89,7 +89,7 @@ const Users = () => {
             <PrimaryActionButton
               text="Create new user"
               type="submit"
-              color="blue"
+              color="yellow"
             />
           </PrimaryActionButtonWrapper>
         </form>
