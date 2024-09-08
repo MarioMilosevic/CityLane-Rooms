@@ -1,4 +1,4 @@
-import roomHubLogo from "../../assets/images/roomhub icon.jpg";
+import happyRooms from "../../assets/images/happyrooms icon.jpg";
 import { useState } from "react";
 import { links } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
@@ -15,8 +15,8 @@ const Sidebar = () => {
   };
   return (
     <aside className="bg-neutral-50 w-[200px] flex flex-col border-r border-neutral-200">
-      <img src={roomHubLogo} alt={roomHubLogo} className="w-full pb-6" />
-      <Title title="RoomHub" />
+      <img src={happyRooms} alt={happyRooms} className="w-full pb-6" />
+      <Title title="Happy Rooms" />
       <div className="flex flex-col pl-2 pt-6">
         {links.map((link, index) => (
           <Link

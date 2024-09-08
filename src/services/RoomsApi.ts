@@ -98,22 +98,6 @@ export const uploadImage = async (file: File) => {
   }
 };
 
-export const downloadImage = async (fileName: string) => {
-  try {
-    const imagePath = getRoomImagePath(fileName);
-    const { data, error } = await supabase.storage
-      .from("RoomHubBucket")
-      .download(imagePath);
-
-    if (error) {
-      return error;
-    }
-    return data;
-  } catch (error) {
-    console.error("Error occured when getting image", error);
-  }
-};
-
 export const replaceExistingFile = async (file) => {
   console.log(file.image.name);
   // console.log("NOVI FAJL IME",f);

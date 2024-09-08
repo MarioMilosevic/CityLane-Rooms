@@ -26,7 +26,6 @@ import FileInput from "./FileInput";
 const ModalForm = ({
   room,
   filterAndSort,
-  fetchedFile,
   setIsModalFormOpen,
   setRooms,
   setRenderedRooms,
@@ -45,7 +44,7 @@ const ModalForm = ({
       regularPrice: room?.regularPrice || undefined,
       discount: room?.discount || undefined,
       description: room?.description || undefined,
-      image: fetchedFile || undefined,
+      image: room?.image || undefined,
     },
     resolver: zodResolver(newRoomSchema),
     mode: "onChange",
@@ -98,11 +97,8 @@ const ModalForm = ({
   };
 
   const editCurrentRoom = async (formData: RoomType) => {
-    // console.log("FORM DATA",formData);
     try {
       setIsButtonLoading(true);
-      // const pathsObject = await replaceExistingFile(formData);
-      // console.log(pathsObject)
       const response = await editRoomServer(room.id, {...formData, image:formData.image[0]});
       console.log(response);
       if (response) {

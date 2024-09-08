@@ -1,4 +1,4 @@
-import roomHubLogo from "../assets/images/roomhub icon.jpg";
+import happyRooms from "../assets/images/happyrooms icon.jpg";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import FormBlock from "../components/layout/FormBlock";
 import Input from "../components/layout/Input";
@@ -57,11 +57,12 @@ const Login = () => {
       <Toaster />
       <div className="flex flex-col gap-4 items-center">
         <img
-          src={roomHubLogo}
-          alt={roomHubLogo}
+          src={happyRooms}
+          alt={happyRooms}
           className="rounded-full w-[100px] h-[100px]"
         />
-        <h2 className="text-2xl text-yellow-800 text-center">ROOMHUB</h2>
+        {/* mozda TITLE */}
+        <h2 className="text-2xl text-yellow-800 text-center">HAPPYROOMS</h2>
         <h1 className="text-4xl font-medium">Log into your account</h1>
       </div>
       <form

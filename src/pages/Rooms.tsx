@@ -127,9 +127,4 @@ const Rooms = () => {
 };
 
 export default Rooms;
-/**
- * imam error kada dodajem sobu
- * kada downloadImage moram ime da promjenim da bude isto
- * kada editImage treba dodati replace file 
- * da napravim autentikaciju
- */
+

@@ -4,7 +4,6 @@ import { useState } from "react";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { showToast } from "../../services/toastNotification";
 import { createPortal } from "react-dom";
-import { downloadImage } from "../../services/RoomsApi";
 import { deleteRoomFromServer } from "../../services/RoomsApi";
 import useClickOutside from "../../hooks/useClickOutside";
 import OptionButton from "./OptionButton";
@@ -19,7 +18,6 @@ const SingleRoom = ({
 }: ContentRowProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
-  const [fetchedFile, setFetchedFile] = useState<Blob>()  
 
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsModalOpen(false),
@@ -47,17 +45,6 @@ const SingleRoom = ({
 
     const openModalAndGetImage = async () => {
       try {
-        console.log(image)
-        // OVO ISPOD AKO BIH HTIO DA MI STOJI TAJ NAZIV SLIKE U CHOSEN FILE
-        // const fileName = image.split("/").pop().slice(22);
-        const fileName = image.split("/").pop();
-        const downloadedBlob = await downloadImage(image);
-        downloadedBlob.name = fileName
-        downloadedBlob.lastModified = new Date()
-        const myFile = new File([downloadedBlob], fileName, {
-          type:downloadedBlob.type
-        })
-        setFetchedFile(myFile)
         setIsModalFormOpen(true);
       } catch (error) {
         console.error("Error occured", error);
@@ -109,7 +96,6 @@ const SingleRoom = ({
         createPortal(
           <ModalForm
             room={room}
-            fetchedFile={fetchedFile}
             filterAndSort={filterAndSort}
             setRooms={setRooms}
             setRenderedRooms={setRenderedRooms}
