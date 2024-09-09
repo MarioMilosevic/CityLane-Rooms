@@ -1,24 +1,31 @@
-import logo from "../assets/images/logo.jpg";
+import logo from "src/assets/images/logo.jpg";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import FormBlock from "../components/layout/FormBlock";
 import Input from "../components/layout/Input";
 import Label from "../components/layout/Label";
-import { loginUser } from "./LoginApi";
+import { getSession, loginUser } from "src/features/auth/services/LoginApi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginUserFormValues, loginUserSchema } from "./loginUserSchema";
+import {
+  loginUserFormValues,
+  loginUserSchema,
+} from "src/features/auth/validation/loginUserSchema";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { showToast } from "../services/toastNotification";
+import { showToast } from "src/utils/toast";
 import { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      navigate("/bookings");
-    }
+    const retrieveSession = async () => {
+      const session  = await getSession();
+      console.log(session);
+      if (session) {
+        navigate("/bookings");
+      }
+    };
+    retrieveSession();
   }, [navigate]);
 
   const form = useForm<loginUserFormValues>({
@@ -39,16 +46,11 @@ const Login = () => {
   const onSubmit = async (formData: loginUserFormValues) => {
     console.log(formData);
     try {
-      const response = await loginUser(formData);
-      if (response.user) {
-        localStorage.setItem("jwt", response.refresh_token);
-        navigate('/bookings')
-      }
+      await loginUser(formData);
+      reset();
     } catch (error) {
       showToast("Unexpected error occured, please try again later");
       console.error(error);
-    } finally {
-      reset();
     }
   };
 
@@ -58,7 +60,7 @@ const Login = () => {
       <div className="flex flex-col gap-4 items-center">
         <img
           src={logo}
-          alt={logo}
+          alt="Company logo"
           className="rounded-full w-[100px] h-[100px]"
         />
         {/* mozda TITLE */}

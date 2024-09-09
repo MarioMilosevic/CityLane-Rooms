@@ -1,14 +1,11 @@
+import { useState } from "react";
 import { ModalFormProps } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
-import {
-  createNewRoom,
-  editRoomServer,
-} from "../../services/RoomsApi";
-import { showToast } from "../../services/toastNotification";
-import { uploadImage } from "../../services/RoomsApi";
+import { createNewRoom, editRoomServer } from "src/features/rooms/services/RoomsApi";
+import { showToast } from "src/utils/toast";
+import { uploadImage } from "src/features/rooms/services/RoomsApi";
 import { RoomType } from "../../types/types";
-import { useState } from "react";
-import { newRoomSchema, newRoomValues } from "../../validation/newRoomSchema";
+import { newRoomSchema, newRoomValues } from "src/features/rooms/validation/newRoomSchema";
 import { FieldError, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateRooms } from "../../utils/helpers";
@@ -60,7 +57,7 @@ const ModalForm = ({
   const addNewRoom = async (formData: RoomType) => {
     try {
       setIsButtonLoading(true);
-      const imageFile = formData.image[0]
+      const imageFile = formData.image[0];
       const imageUrl = await uploadImage(imageFile as File);
       const newRoom = { ...formData, image: imageUrl as string };
       const data = await createNewRoom(newRoom);
@@ -93,20 +90,22 @@ const ModalForm = ({
   };
 
   const editCurrentRoom = async (formData: RoomType) => {
-    try {
-      setIsButtonLoading(true);
-      const response = await editRoomServer(room.id, {
-        ...formData,
-        image: formData.image[0],
-      });
-      if (response) {
-        editRoom(room.id, response);
+    if (room) {
+      try {
+        setIsButtonLoading(true);
+        const response = await editRoomServer(room.id, {
+          ...formData,
+          image: formData.image,
+        });
+        if (response) {
+          editRoom(room.id, response);
+        }
+      } catch (error) {
+        console.error("Error occured: ", error);
+      } finally {
+        setIsButtonLoading(false);
+        setIsModalFormOpen(false);
       }
-    } catch (error) {
-      console.error("Error occured: ", error);
-    } finally {
-      setIsButtonLoading(false);
-      setIsModalFormOpen(false);
     }
   };
 

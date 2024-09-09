@@ -7,7 +7,8 @@ export type RoomType = {
   regularPrice: number;
   discount: number;
   description: string;
-  image: File | string;
+  image: FileList | string;
+  // image: File | string;
   capacity: number;
   id: number;
   created_at: string;
@@ -121,7 +122,6 @@ export type OptionButtonProps = {
 
 export type ModalFormProps = {
   room?: RoomType;
-  rooms?: RoomType[];
   filterAndSort?: filterAndSortType;
   setIsModalFormOpen: Dispatch<SetStateAction<boolean>>;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;

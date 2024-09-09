@@ -7,8 +7,8 @@ import Input from "../components/layout/Input";
 import PrimaryActionButtonWrapper from "../components/layout/PrimaryActionButtonWrapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createNewUser } from "../services/UsersApi";
-import { newUserSchema, userFormValues } from "../validation/newUserSchema";
+import { createNewUser } from "src/features/users/services/UsersApi";
+import { newUserSchema, userFormValues } from "src/features/users/validation/newUserSchema";
 const Users = () => {
   const form = useForm({
     defaultValues: {

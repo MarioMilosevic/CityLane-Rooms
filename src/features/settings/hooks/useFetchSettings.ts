@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchSettings } from "../services/SettingsApi";
-import { SettingsType } from "../types/types";
+import { SettingsType } from "src/types/types";
 const useFetchSettings = (
   setSettings: React.Dispatch<React.SetStateAction<SettingsType>>
 ) => {
@@ -19,7 +19,7 @@ const useFetchSettings = (
     };
     fetchAndSetSettings();
   }, [setSettings]);
-  return loading
+  return loading;
 };
 
 export default useFetchSettings;

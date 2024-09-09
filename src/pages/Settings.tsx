@@ -1,11 +1,11 @@
-import HeaderContainer from "../components/layout/HeadingContainer";
-import ContentWrapper from "../components/layout/ContentWrapper";
-import { SettingsType } from "../types/types";
-import { initialSettingsState } from "../utils/constants";
+import HeaderContainer from "src/components/layout/HeadingContainer";
+import ContentWrapper from "src/components/layout/ContentWrapper";
+import { SettingsType } from "src/types/types";
+import { initialSettingsState } from "src/utils/constants";
 import { useState } from "react";
-import LoadingSpinner from "../components/layout/LoadingSpinner";
-import useFetchSettings from "../hooks/useFetchSettings";
-import SettingsForm from "../components/layout/SettingsForm";
+import LoadingSpinner from "src/components/layout/LoadingSpinner";
+import useFetchSettings from "src/features/settings/hooks/useFetchSettings";
+import SettingsForm from "src/components/layout/SettingsForm";
 const Settings = () => {
   const [settings, setSettings] = useState<SettingsType>(initialSettingsState);
   const loading = useFetchSettings(setSettings);

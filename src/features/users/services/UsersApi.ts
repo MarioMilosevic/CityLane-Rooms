@@ -1,6 +1,6 @@
-import supabase from "../config/supabaseClient";
-import { UserType } from "../types/types";
-import { showToast } from "./toastNotification";
+import supabase from "src/config/supabaseClient";
+import { UserType } from "src/types/types";
+import { showToast } from "src/utils/toast";
 
 export const createNewUser = async (user: UserType) => {
   try {

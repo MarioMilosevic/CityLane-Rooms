@@ -4,12 +4,9 @@ import Input from "./Input";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  settingsFormSchema,
-  settingsFormValues,
-} from "../../validation/settingsFormSchema";
-import { updateSettings } from "../../services/SettingsApi";
-import { showToast } from "../../services/toastNotification";
+import { settingsFormSchema, settingsFormValues } from "src/features/settings/validation/settingsFormSchema";
+import { updateSettings } from "src/features/settings/services/SettingsApi";
+import { showToast } from "src/utils/toast";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
 import { SettingsFormProps } from "../../types/types";
 

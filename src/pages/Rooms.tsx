@@ -11,7 +11,7 @@ import HeaderContainer from "src/components/layout/HeadingContainer";
 import ModalForm from "src/components/layout/ModalForm";
 import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
-import useFetchRooms from "src/hooks/useFetchRooms";
+import useFetchRooms from "src/features/rooms/hooks/useFetchRooms";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
 

@@ -1,7 +1,7 @@
-import { RoomType } from "../types/types";
+import { RoomType } from "src/types/types";
 import { nanoid } from "nanoid";
-import supabase from "../config/supabaseClient";
-import { getRoomImagePath } from "../utils/helpers";
+import supabase from "src/config/supabaseClient";
+import { getRoomImagePath } from "src/utils/helpers";
 const supabaseUrl = "https://xonugvplyyycodzjotuu.supabase.co";
 
 export const fetchAllRooms = async () => {
@@ -98,7 +98,7 @@ export const uploadImage = async (file: File) => {
 
 export const editRoomServer = async (roomId: number, newRoom: RoomType) => {
   try {
-    const newRoomName = newRoom.image as File;
+    const newRoomName = newRoom.image[0] as File;
     const imageName = `${nanoid()}--${newRoomName.name}`;
     const imagePath = `${supabaseUrl}/storage/v1/object/public/roomsStorage/${imageName}`;
 
@@ -114,7 +114,7 @@ export const editRoomServer = async (roomId: number, newRoom: RoomType) => {
 
     const uploadImageQuery = supabase.storage
       .from("roomsStorage")
-      .upload(imageName, newRoom.image, {
+      .upload(imageName, newRoomName, {
         cacheControl: "3600",
         upsert: false,
       });
