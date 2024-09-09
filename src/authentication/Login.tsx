@@ -1,4 +1,4 @@
-import happyRooms from "../assets/images/happyrooms icon.jpg";
+import logo from "../assets/images/logo.jpg";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import FormBlock from "../components/layout/FormBlock";
 import Input from "../components/layout/Input";
@@ -57,12 +57,12 @@ const Login = () => {
       <Toaster />
       <div className="flex flex-col gap-4 items-center">
         <img
-          src={happyRooms}
-          alt={happyRooms}
+          src={logo}
+          alt={logo}
           className="rounded-full w-[100px] h-[100px]"
         />
         {/* mozda TITLE */}
-        <h2 className="text-2xl text-yellow-800 text-center">HAPPYROOMS</h2>
+        <h2 className="text-2xl text-yellow-800 text-center">CityLane Rooms</h2>
         <h1 className="text-4xl font-medium">Log into your account</h1>
       </div>
       <form

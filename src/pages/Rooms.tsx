@@ -1,19 +1,19 @@
-import { roomsSortOptions } from "../utils/constants";
+import { roomsSortOptions } from "src/utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
-import { updateRooms } from "../utils/helpers";
-import { RoomType } from "../types/types";
-import ContentWrapper from "../components/layout/ContentWrapper";
-import ContentHeader from "../components/layout/ContentHeader";
-import SingleRoom from "../components/layout/SingleRoom";
-import PrimaryActionButton from "../components/common/PrimaryActionButton";
-import HeaderContainer from "../components/layout/HeadingContainer";
-import ModalForm from "../components/layout/ModalForm";
-import ContentHeaderWrapper from "../components/layout/ContentHeaderWrapper";
-import ContentRowWrapper from "../components/layout/ContentRowWrapper";
-import useFetchRooms from "../hooks/useFetchRooms";
-import SearchFilterTab from "../components/common/SearchFilterTab";
-import LoadingSpinner from "../components/layout/LoadingSpinner";
+import { updateRooms } from "src/utils/helpers";
+import { RoomType } from "src/types/types";
+import ContentWrapper from "src/components/layout/ContentWrapper";
+import ContentHeader from "src/components/layout/ContentHeader";
+import SingleRoom from "src/components/layout/SingleRoom";
+import PrimaryActionButton from "src/components/common/PrimaryActionButton";
+import HeaderContainer from "src/components/layout/HeadingContainer";
+import ModalForm from "src/components/layout/ModalForm";
+import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
+import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
+import useFetchRooms from "src/hooks/useFetchRooms";
+import SearchFilterTab from "src/components/common/SearchFilterTab";
+import LoadingSpinner from "src/components/layout/LoadingSpinner";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
@@ -127,4 +127,3 @@ const Rooms = () => {
 };
 
 export default Rooms;
-
