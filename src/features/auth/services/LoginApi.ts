@@ -11,7 +11,7 @@ export const loginUser = async (form: loginUserFormValues) => {
     });
     if (error) {
       showToast("Invalid credentials", "error");
-      return error;
+      throw Error('Invalid credentials')
     }
     return data;
   } catch (error) {

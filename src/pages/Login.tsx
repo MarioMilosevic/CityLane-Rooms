@@ -19,9 +19,10 @@ const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const retrieveSession = async () => {
-      const session  = await getSession();
-      console.log(session);
+      const {session} = await getSession();
+      console.log(session)
       if (session) {
+        console.log('uslo')
         navigate("/bookings");
       }
     };
@@ -34,7 +35,7 @@ const Login = () => {
       password: "",
     },
     resolver: zodResolver(loginUserSchema),
-    mode: "onChange",
+    // mode: "onChange",
   });
   const {
     register,
@@ -44,10 +45,13 @@ const Login = () => {
   } = form;
 
   const onSubmit = async (formData: loginUserFormValues) => {
-    console.log(formData);
     try {
-      await loginUser(formData);
-      reset();
+      const response = await loginUser(formData);
+      console.log(response)
+      if (response) {
+        navigate('/bookings')
+        reset();
+      }
     } catch (error) {
       showToast("Unexpected error occured, please try again later");
       console.error(error);

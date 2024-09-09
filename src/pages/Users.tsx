@@ -30,7 +30,8 @@ const Users = () => {
   const onSubmit = async (formData: userFormValues) => {
     try {
       const { repeatPassword, ...correctFormData } = formData;
-      await createNewUser(correctFormData);
+      const response = await createNewUser(correctFormData);
+      console.log(response)
     } catch (error) {
       console.error("Error creating new user: ", error);
     }

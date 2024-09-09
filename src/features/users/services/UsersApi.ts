@@ -4,13 +4,18 @@ import { showToast } from "src/utils/toast";
 
 export const createNewUser = async (user: UserType) => {
   try {
-    const { error } = await supabase.from("Users").insert(user);
+    const { data, error } = await supabase.auth.signUp({
+      email: user.emailAddress,
+      password: user.password,
+    });
     if (error) {
-      showToast("Unexpected error occured, please try again", "error");
-      return error;
+      showToast("Error occured when signing up", "error");
+      console.error("Error occured when signing up", error);
+      return;
     }
-    showToast("User created succesfully", "success");
+    return data;
   } catch (error) {
-    console.error("Error creating user: ", error);
+    showToast("Unexpected error occured, please try again", "error");
+    console.error(error);
   }
 };
