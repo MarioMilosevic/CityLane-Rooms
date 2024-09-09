@@ -3,8 +3,6 @@ import { PiXBold } from "react-icons/pi";
 import {
   createNewRoom,
   editRoomServer,
-  getImage,
-  replaceExistingFile,
 } from "../../services/RoomsApi";
 import { showToast } from "../../services/toastNotification";
 import { uploadImage } from "../../services/RoomsApi";
@@ -21,7 +19,6 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
-import FileInput from "./FileInput";
 
 const ModalForm = ({
   room,
@@ -61,13 +58,12 @@ const ModalForm = ({
   };
 
   const addNewRoom = async (formData: RoomType) => {
-    console.log(formData);
     try {
       setIsButtonLoading(true);
-      const imageUrl = await uploadImage(formData.image[0] as File);
+      const imageFile = formData.image[0]
+      const imageUrl = await uploadImage(imageFile as File);
       const newRoom = { ...formData, image: imageUrl as string };
       const data = await createNewRoom(newRoom);
-      console.log(data);
       addRoom(data);
       showToast("Room created successfully!", "success");
     } catch (error) {
@@ -99,8 +95,10 @@ const ModalForm = ({
   const editCurrentRoom = async (formData: RoomType) => {
     try {
       setIsButtonLoading(true);
-      const response = await editRoomServer(room.id, {...formData, image:formData.image[0]});
-      console.log(response);
+      const response = await editRoomServer(room.id, {
+        ...formData,
+        image: formData.image[0],
+      });
       if (response) {
         editRoom(room.id, response);
       }
@@ -175,21 +173,6 @@ const ModalForm = ({
             zod={{ ...register("image") }}
             error={errors.image as FieldError}
           />
-          {/* {fetchedFile ? (
-            <FileInput
-              id="Room photo"
-              file={fetchedFile}
-              zod={{ ...register("image") }}
-              error={errors.image as FieldError}
-            />
-          ) : (
-            <Input
-              id="Room photo"
-              type="file"
-              zod={{ ...register("image") }}
-              error={errors.image as FieldError}
-            />
-          )} */}
         </FormBlock>
         <PrimaryActionButtonWrapper>
           <PrimaryActionButton

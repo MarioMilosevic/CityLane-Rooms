@@ -7,7 +7,7 @@ export type RoomType = {
   regularPrice: number;
   discount: number;
   description: string;
-  image: FileList | string;
+  image: File | string;
   capacity: number;
   id: number;
   created_at: string;
@@ -139,12 +139,6 @@ export type InputProps = {
   error?: FieldError | undefined;
 };
 
-export type FileInputProps = {
-  id: string;
-  zod: UseFormRegisterReturn;
-  error: FieldError | undefined;
-  file: File;
-};
 
 export type TextAreaProps = {
   id: string;

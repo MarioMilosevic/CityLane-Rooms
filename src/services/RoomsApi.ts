@@ -37,7 +37,7 @@ export const deleteRoomFromServer = async (roomId: number) => {
     const imagePath = getRoomImagePath(imageUrl);
 
     const { error: deleteImageError } = await supabase.storage
-      .from("RoomHubBucket")
+      .from("roomsStorage")
       .remove([imagePath]);
 
     if (deleteImageError) {
@@ -62,7 +62,6 @@ export const deleteRoomFromServer = async (roomId: number) => {
 };
 
 export const createNewRoom = async (newRoom: RoomType) => {
-  // console.log(newRoom);
   const { data, error } = await supabase
     .from("Rooms")
     .insert([newRoom])
@@ -79,16 +78,15 @@ export const uploadImage = async (file: File) => {
   const fileName = `${nanoid()}_${file.name}`;
 
   const { data, error } = await supabase.storage
-    .from("RoomHubBucket")
+    .from("roomsStorage")
     .upload(`${fileName}`, file, {
       cacheControl: "3600",
       upsert: false,
     });
-  // console.log(data);
 
   if (data) {
     const { data: publicURL } = supabase.storage
-      .from("RoomHubBucket")
+      .from("roomsStorage")
       .getPublicUrl(`${fileName}`);
 
     return publicURL.publicUrl;
@@ -98,81 +96,45 @@ export const uploadImage = async (file: File) => {
   }
 };
 
-export const replaceExistingFile = async (file) => {
-  console.log(file.image.name);
-  // console.log("NOVI FAJL IME",f);
-  const imageName = `${crypto.randomUUID()}--${file.image.name}`;
-  const imagePath = `${supabaseUrl}/storage/v1/object/RoomHubBucket/images/${imageName}`;
+export const editRoomServer = async (roomId: number, newRoom: RoomType) => {
   try {
-    let query = supabase.from("Rooms");
-    const { data, error } = await supabase.storage
-      .from("RoomHubBucket")
-      .upload(`images/${oldFileName}`, newFile, {
+    const newRoomName = newRoom.image as File;
+    const imageName = `${nanoid()}--${newRoomName.name}`;
+    const imagePath = `${supabaseUrl}/storage/v1/object/public/roomsStorage/${imageName}`;
+
+    const updateRoomQuery = supabase
+      .from("Rooms")
+      .update({
+        ...newRoom,
+        image: imagePath,
+      })
+      .eq("id", roomId)
+      .select()
+      .single();
+
+    const uploadImageQuery = supabase.storage
+      .from("roomsStorage")
+      .upload(imageName, newRoom.image, {
         cacheControl: "3600",
         upsert: false,
       });
-    if (error) {
-      console.log(error);
+
+    const [{ data, error: updateError }, { error: uploadError }] =
+      await Promise.all([updateRoomQuery, uploadImageQuery]);
+
+    if (updateError) {
+      console.error("Error updating room:", updateError);
       return;
     }
-    console.log(data);
+
+    if (uploadError) {
+      await supabase.from("Rooms").delete().eq("id", roomId);
+      console.error("Error uploading image. Room update has been reverted.");
+      return;
+    }
+
     return data;
   } catch (error) {
-    console.log(error);
+    console.error("Unexpected error:", error);
   }
-};
-
-// https://xonugvplyyycodzjotuu.supabase.co/storage/v1/object/public/RoomHubBucket/images/58370695-7388-4296-9e3c-6b2846908f65--probnaslika.avif
-
-// https://xonugvplyyycodzjotuu.supabase.co/storage/v1/object/public/RoomHubBucket/58370695-7388-4296-9e3c-6b2846908f65--probnaslika.avif
-
-export const editRoomServer = async (roomId: number, newRoom: RoomType) => {
-  console.log("OVO TRAZIMO", newRoom);
-  const imageName = `${crypto.randomUUID()}--${newRoom.image.name}`.replaceAll(
-    "/",
-    ""
-  );
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/RoomHubBucket/${imageName}`;
-  let query = supabase
-    .from("Rooms")
-    .update({
-      ...newRoom,
-      image: imagePath,
-    })
-    .eq("id", roomId);
-  const { data, error } = await query.select().single();
-  if (error) {
-    console.log(error);
-    return;
-  }
-  console.log(data);
-  const { data: storageData, error: storageError } = await supabase.storage
-    .from("RoomHubBucket")
-    .upload(imageName, newRoom.image, {
-      cacheControl: "3600",
-      upsert: false,
-    });
-  console.log(storageData);
-  if (storageError) {
-    await supabase.from("Rooms").delete("id", roomId);
-    console.log("Soba nije mogla biti uploadovana, vracam promjene");
-  }
-
-  // try {
-
-  //   const { capacity, description, discount, name, regularPrice } = newRoom
-  //   console.log(capacity, description, discount, name, regularPrice)
-  //   const { data, error } = await supabase
-  //     .from("Rooms")
-  //     .update({capacity, description, discount, name, regularPrice})
-  //     .eq("id", roomId)
-  //     .select()
-  //     .single();
-  //   if (error) {
-  //     return error;
-  //   }
-  //   return data;
-  // } catch (error) {
-  //   console.error("Error occured when trying to edit room", error);
-  // }
 };
