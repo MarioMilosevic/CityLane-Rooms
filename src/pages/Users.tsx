@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewUser } from "src/features/users/services/UsersApi";
 import { newUserSchema, userFormValues } from "src/features/users/validation/newUserSchema";
+import { showToast } from "src/utils/toast";
 const Users = () => {
   const form = useForm({
     defaultValues: {
@@ -32,6 +33,9 @@ const Users = () => {
       const { repeatPassword, ...correctFormData } = formData;
       const response = await createNewUser(correctFormData);
       console.log(response)
+      if (response.user.id) {
+        showToast('User sucessfully created')
+      }
     } catch (error) {
       console.error("Error creating new user: ", error);
     }
