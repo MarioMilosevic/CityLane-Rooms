@@ -3,13 +3,13 @@ import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import FormBlock from "../components/layout/FormBlock";
 import Input from "../components/layout/Input";
 import Label from "../components/layout/Label";
-import { getSession, loginUser } from "src/features/auth/services/LoginApi";
+import { getSession, loginUser } from "src/api/LoginApi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   loginUserFormValues,
   loginUserSchema,
-} from "src/features/auth/validation/loginUserSchema";
+} from "src/validation/loginUserSchema";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "src/utils/toast";
@@ -20,7 +20,6 @@ const Login = () => {
   useEffect(() => {
     const retrieveSession = async () => {
       const {session} = await getSession();
-      console.log(session)
       if (session) {
         console.log('uslo')
         navigate("/bookings");
@@ -35,7 +34,6 @@ const Login = () => {
       password: "",
     },
     resolver: zodResolver(loginUserSchema),
-    // mode: "onChange",
   });
   const {
     register,
@@ -47,7 +45,6 @@ const Login = () => {
   const onSubmit = async (formData: loginUserFormValues) => {
     try {
       const response = await loginUser(formData);
-      console.log(response)
       if (response) {
         navigate('/bookings')
         reset();
@@ -67,9 +64,8 @@ const Login = () => {
           alt="Company logo"
           className="rounded-full w-[100px] h-[100px]"
         />
-        {/* mozda TITLE */}
         <h2 className="text-2xl text-yellow-800 text-center">CityLane Rooms</h2>
-        <h1 className="text-4xl font-medium">Log into your account</h1>
+        <h1 className="text-3xl font-medium">Log into your account</h1>
       </div>
       <form
         className="w-[500px] pt-24 flex flex-col"

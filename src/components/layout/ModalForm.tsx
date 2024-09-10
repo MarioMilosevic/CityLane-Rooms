@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { ModalFormProps } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
-import { createNewRoom, editRoomServer } from "src/features/rooms/services/RoomsApi";
+import { createNewRoom, editRoomServer } from "src/api/RoomsApi";
 import { showToast } from "src/utils/toast";
-import { uploadImage } from "src/features/rooms/services/RoomsApi";
+import { uploadImage } from "src/api/RoomsApi";
 import { RoomType } from "../../types/types";
-import { newRoomSchema, newRoomValues } from "src/features/rooms/validation/newRoomSchema";
+import {
+  newRoomSchema,
+  newRoomValues,
+} from "src/validation/newRoomSchema";
 import { FieldError, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateRooms } from "../../utils/helpers";

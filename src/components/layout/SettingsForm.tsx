@@ -4,8 +4,11 @@ import Input from "./Input";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { settingsFormSchema, settingsFormValues } from "src/features/settings/validation/settingsFormSchema";
-import { updateSettings } from "src/features/settings/services/SettingsApi";
+import {
+  settingsFormSchema,
+  settingsFormValues,
+} from "src/validation/settingsFormSchema";
+import { updateSettings } from "src/api/SettingsApi";
 import { showToast } from "src/utils/toast";
 import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
 import { SettingsFormProps } from "../../types/types";
@@ -90,7 +93,11 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
             color="white"
             clickHandler={() => reset()}
           />
-          <PrimaryActionButton text="Save changes" color="yellow" type="submit" />
+          <PrimaryActionButton
+            text="Save changes"
+            color="yellow"
+            type="submit"
+          />
         </PrimaryActionButtonWrapper>
       )}
     </form>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchAllRooms } from "src/features/rooms/services/RoomsApi";
+import { fetchAllRooms } from "src/api/RoomsApi";
 import { RoomType } from "src/types/types";
 
 const useFetchRooms = (

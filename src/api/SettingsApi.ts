@@ -1,5 +1,5 @@
 import supabase from "src/config/supabaseClient";
-import { settingsFormValues } from "src/features/settings/validation/settingsFormSchema";
+import { settingsFormValues } from "src/validation/settingsFormSchema";
 
 export const fetchSettings = async () => {
   try {

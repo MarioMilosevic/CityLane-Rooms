@@ -11,7 +11,7 @@ import HeaderContainer from "src/components/layout/HeadingContainer";
 import ModalForm from "src/components/layout/ModalForm";
 import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
-import useFetchRooms from "src/features/rooms/hooks/useFetchRooms";
+import useFetchRooms from "src/hooks/useFetchRooms";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
 
@@ -29,8 +29,8 @@ const Rooms = () => {
   const roomsTabs = [
     {
       text: "All",
-      clickHandler: () => {
-        setActiveIndex(0);
+      clickHandler: (index:number) => {
+        setActiveIndex(index);
         const filteredRooms = updateRooms(rooms, "All", filterAndSort.sort);
         setFilterAndSort((prev) => ({
           ...prev,
@@ -41,8 +41,8 @@ const Rooms = () => {
     },
     {
       text: "No discount",
-      clickHandler: () => {
-        setActiveIndex(1);
+      clickHandler: (index:number) => {
+        setActiveIndex(index);
         const filteredRooms = updateRooms(
           rooms,
           "No discount",
@@ -57,8 +57,8 @@ const Rooms = () => {
     },
     {
       text: "With discount",
-      clickHandler: () => {
-        setActiveIndex(2);
+      clickHandler: (index:number) => {
+        setActiveIndex(index);
         const filteredRooms = updateRooms(
           rooms,
           "With discount",

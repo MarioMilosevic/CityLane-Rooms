@@ -3,7 +3,6 @@ import { showToast } from "src/utils/toast";
 import { loginUserFormValues } from "../validation/loginUserSchema";
 
 export const loginUser = async (form: loginUserFormValues) => {
-  console.log(form)
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: form.email,

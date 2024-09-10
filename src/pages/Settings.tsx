@@ -4,7 +4,7 @@ import { SettingsType } from "src/types/types";
 import { initialSettingsState } from "src/utils/constants";
 import { useState } from "react";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
-import useFetchSettings from "src/features/settings/hooks/useFetchSettings";
+import useFetchSettings from "src/hooks/useFetchSettings";
 import SettingsForm from "src/components/layout/SettingsForm";
 const Settings = () => {
   const [settings, setSettings] = useState<SettingsType>(initialSettingsState);

@@ -12,7 +12,12 @@ export const links = [
 ];
 
 // Bookings
-export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
+export const bookingsSortOptions = [
+  "Sort by date (recent first)",
+  "Sort by date (earlier first)",
+  "Sort by amount (high first)",
+  "Sort by amount (low first)",
+]
 
 // Rooms
 

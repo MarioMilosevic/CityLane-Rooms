@@ -91,7 +91,7 @@ export type filterAndSortType = {
 };
 
 export type SearchFilterTabProps = {
-  tabOptions: { text: string; clickHandler: () => void }[];
+  tabOptions: { text: string; clickHandler: (index: number) => void }[];
   sortOptions: string[];
   activeIndex: number;
   rendered: RoomType[];
@@ -103,7 +103,7 @@ export type SearchFilterTabProps = {
 export type FormBlockProps = {
   children: ReactNode;
   size: keyof FormBlockSizeOptions;
-  direction:keyof FormBlockDirectionOptions
+  direction: keyof FormBlockDirectionOptions;
 };
 
 export type FormBlockDirectionOptions = {
@@ -138,7 +138,6 @@ export type InputProps = {
   zod?: UseFormRegisterReturn;
   error?: FieldError | undefined;
 };
-
 
 export type TextAreaProps = {
   id: string;

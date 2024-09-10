@@ -4,7 +4,7 @@ import { useState } from "react";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { showToast } from "src/utils/toast";
 import { createPortal } from "react-dom";
-import { deleteRoomFromServer } from "src/features/rooms/services/RoomsApi";
+import { deleteRoomFromServer } from "src/api/RoomsApi";
 import useClickOutside from "../../hooks/useClickOutside";
 import OptionButton from "./OptionButton";
 import RowOption from "../common/RowOption";
@@ -43,13 +43,9 @@ const SingleRoom = ({
     }
   };
 
-    const openModalAndGetImage = async () => {
-      try {
-        setIsModalFormOpen(true);
-      } catch (error) {
-        console.error("Error occured", error);
-      }
-    };
+  const openModal = async () => {
+    setIsModalFormOpen(true);
+  };
 
   return (
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative">
@@ -82,7 +78,7 @@ const SingleRoom = ({
             <RowOption
               text="Edit"
               icon={MdModeEditOutline}
-              clickHandler={openModalAndGetImage}
+              clickHandler={openModal}
             />
             <RowOption
               text="Delete"

@@ -27,12 +27,12 @@ const SearchFilterTab = ({
         <FilterTab
           key={index}
           color={activeIndex === index ? "yellow" : "neutral"}
-          buttonHandler={tab.clickHandler}
+          buttonHandler={() => tab.clickHandler(index)}
           text={tab.text}
         />
       ))}
       <select
-        className="px-2 py-2 rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+        className="py-1 px-2 rounded-md bg-neutral-50 focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         onChange={(e) => sortRendered(e)}
       >
         {sortOptions?.map((option, index) => (

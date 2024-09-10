@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchSettings } from "../services/SettingsApi";
+import { fetchSettings } from "src/api/SettingsApi";
 import { SettingsType } from "src/types/types";
 const useFetchSettings = (
   setSettings: React.Dispatch<React.SetStateAction<SettingsType>>
