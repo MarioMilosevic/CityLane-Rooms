@@ -178,3 +178,13 @@ export type UserType = {
   emailAddress: string;
   password: string;
 };
+
+export type StatusProps = {
+  status: keyof StatusOptions;
+}
+
+export type StatusOptions = {
+  checkedIn: string;
+  checkedOut: string;
+  unconfirmed: string;
+}
