@@ -181,10 +181,22 @@ export type UserType = {
 
 export type StatusProps = {
   status: keyof StatusOptions;
-}
+};
 
 export type StatusOptions = {
   checkedIn: string;
   checkedOut: string;
   unconfirmed: string;
-}
+};
+
+export type AmountProps = {
+  type: keyof TypeOptions;
+  value: number;
+};
+
+export type TypeOptions = {
+  price: string;
+  amount: string;
+};
+
+

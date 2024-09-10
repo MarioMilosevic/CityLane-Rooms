@@ -9,6 +9,8 @@ import useClickOutside from "../../hooks/useClickOutside";
 import OptionButton from "./OptionButton";
 import RowOption from "../common/RowOption";
 import ModalForm from "./ModalForm";
+import Amount from "../common/Amount";
+import Discount from "../common/Discount";
 
 const SingleRoom = ({
   room,
@@ -58,8 +60,7 @@ const SingleRoom = ({
       </div>
       <h3 className="text-lg font-medium">{name}</h3>
       <p>Fits up to {capacity} guests</p>
-      <h4 className="font-medium">{`$${regularPrice}.00`}</h4>
-
+      <Amount value={regularPrice} type="price"/>
       <div className="font-medium relative flex items-center justify-between pr-6">
         {discount ? (
           <h4 className="text-green-500">{`$${discount}.00`}</h4>

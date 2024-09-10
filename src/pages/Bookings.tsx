@@ -56,11 +56,11 @@ const Bookings = () => {
           <ContentHeader title="Amount"/>
         </ContentHeaderWrapper>
         <ContentRowWrapper>
-          <SingleBooking status="checkedIn"/>
-          <SingleBooking status="checkedOut"/>
-          <SingleBooking status="unconfirmed"/>
-          <SingleBooking status="unconfirmed"/>
-          <SingleBooking status="checkedOut"/>
+          <SingleBooking amount={1200} status="checkedIn"/>
+          <SingleBooking amount={975} status="checkedOut"/>
+          <SingleBooking amount={800} status="unconfirmed"/>
+          <SingleBooking amount={29400} status="unconfirmed"/>
+          <SingleBooking amount={200} status="checkedOut"/>
         </ContentRowWrapper>
       </ContentWrapper>
     </>
