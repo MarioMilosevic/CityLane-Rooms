@@ -11,6 +11,7 @@ import RowOption from "../common/RowOption";
 import ModalForm from "./ModalForm";
 import Amount from "../common/Amount";
 import Discount from "../common/Discount";
+import { formatPrice } from "src/utils/helpers";
 
 const SingleRoom = ({
   room,
@@ -60,12 +61,14 @@ const SingleRoom = ({
       </div>
       <h3 className="text-lg font-medium">{name}</h3>
       <p>Fits up to {capacity} guests</p>
-      <Amount value={regularPrice} type="price"/>
+      <Amount value={regularPrice} type="price" />
       <div className="font-medium relative flex items-center justify-between pr-6">
         {discount ? (
-          <h4 className="text-green-500">{`$${discount}.00`}</h4>
+          <h4 className="text-green-500">{`$${formatPrice(discount)}`}</h4>
         ) : (
-          <h4 className="line-through text-neutral-500">{`$${regularPrice}.00`}</h4>
+          <h4 className="line-through text-neutral-500">{`$${formatPrice(
+            regularPrice
+          )}`}</h4>
         )}
         <button
           className="cursor-pointer w-8 h-8 flex items-center justify-center"

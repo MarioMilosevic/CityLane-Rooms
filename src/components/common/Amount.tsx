@@ -1,4 +1,5 @@
 import { AmountProps } from "src/types/types";
+import { formatPrice } from "src/utils/helpers";
 
 const Amount = ({ type, value }: AmountProps) => {
   const typeOptions = {
@@ -6,7 +7,7 @@ const Amount = ({ type, value }: AmountProps) => {
     amount: "font-normal",
   };
 
-  return <h4 className={`${typeOptions[type]}`}>{`$${value}.00`}</h4>;
+  return <h4 className={`${typeOptions[type]}`}>${formatPrice(value)}</h4>;
 };
 
 export default Amount;

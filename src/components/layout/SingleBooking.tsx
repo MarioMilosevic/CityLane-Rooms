@@ -13,8 +13,8 @@ const SingleBooking = ({ status, amount }) => {
         <span>In 5 years → 3 night stay</span>
         <span className="text-sm">Sep 18 2029 — Sep 21 2029</span>
       </div>
-          <Status status={status} />
-          <Amount value={amount} type="amount"/>
+      <Status status={status} />
+      <Amount value={amount} type="amount" />
     </li>
   );
 };
