@@ -47,7 +47,7 @@ export type ContentWrapperProps = {
   children: ReactNode;
 };
 
-export type RowOptionProps = {
+export type OptionProps = {
   icon: IconType;
   text: string;
   clickHandler: () => void;
@@ -191,3 +191,8 @@ export type TypeOptions = {
 export type SelectProps = {
   options:string[]
 }
+
+export type OpenModalOptionsProps = {
+  clickHandler: () => void;
+}
+

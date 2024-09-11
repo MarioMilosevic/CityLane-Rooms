@@ -18,7 +18,7 @@ const Navigation = () => {
 }
 
   return (
-    <nav className="flex justify-end gap-4 w-full h-[50px] py-2 pr-24 border-b border-neutral-200">
+    <nav className="flex justify-end gap-4 w-full h-[50px] py-2 border-b border-neutral-200">
       <div className="flex gap-2 justify-center items-center h-full">
         <img
           src={userPicture}

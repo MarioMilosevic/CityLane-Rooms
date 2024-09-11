@@ -8,7 +8,7 @@ const Status = ({ status }: StatusProps) => {
   };
 
   return (
-    <span className={`${statusOptions[status]} uppercase font-normal rounded-full text-sm w-[120px] px-2 py-1 text-center`}>
+    <span className={`${statusOptions[status]} uppercase font-normal rounded-full text-xs w-[120px] px-2 py-1 text-center`}>
       {status}
     </span>
   );

@@ -14,7 +14,7 @@ export const loginUser = async (form: loginUserFormValues) => {
     }
     return data;
   } catch (error) {
-    console.log("Error occured", error);
+    console.log(error);
   }
 };
 

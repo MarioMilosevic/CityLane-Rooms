@@ -34,12 +34,14 @@ const Login = () => {
       password: "",
     },
     resolver: zodResolver(loginUserSchema),
+    mode:'onSubmit'
   });
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    
   } = form;
 
   const onSubmit = async (formData: loginUserFormValues) => {

@@ -1,27 +1,24 @@
 import { ContentRowProps } from "../../types/types";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 import { showToast } from "src/utils/toast";
 import { createPortal } from "react-dom";
 import { deleteRoomFromServer } from "src/api/RoomsApi";
+import { formatPrice } from "src/utils/helpers";
 import useClickOutside from "../../hooks/useClickOutside";
 import OptionButton from "./OptionButton";
-import RowOption from "../common/RowOption";
+import Option from "../common/Option";
 import ModalForm from "./ModalForm";
 import Amount from "../common/Amount";
-import { formatPrice } from "src/utils/helpers";
+import OpenModalOptions from "./OpenModalOptions";
 
-const SingleRoom = ({
-  room,
-  setRooms,
-}: ContentRowProps) => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+const SingleRoom = ({ room, setRooms }: ContentRowProps) => {
+  const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
 
   const modalRef = useClickOutside<HTMLDivElement>(
-    () => setIsModalOpen(false),
-    isModalOpen
+    () => setIsOptionsModalOpen(false),
+    isOptionsModalOpen
   );
   const { image, name, regularPrice, discount, capacity } = room;
 
@@ -40,10 +37,6 @@ const SingleRoom = ({
       showToast("Error deleting room");
       console.error("Error deleting room :", error);
     }
-  };
-
-  const openModal = async () => {
-    setIsModalFormOpen(true);
   };
 
   return (
@@ -66,21 +59,17 @@ const SingleRoom = ({
             regularPrice
           )}`}</h4>
         )}
-        <button
-          className="cursor-pointer w-8 h-8 flex items-center justify-center"
-          onClick={() => setIsModalOpen((prev) => !prev)}
-        >
-          <BsThreeDotsVertical className="h-5 w-5" />
-        </button>
-
-        {isModalOpen && (
+        <OpenModalOptions
+          clickHandler={() => setIsOptionsModalOpen((prev) => !prev)}
+        />
+        {isOptionsModalOpen && (
           <OptionButton ref={modalRef}>
-            <RowOption
+            <Option
               text="Edit"
               icon={MdModeEditOutline}
-              clickHandler={openModal}
+              clickHandler={() => setIsModalFormOpen(true)}
             />
-            <RowOption
+            <Option
               text="Delete"
               icon={MdDelete}
               clickHandler={() => deleteHandler(room.id)}
