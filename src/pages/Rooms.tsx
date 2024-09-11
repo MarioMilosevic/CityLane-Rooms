@@ -14,6 +14,7 @@ import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import useFetchRooms from "src/hooks/useFetchRooms";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
+import { useSearchParams } from "react-router-dom";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
@@ -25,53 +26,59 @@ const Rooms = () => {
     filter: "All",
     sort: "name (A-Z)",
   });
+  const [searchParams] = useSearchParams();
+  const filterValue = searchParams.get("discount") || "All";
+  console.log(filterValue);
 
-  const roomsTabs = [
-    {
-      text: "All",
-      clickHandler: (index:number) => {
-        setActiveIndex(index);
-        const filteredRooms = updateRooms(rooms, "All", filterAndSort.sort);
-        setFilterAndSort((prev) => ({
-          ...prev,
-          filter: "All",
-        }));
-        setRenderedRooms(filteredRooms);
-      },
-    },
-    {
-      text: "No discount",
-      clickHandler: (index:number) => {
-        setActiveIndex(index);
-        const filteredRooms = updateRooms(
-          rooms,
-          "No discount",
-          filterAndSort.sort
-        );
-        setFilterAndSort((prev) => ({
-          ...prev,
-          filter: "No discount",
-        }));
-        setRenderedRooms(filteredRooms);
-      },
-    },
-    {
-      text: "With discount",
-      clickHandler: (index:number) => {
-        setActiveIndex(index);
-        const filteredRooms = updateRooms(
-          rooms,
-          "With discount",
-          filterAndSort.sort
-        );
-        setFilterAndSort((prev) => ({
-          ...prev,
-          filter: "With discount",
-        }));
-        setRenderedRooms(filteredRooms);
-      },
-    },
-  ];
+  let filteredRooms = rooms.filter
+// if ovo onda ovo if ono onda ono
+
+  // const roomsTabs = [
+  //   {
+  //     text: "All",
+  //     clickHandler: (index: number) => {
+  //       setActiveIndex(index);
+  //       const filteredRooms = updateRooms(rooms, "All", filterAndSort.sort);
+  //       setFilterAndSort((prev) => ({
+  //         ...prev,
+  //         filter: "All",
+  //       }));
+  //       setRenderedRooms(filteredRooms);
+  //     },
+  //   },
+  //   {
+  //     text: "No discount",
+  //     clickHandler: (index: number) => {
+  //       setActiveIndex(index);
+  //       const filteredRooms = updateRooms(
+  //         rooms,
+  //         "No discount",
+  //         filterAndSort.sort
+  //       );
+  //       setFilterAndSort((prev) => ({
+  //         ...prev,
+  //         filter: "No discount",
+  //       }));
+  //       setRenderedRooms(filteredRooms);
+  //     },
+  //   },
+  //   {
+  //     text: "With discount",
+  //     clickHandler: (index: number) => {
+  //       setActiveIndex(index);
+  //       const filteredRooms = updateRooms(
+  //         rooms,
+  //         "With discount",
+  //         filterAndSort.sort
+  //       );
+  //       setFilterAndSort((prev) => ({
+  //         ...prev,
+  //         filter: "With discount",
+  //       }));
+  //       setRenderedRooms(filteredRooms);
+  //     },
+  //   },
+  // ];
 
   if (loading) return <LoadingSpinner />;
 

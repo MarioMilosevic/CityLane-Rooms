@@ -36,7 +36,6 @@ export type FilterTabProps = {
 };
 
 export type FilterTabColors = {
-  blue: string;
   neutral: string;
   yellow: string;
 };

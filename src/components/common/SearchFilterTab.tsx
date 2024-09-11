@@ -1,12 +1,12 @@
-import FilterTab from "./FilterTab";
 import SortOption from "./SortOption";
 import { updateRooms } from "../../utils/helpers";
 
 import { SearchFilterTabProps } from "../../types/types";
+import Filter from "../Filter";
 const SearchFilterTab = ({
-  tabOptions,
+  // tabOptions,
   sortOptions,
-  activeIndex,
+  // activeIndex,
   rendered,
   setRendered,
   filterAndSort,
@@ -23,14 +23,8 @@ const SearchFilterTab = ({
 
   return (
     <div className="flex items-center gap-2 text-sm">
-      {tabOptions?.map((tab, index) => (
-        <FilterTab
-          key={index}
-          color={activeIndex === index ? "yellow" : "neutral"}
-          buttonHandler={() => tab.clickHandler(index)}
-          text={tab.text}
-        />
-      ))}
+      <Filter options={["All", "With discount", "No discount"]} />
+      {/* isto za sort */}
       <select
         className="py-1 px-2 rounded-md bg-neutral-50 focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         onChange={(e) => sortRendered(e)}
