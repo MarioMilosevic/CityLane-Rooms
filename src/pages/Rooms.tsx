@@ -10,19 +10,15 @@ import HeaderContainer from "src/components/layout/HeadingContainer";
 import ModalForm from "src/components/layout/ModalForm";
 import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
-import useFetchRooms from "src/hooks/useFetchRooms";
+import useFetchData from "src/hooks/useFetchData";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
 import { useSearchParams } from "react-router-dom";
-
+import { fetchAllRooms } from "src/api/RoomsApi";
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
-  const loading = useFetchRooms(setRooms);
+  const loading = useFetchData(setRooms, fetchAllRooms);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
-  const [filterAndSort, setFilterAndSort] = useState({
-    filter: "All",
-    sort: "name (A-Z)",
-  });
   const [searchParams] = useSearchParams();
   const filterValue = searchParams.get("discount") || "All";
   const sortValue = searchParams.get("sort") || "name (A-Z)";
@@ -69,8 +65,6 @@ const Rooms = () => {
         <SearchFilterTab
           tabOptions={roomsTabs}
           sortOptions={roomsSortOptions}
-          filterAndSort={filterAndSort}
-          setFilterAndSort={setFilterAndSort}
         />
       </HeaderContainer>
       <ContentWrapper>
@@ -86,7 +80,6 @@ const Rooms = () => {
             <SingleRoom
               key={room.id}
               room={room}
-              filterAndSort={filterAndSort}
               setRooms={setRooms}
             ></SingleRoom>
           ))}

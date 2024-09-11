@@ -55,9 +55,7 @@ export type RowOptionProps = {
 
 export type ContentRowProps = {
   room: RoomType;
-  filterAndSort: filterAndSortType;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
-  setRenderedRooms: Dispatch<SetStateAction<RoomType[]>>;
 };
 
 export type buttonColorOptions = {
@@ -88,11 +86,6 @@ export type filterAndSortType = {
 export type SearchFilterTabProps = {
   tabOptions: string[];
   sortOptions: string[];
-  activeIndex: number;
-  rendered: RoomType[];
-  setRendered: Dispatch<SetStateAction<RoomType[]>>;
-  filterAndSort: filterAndSortType;
-  setFilterAndSort: Dispatch<SetStateAction<filterAndSortType>>;
 };
 
 export type FormBlockProps = {
@@ -117,10 +110,8 @@ export type OptionButtonProps = {
 
 export type ModalFormProps = {
   room?: RoomType;
-  filterAndSort?: filterAndSortType;
   setIsModalFormOpen: Dispatch<SetStateAction<boolean>>;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
-  setRenderedRooms: Dispatch<SetStateAction<RoomType[]>>;
 };
 
 export type LabelProps = {
@@ -197,3 +188,6 @@ export type TypeOptions = {
 };
 
 
+export type SelectProps = {
+  options:string[]
+}

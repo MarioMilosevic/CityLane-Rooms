@@ -11,7 +11,6 @@ import {
 } from "src/validation/newRoomSchema";
 import { FieldError, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { updateRooms } from "../../utils/helpers";
 import useClickOutside from "../../hooks/useClickOutside";
 import FormBlock from "./FormBlock";
 import Label from "./Label";
@@ -22,10 +21,8 @@ import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
 
 const ModalForm = ({
   room,
-  filterAndSort,
   setIsModalFormOpen,
   setRooms,
-  setRenderedRooms,
 }: ModalFormProps) => {
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalFormOpen(false)
@@ -54,7 +51,6 @@ const ModalForm = ({
 
   const addRoom = (newRoom: RoomType) => {
     setRooms((prev) => [...prev, newRoom]);
-    setRenderedRooms((prev) => [...prev, newRoom]);
   };
 
   const addNewRoom = async (formData: RoomType) => {
@@ -79,17 +75,6 @@ const ModalForm = ({
     setRooms((prev) =>
       prev.map((room) => (room.id === roomId ? updatedRoom : room))
     );
-    setRenderedRooms((prev) => {
-      const newRooms = prev.map((room) =>
-        room.id === roomId ? updatedRoom : room
-      );
-      const updatedRooms = updateRooms(
-        newRooms,
-        filterAndSort?.filter as string,
-        filterAndSort?.sort as string
-      );
-      return updatedRooms;
-    });
   };
 
   const editCurrentRoom = async (formData: RoomType) => {

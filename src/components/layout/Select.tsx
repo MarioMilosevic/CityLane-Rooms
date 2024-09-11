@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom";
+import { SelectProps } from "src/types/types";
 
-const Select = ({ options }) => {
+const Select = ({ options }:SelectProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

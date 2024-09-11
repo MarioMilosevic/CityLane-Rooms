@@ -10,14 +10,11 @@ import OptionButton from "./OptionButton";
 import RowOption from "../common/RowOption";
 import ModalForm from "./ModalForm";
 import Amount from "../common/Amount";
-import Discount from "../common/Discount";
 import { formatPrice } from "src/utils/helpers";
 
 const SingleRoom = ({
   room,
-  filterAndSort,
   setRooms,
-  setRenderedRooms,
 }: ContentRowProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
@@ -30,7 +27,6 @@ const SingleRoom = ({
 
   const deleteRoom = (roomId: number) => {
     setRooms((prev) => prev.filter((room) => room.id !== roomId));
-    setRenderedRooms((prev) => prev.filter((room) => room.id !== roomId));
   };
 
   const deleteHandler = async (roomId: number) => {
@@ -96,9 +92,7 @@ const SingleRoom = ({
         createPortal(
           <ModalForm
             room={room}
-            filterAndSort={filterAndSort}
             setRooms={setRooms}
-            setRenderedRooms={setRenderedRooms}
             setIsModalFormOpen={setIsModalFormOpen}
           />,
           document.body
