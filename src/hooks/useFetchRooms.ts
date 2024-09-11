@@ -4,7 +4,6 @@ import { RoomType } from "src/types/types";
 
 const useFetchRooms = (
   setRooms: React.Dispatch<React.SetStateAction<RoomType[]>>,
-  setRenderedRooms: React.Dispatch<React.SetStateAction<RoomType[]>>
 ) => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -13,7 +12,6 @@ const useFetchRooms = (
         setLoading(true);
         const data = await fetchAllRooms();
         setRooms(data);
-        setRenderedRooms(data);
       } catch (error) {
         console.error("Error fetching rooms", error);
         setRooms([]);
@@ -22,7 +20,7 @@ const useFetchRooms = (
       }
     };
     fetchAndSetRooms();
-  }, [setRooms, setRenderedRooms]);
+  }, [setRooms]);
   return loading;
 };
 

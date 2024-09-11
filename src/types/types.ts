@@ -8,7 +8,6 @@ export type RoomType = {
   discount: number;
   description: string;
   image: FileList | string;
-  // image: File | string;
   capacity: number;
   id: number;
   created_at: string;
@@ -29,13 +28,13 @@ export type MainContainerProps = {
   children: ReactNode;
 };
 
-export type FilterTabProps = {
+export type FilterButtonProps = {
   text: string;
-  color: keyof FilterTabColors;
+  color: keyof FilterButtonColors;
   buttonHandler: () => void;
 };
 
-export type FilterTabColors = {
+export type FilterButtonColors = {
   neutral: string;
   yellow: string;
 };
@@ -80,9 +79,6 @@ export type HeadingContainerProps = {
   children?: ReactNode;
 };
 
-export type SortOptionType = {
-  option: string;
-};
 
 export type filterAndSortType = {
   filter: string;
@@ -90,7 +86,7 @@ export type filterAndSortType = {
 };
 
 export type SearchFilterTabProps = {
-  tabOptions: { text: string; clickHandler: (index: number) => void }[];
+  tabOptions: string[];
   sortOptions: string[];
   activeIndex: number;
   rendered: RoomType[];
@@ -156,7 +152,9 @@ export type PrimaryActionButtonWrapperProps = {
   children: ReactNode;
 };
 
-////////////////////////////////////////////////////// SETTINGS
+export type FilterProps = {
+  options:string[]
+}
 
 export type SettingsType = {
   breakfastPrice: number;

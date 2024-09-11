@@ -17,9 +17,11 @@ export const bookingsSortOptions = [
   "Sort by date (earlier first)",
   "Sort by amount (high first)",
   "Sort by amount (low first)",
-]
+];
 
 // Rooms
+
+export const roomsTabs = ["All", "With discount", "No discount"];
 
 export const roomsSortOptions = [
   "name (A-Z)",
@@ -32,10 +34,7 @@ export const roomsSortOptions = [
 
 // Users
 
-
-
 // Settings
-
 
 export const initialSettingsState = {
   id: 0,

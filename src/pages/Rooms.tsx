@@ -1,7 +1,6 @@
-import { roomsSortOptions } from "src/utils/constants";
+import { roomsSortOptions, roomsTabs } from "src/utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
-import { updateRooms } from "src/utils/helpers";
 import { RoomType } from "src/types/types";
 import ContentWrapper from "src/components/layout/ContentWrapper";
 import ContentHeader from "src/components/layout/ContentHeader";
@@ -18,9 +17,7 @@ import { useSearchParams } from "react-router-dom";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
-  const [renderedRooms, setRenderedRooms] = useState<RoomType[]>([]);
-  const loading = useFetchRooms(setRooms, setRenderedRooms);
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const loading = useFetchRooms(setRooms);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
   const [filterAndSort, setFilterAndSort] = useState({
     filter: "All",
@@ -28,57 +25,41 @@ const Rooms = () => {
   });
   const [searchParams] = useSearchParams();
   const filterValue = searchParams.get("discount") || "All";
-  console.log(filterValue);
+  const sortValue = searchParams.get("sort") || "name (A-Z)";
 
-  let filteredRooms = rooms.filter
-// if ovo onda ovo if ono onda ono
+  let displayedRooms;
 
-  // const roomsTabs = [
-  //   {
-  //     text: "All",
-  //     clickHandler: (index: number) => {
-  //       setActiveIndex(index);
-  //       const filteredRooms = updateRooms(rooms, "All", filterAndSort.sort);
-  //       setFilterAndSort((prev) => ({
-  //         ...prev,
-  //         filter: "All",
-  //       }));
-  //       setRenderedRooms(filteredRooms);
-  //     },
-  //   },
-  //   {
-  //     text: "No discount",
-  //     clickHandler: (index: number) => {
-  //       setActiveIndex(index);
-  //       const filteredRooms = updateRooms(
-  //         rooms,
-  //         "No discount",
-  //         filterAndSort.sort
-  //       );
-  //       setFilterAndSort((prev) => ({
-  //         ...prev,
-  //         filter: "No discount",
-  //       }));
-  //       setRenderedRooms(filteredRooms);
-  //     },
-  //   },
-  //   {
-  //     text: "With discount",
-  //     clickHandler: (index: number) => {
-  //       setActiveIndex(index);
-  //       const filteredRooms = updateRooms(
-  //         rooms,
-  //         "With discount",
-  //         filterAndSort.sort
-  //       );
-  //       setFilterAndSort((prev) => ({
-  //         ...prev,
-  //         filter: "With discount",
-  //       }));
-  //       setRenderedRooms(filteredRooms);
-  //     },
-  //   },
-  // ];
+  displayedRooms = rooms.filter((room) => {
+    if (filterValue === "With discount") {
+      return room.discount > 0;
+    } else if (filterValue === "No discount") {
+      return room.discount === 0;
+    } else if (filterValue === "All") {
+      return rooms;
+    }
+  });
+
+  displayedRooms = displayedRooms.sort((a, b) => {
+    if (sortValue === "name (A-Z)") {
+      return a.name.localeCompare(b.name);
+    }
+    if (sortValue === "name (Z-A)") {
+      return b.name.localeCompare(a.name);
+    }
+    if (sortValue === "price (low first)") {
+      return Number(a.regularPrice) - Number(b.regularPrice);
+    }
+    if (sortValue === "price (high first)") {
+      return Number(b.regularPrice) - Number(a.regularPrice);
+    }
+    if (sortValue === "capacity (low first)") {
+      return Number(a.capacity) - Number(b.capacity);
+    }
+    if (sortValue === "capacity (high first)") {
+      return Number(b.capacity) - Number(a.capacity);
+    }
+    return 0;
+  });
 
   if (loading) return <LoadingSpinner />;
 
@@ -88,9 +69,6 @@ const Rooms = () => {
         <SearchFilterTab
           tabOptions={roomsTabs}
           sortOptions={roomsSortOptions}
-          activeIndex={activeIndex}
-          rendered={renderedRooms}
-          setRendered={setRenderedRooms}
           filterAndSort={filterAndSort}
           setFilterAndSort={setFilterAndSort}
         />
@@ -104,13 +82,12 @@ const Rooms = () => {
           <ContentHeader title="Discount" />
         </ContentHeaderWrapper>
         <ContentRowWrapper>
-          {renderedRooms.map((room) => (
+          {displayedRooms.map((room) => (
             <SingleRoom
               key={room.id}
               room={room}
               filterAndSort={filterAndSort}
               setRooms={setRooms}
-              setRenderedRooms={setRenderedRooms}
             ></SingleRoom>
           ))}
         </ContentRowWrapper>
@@ -125,7 +102,6 @@ const Rooms = () => {
           <ModalForm
             setIsModalFormOpen={setIsModalFormOpen}
             setRooms={setRooms}
-            setRenderedRooms={setRenderedRooms}
           />,
           document.body
         )}

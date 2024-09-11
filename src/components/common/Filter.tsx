@@ -1,8 +1,9 @@
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import FilterButton from "./common/FilterButton";
+import FilterButton from "./FilterButton";
+import { FilterProps } from "src/types/types";
 
-const Filter = ({ options }: { options: string[] }) => {
+const Filter = ({ options }: FilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeIndex, setActiveIndex] = useState<number>(0);
 

@@ -1,9 +1,9 @@
-import { FilterTabColors, FilterTabProps } from "../../types/types";
+import { FilterButtonColors, FilterButtonProps } from "../../types/types";
 
-const FilterButton = ({text, color, buttonHandler }: FilterTabProps) => {
-  const filterTabColors: FilterTabColors = {
+const FilterButton = ({ text, color, buttonHandler }: FilterButtonProps) => {
+  const filterTabColors: FilterButtonColors = {
     neutral: "bg-neutral-50 text-neutral-950",
-    yellow:"bg-yellow-500 text-yellow-50"
+    yellow: "bg-yellow-500 text-yellow-50",
   };
 
   return (
