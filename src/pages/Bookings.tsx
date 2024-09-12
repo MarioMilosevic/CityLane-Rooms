@@ -7,9 +7,13 @@ import ContentHeader from "src/components/layout/ContentHeader";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SingleBooking from "src/components/layout/SingleBooking";
 import supabase from "src/config/supabaseClient";
-import { bookings } from "src/utils/constants";
+import { bookings } from "src/data/data-bookings";
+import useFetchData from "src/hooks/useFetchData";
+import { useState } from "react";
 const Bookings = () => {
+  const [bookings, setBookings] = useState()
   
+  // const loading = useFetchData(setBookings)
 
   const addGuests = async () => {
     try {

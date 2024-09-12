@@ -4,6 +4,7 @@ import { links } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import Title from "../common/Title";
 import Link from "../common/Link";
+import Uploader from "src/data/Uploader";
 
 const Sidebar = () => {
   const [activePageIndex, setActivePageIndex] = useState<number>(0);
@@ -28,6 +29,7 @@ const Sidebar = () => {
           />
         ))}
       </div>
+      <Uploader/>
     </aside>
   );
 };
