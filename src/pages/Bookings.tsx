@@ -1,3 +1,4 @@
+import { useState } from "react";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
 import HeadingContainer from "src/components/layout/HeadingContainer";
 import { bookingsSortOptions, bookingsTabs } from "src/utils/constants";
@@ -7,29 +8,36 @@ import ContentHeader from "src/components/layout/ContentHeader";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SingleBooking from "src/components/layout/SingleBooking";
 import supabase from "src/config/supabaseClient";
-import { bookings } from "src/data/data-bookings";
+import LoadingSpinner from "src/components/layout/LoadingSpinner";
 import useFetchData from "src/hooks/useFetchData";
-import { useState } from "react";
+import { fetchBookings } from "src/api/BookingsApi";
+import { BookingType } from "src/types/types";
+
 const Bookings = () => {
-  const [bookings, setBookings] = useState()
-  
-  // const loading = useFetchData(setBookings)
+  const [bookings, setBookings] = useState<BookingType[]>([]);
+
+  const loading = useFetchData(setBookings, fetchBookings);
 
   const addGuests = async () => {
     try {
-      const { error } = await supabase.from("Bookings").insert(bookings)
+      const { error } = await supabase.from("Bookings").insert(bookings);
       if (error) {
-        console.log('Unable to add guests', error)
-        return error
+        console.log("Unable to add guests", error);
+        return error;
       } else {
-        console.log('valjda se dodalo')
+        console.log("Guests added successfully");
       }
     } catch (error) {
-      console.log('uslo u catch', error)
+      console.log("Error in addGuests catch", error);
     }
-  }
+  };
 
-  return (
+  console.log(bookings);
+  console.log(loading);
+
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <>
       <HeadingContainer title="All bookings">
         <SearchFilterTab
@@ -39,21 +47,19 @@ const Bookings = () => {
       </HeadingContainer>
       <ContentWrapper>
         <ContentHeaderWrapper>
-          <ContentHeader title="Room"/>
-          <ContentHeader title="Guest"/>
-          <ContentHeader title="Dates"/>
-          <ContentHeader title="Status"/>
-          <ContentHeader title="Amount"/>
+          <ContentHeader title="Room" />
+          <ContentHeader title="Guest" />
+          <ContentHeader title="Dates" />
+          <ContentHeader title="Status" />
+          <ContentHeader title="Amount" />
         </ContentHeaderWrapper>
         <ContentRowWrapper>
-          <SingleBooking amount={1200} status="checkedIn"/>
-          <SingleBooking amount={975} status="checkedOut"/>
-          <SingleBooking amount={800} status="unconfirmed"/>
-          <SingleBooking amount={29400} status="unconfirmed"/>
-          <SingleBooking amount={200} status="checkedOut"/>
+          {bookings.map((booking) => (
+            <SingleBooking key={booking.id} {...booking} />
+          ))}
         </ContentRowWrapper>
       </ContentWrapper>
-        <button onClick={addGuests}>Click me</button>
+      <button onClick={addGuests}>Click me</button>
     </>
   );
 };

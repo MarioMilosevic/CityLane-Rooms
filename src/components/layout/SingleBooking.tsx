@@ -7,7 +7,7 @@ import { useState } from "react";
 import useClickOutside from "src/hooks/useClickOutside";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
 
-const SingleBooking = ({ status, amount }) => {
+const SingleBooking = ({ extrasPrice, guestId, isPaid, numGuests, numNights, observations, roomId, roomPrice, startDate, endDate, status, totalPrice,  }) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
 
   const modalRef = useClickOutside<HTMLDivElement>(
@@ -28,7 +28,7 @@ const SingleBooking = ({ status, amount }) => {
       </div>
       <Status status={status} />
       <div className="flex justify-between pr-6">
-        <Amount value={amount} type="amount" />
+        <Amount value={totalPrice} type="amount" />
         <OpenModalOptions clickHandler={() => setIsOptionsModalOpen(true)} />
       </div>
       {isOptionsModalOpen && (

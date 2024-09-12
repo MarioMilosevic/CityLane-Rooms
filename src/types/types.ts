@@ -196,3 +196,20 @@ export type OpenModalOptionsProps = {
   clickHandler: () => void;
 }
 
+export type BookingType = {
+  created_at: string;
+  endDate: string;
+  extrasPrice: number;
+  guestId: number;
+  hasBreakfast: boolean;
+  id: number;
+  isPaid: boolean;
+  numGuests: number;
+  numNights: number;
+  observations: string;
+  roomId: number;
+  roomPrice: number;
+  startDate: string;
+  status: string;
+  totalPrice: number;
+};
