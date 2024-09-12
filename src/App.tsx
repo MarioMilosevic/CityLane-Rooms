@@ -26,3 +26,5 @@ function App() {
 }
 
 export default App;
+
+// part 20 oko 42 min

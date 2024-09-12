@@ -6,9 +6,25 @@ import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentHeader from "src/components/layout/ContentHeader";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SingleBooking from "src/components/layout/SingleBooking";
-
+import supabase from "src/config/supabaseClient";
+import { bookings } from "src/utils/constants";
 const Bookings = () => {
   
+
+  const addGuests = async () => {
+    try {
+      const { error } = await supabase.from("Bookings").insert(bookings)
+      if (error) {
+        console.log('Unable to add guests', error)
+        return error
+      } else {
+        console.log('valjda se dodalo')
+      }
+    } catch (error) {
+      console.log('uslo u catch', error)
+    }
+  }
+
   return (
     <>
       <HeadingContainer title="All bookings">
@@ -33,6 +49,7 @@ const Bookings = () => {
           <SingleBooking amount={200} status="checkedOut"/>
         </ContentRowWrapper>
       </ContentWrapper>
+        <button onClick={addGuests}>Click me</button>
     </>
   );
 };

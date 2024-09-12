@@ -6,4 +6,7 @@ export const getRoomImagePath = (imageUrl: string) => {
 };
 
 export const formatPrice = (number: number): string =>
-  new Intl.NumberFormat("en-US", {minimumFractionDigits:2, maximumFractionDigits:2}).format(number);
+  new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(number);
