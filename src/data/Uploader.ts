@@ -5,9 +5,8 @@ import PrimaryActionButton from "src/components/common/PrimaryActionButton";
 
 import { subtractDates } from "../utils/helpers";
 
-import { bookings } from "./data-bookings";
-import { cabins } from "./data-cabins";
-import { guests } from "./data-guests";
+import { rooms, guests, bookings } from "src/utils/constants";
+
 
 // const originalSettings = {
 //   minBookingLength: 3,
