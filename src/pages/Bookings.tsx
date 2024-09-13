@@ -7,33 +7,35 @@ import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentHeader from "src/components/layout/ContentHeader";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SingleBooking from "src/components/layout/SingleBooking";
-import supabase from "src/config/supabaseClient";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
-import useFetchData from "src/hooks/useFetchData";
+import { useEffect } from "react";
+// import useFetchData from "src/hooks/useFetchData";
 import { fetchBookings } from "src/api/BookingsApi";
 import { BookingType } from "src/types/types";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
-
-  const loading = useFetchData(setBookings, fetchBookings);
-
-  const addGuests = async () => {
-    try {
-      const { error } = await supabase.from("Bookings").insert(bookings);
-      if (error) {
-        console.log("Unable to add guests", error);
-        return error;
-      } else {
-        console.log("Guests added successfully");
+  const [loading, setLoading] = useState<boolean>(false);
+  useEffect(() => {
+    const fetchAndSetBookings = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchBookings();
+        // console.log("data: ", data);
+        setBookings(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.log("Error in addGuests catch", error);
-    }
-  };
+    };
+    fetchAndSetBookings();
+  }, []);
 
-  console.log(bookings);
-  console.log(loading);
+  // const loading = useFetchData(setBookings, fetchBookings);
+
+  // treba da fecam goste sa id-jem iz bukinga i da ih ubacim u neki poseban novi array i s njime da renderujem u UI
+
 
   return loading ? (
     <LoadingSpinner />
@@ -59,7 +61,6 @@ const Bookings = () => {
           ))}
         </ContentRowWrapper>
       </ContentWrapper>
-      <button onClick={addGuests}>Click me</button>
     </>
   );
 };
