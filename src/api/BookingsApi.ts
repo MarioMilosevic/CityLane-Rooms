@@ -25,17 +25,25 @@ export const fetchBookings = async () => {
   }
 };
 
+export const filterBookings = async (status: string) => {
+  try {
+    let query = supabase.from("Bookings").select(`*, Guests(*)`).limit(10);
 
-export const filterBookings = async (status:string) => {
- try {
-   const { data, error } = await supabase.from('Bookings').select().eq('status', status)
-   if (error) {
-     console.log('Nije dosao data', error)
-     return
-   } else {
-     console.log("Dosao data",data)
-   }
- } catch (error) {
-   console.error(error)
- } 
-}
+    // Only apply the status filter if the status is not "All"
+    if (status !== "All") {
+      query = query.eq("status", status);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.log("Error fetching data", error);
+      return;
+    } else {
+      // console.log("Fetched data", data);
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};

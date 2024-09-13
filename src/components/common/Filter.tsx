@@ -7,7 +7,6 @@ const Filter = ({ options }: FilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const {pathname} = useLocation();
-  console.log(pathname)
 
   const handleClick = (value: string, index: number) => {
     if (pathname === '/bookings') {

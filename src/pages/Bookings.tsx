@@ -12,15 +12,21 @@ import { useEffect } from "react";
 // import useFetchData from "src/hooks/useFetchData";
 import { fetchBookings } from "src/api/BookingsApi";
 import { BookingType } from "src/types/types";
+import { useSearchParams } from "react-router-dom";
+import { filterBookings } from "src/api/BookingsApi";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+   const [searchParams] = useSearchParams();
+   const filterValue = searchParams.get("status") || "All";
+   const sortValue = searchParams.get("sort") || "date (recent first)";
+   console.log(filterValue);
   useEffect(() => {
     const fetchAndSetBookings = async () => {
       try {
         setLoading(true);
-        const data = await fetchBookings();
+        const data = await filterBookings(filterValue);
         // console.log("data: ", data);
         setBookings(data);
       } catch (error) {
@@ -30,7 +36,10 @@ const Bookings = () => {
       }
     };
     fetchAndSetBookings();
-  }, []);
+  }, [filterValue]);
+
+   
+
 
   // const loading = useFetchData(setBookings, fetchBookings);
 
