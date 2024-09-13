@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import { useState } from "react";
 import FilterButton from "./FilterButton";
 import { FilterProps } from "src/types/types";
@@ -6,9 +6,15 @@ import { FilterProps } from "src/types/types";
 const Filter = ({ options }: FilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const {pathname} = useLocation();
+  console.log(pathname)
 
   const handleClick = (value: string, index: number) => {
-    searchParams.set("discount", value);
+    if (pathname === '/bookings') {
+      searchParams.set("status", value);
+    } else if (pathname === '/rooms') {
+      searchParams.set("discount", value);
+    }
     setSearchParams(searchParams);
     setActiveIndex(index);
   };

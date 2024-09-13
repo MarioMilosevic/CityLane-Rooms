@@ -87,19 +87,19 @@ export const createBookings = async () => {
         isPast(new Date(booking.endDate)) &&
         !isToday(new Date(booking.endDate))
       )
-        status = "checked-out";
+        status = "Checked out";
       if (
         isFuture(new Date(booking.startDate)) ||
         isToday(new Date(booking.startDate))
       )
-        status = "unconfirmed";
+        status = "Unconfirmed";
       if (
         (isFuture(new Date(booking.endDate)) ||
           isToday(new Date(booking.endDate))) &&
         isPast(new Date(booking.startDate)) &&
         !isToday(new Date(booking.startDate))
       )
-        status = "checked-in";
+        status = "Checked in";
 
       return {
         ...booking,

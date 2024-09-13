@@ -24,3 +24,18 @@ export const fetchBookings = async () => {
     throw error;
   }
 };
+
+
+export const filterBookings = async (status:string) => {
+ try {
+   const { data, error } = await supabase.from('Bookings').select().eq('status', status)
+   if (error) {
+     console.log('Nije dosao data', error)
+     return
+   } else {
+     console.log("Dosao data",data)
+   }
+ } catch (error) {
+   console.error(error)
+ } 
+}

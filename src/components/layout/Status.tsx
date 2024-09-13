@@ -2,8 +2,8 @@ import { StatusProps } from "src/types/types";
 
 const Status = ({ status }: StatusProps) => {
   const statusOptions = {
-    checkedOut: "bg-neutral-300",
-    checkedIn: "bg-green-300",
+    "checked-out": "bg-neutral-300",
+    "checked-in": "bg-green-300",
     unconfirmed: "bg-blue-300",
   };
 

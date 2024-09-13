@@ -34,9 +34,6 @@ const Bookings = () => {
 
   // const loading = useFetchData(setBookings, fetchBookings);
 
-  // treba da fecam goste sa id-jem iz bukinga i da ih ubacim u neki poseban novi array i s njime da renderujem u UI
-
-
   return loading ? (
     <LoadingSpinner />
   ) : (
@@ -59,7 +56,7 @@ const Bookings = () => {
           {bookings.map((booking) => (
             <SingleBooking key={booking.id} {...booking} />
           ))}
-        </ContentRowWrapper>
+          </ContentRowWrapper>
       </ContentWrapper>
     </>
   );
