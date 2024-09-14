@@ -10,10 +10,6 @@ const Link = ({ link, isSelected, clickHandler }: LinkProps) => {
   const h2Class = isSelected
     ? "text-neutral-50"
     : "group-hover:text-neutral-50";
-  // const spanClass = isSelected ? "text-sky-500" : "group-hover:text-sky-500";
-  // const h2Class = isSelected
-  //   ? "text-neutral-50"
-  //   : "group-hover:text-neutral-50";
 
   return (
     <button
@@ -23,7 +19,7 @@ const Link = ({ link, isSelected, clickHandler }: LinkProps) => {
       <span className={`transition-colors duration-200 ${spanClass}`}>
         {<link.icon />}
       </span>
-      <h2 className={`capitalize font-normal  ${h2Class}`}>{link.heading}</h2>
+      <h2 className={`capitalize font-normal ${h2Class}`}>{link.text}</h2>
     </button>
   );
 };

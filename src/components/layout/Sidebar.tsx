@@ -1,21 +1,15 @@
 import logo from "../../assets/images/logo.jpg";
-import { useState } from "react";
 import { links } from "../../utils/constants";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Title from "../common/Title";
 import Link from "../common/Link";
 // import Uploader from "src/data/Uploader";
 
 const Sidebar = () => {
-   const [searchParams, setSearchParams] = useSearchParams();
-   const { pathname } = useLocation();
-  const [activePageIndex, setActivePageIndex] = useState<number>(0);
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
-const pageValue = searchParams.get('')
-
-  const clickHandler = (path: string, index: number) => {
-    setActivePageIndex(index);
+  const clickHandler = (path: string) => {
     navigate(`/${path}`);
   };
   return (
@@ -23,13 +17,14 @@ const pageValue = searchParams.get('')
       <img src={logo} alt={logo} className="w-full pb-6" />
       <Title title="CityLane Rooms" />
       <div className="flex flex-col pl-2 pt-6">
-        {links.map((link, index) => (
+        {links.map((link) => (
           <Link
-            key={index}
+            key={link.text}
             link={link}
-            index={index}
-            isSelected={activePageIndex === index ? true : false}
-            clickHandler={() => clickHandler(link.heading, index)}
+            isSelected={
+              pathname.slice(1) === link.text.toLocaleLowerCase() ? true : false
+            }
+            clickHandler={() => clickHandler(link.text)}
           />
         ))}
       </div>

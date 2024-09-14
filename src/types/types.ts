@@ -18,8 +18,7 @@ export type RoomsState = {
 };
 
 export type LinkProps = {
-  index: number;
-  link: { heading: string; icon: IconType };
+  link: { text: string; icon: IconType };
   isSelected: boolean;
   clickHandler: MouseEventHandler<HTMLButtonElement>;
 };

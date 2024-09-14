@@ -19,6 +19,7 @@ const Bookings = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
+  console.log(searchParams)
   
    const filterValue = searchParams.get("status") || "All";
    const sortValue = searchParams.get("sort") || "date (recent first)";

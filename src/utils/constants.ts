@@ -5,10 +5,10 @@ import { MdLocalHotel } from "react-icons/md";
 export const initialRoomsState = [];
 
 export const links = [
-  { heading: "bookings", icon: FaRegCalendarAlt },
-  { heading: "rooms", icon: MdLocalHotel },
-  { heading: "users", icon: FaUsers },
-  { heading: "settings", icon: IoSettingsSharp },
+  { text: "bookings", icon: FaRegCalendarAlt },
+  { text: "rooms", icon: MdLocalHotel },
+  { text: "users", icon: FaUsers },
+  { text: "settings", icon: IoSettingsSharp },
 ];
 
 // Bookings
