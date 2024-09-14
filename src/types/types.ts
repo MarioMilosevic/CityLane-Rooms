@@ -171,9 +171,9 @@ export type StatusProps = {
 };
 
 export type StatusOptions = {
-  "checked-in": string;
-  "checked-out": string;
-  unconfirmed: string;
+  "Checked in": string;
+  "Checked out": string;
+  Unconfirmed: string;
 };
 
 export type AmountProps = {

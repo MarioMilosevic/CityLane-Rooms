@@ -10,7 +10,7 @@ import SingleBooking from "src/components/layout/SingleBooking";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
 import { useEffect } from "react";
 // import useFetchData from "src/hooks/useFetchData";
-import { fetchBookings } from "src/api/BookingsApi";
+// import { fetchBookings } from "src/api/BookingsApi";
 import { BookingType } from "src/types/types";
 import { useSearchParams } from "react-router-dom";
 import { filterBookings } from "src/api/BookingsApi";
@@ -19,16 +19,15 @@ const Bookings = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
-  console.log(searchParams)
   
    const filterValue = searchParams.get("status") || "All";
-   const sortValue = searchParams.get("sort") || "date (recent first)";
-  //  console.log("filterValue",filterValue);
+  const sortValue = searchParams.get("sort") || "date (upcoming first)";
+  console.log("sort iz bookingsa",sortValue)
   useEffect(() => {
     const fetchAndSetBookings = async () => {
       try {
         setLoading(true);
-        const data = await filterBookings(filterValue);
+        const data = await filterBookings(filterValue, sortValue);
         setBookings(data);
       } catch (error) {
         console.error(error);
@@ -37,7 +36,7 @@ const Bookings = () => {
       }
     };
     fetchAndSetBookings();
-  }, [filterValue]);
+  }, [filterValue, sortValue]);
 
 
   return loading ? (
