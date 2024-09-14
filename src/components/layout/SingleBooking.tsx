@@ -6,7 +6,7 @@ import Option from "../common/Option";
 import useClickOutside from "src/hooks/useClickOutside";
 import { useState } from "react";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
-import { format, formatDistance, parseISO,  } from "date-fns";
+import { format, formatDistance, parseISO } from "date-fns";
 
 const SingleBooking = ({
   numNights,
@@ -20,14 +20,10 @@ const SingleBooking = ({
 }) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
 
-  
-  console.log(startDate)
-  const currentDate = new Date()
-  console.log(currentDate)
+  const currentDate = new Date();
   const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
   const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
-  const timeDifference = formatDistance(parseISO(startDate), currentDate)
-  console.log(timeDifference)
+  const timeDifference = formatDistance(parseISO(startDate), currentDate);
 
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsOptionsModalOpen(false),
@@ -44,7 +40,10 @@ const SingleBooking = ({
         <h3 className="text-sm">{email}</h3>
       </div>
       <div className="flex flex-col">
-        <span className="">In {timeDifference} → {numNights} night stay</span>
+        <span className="">
+          {status === "Checked out" ? "Over" : "In"} {timeDifference} →{" "}
+          {numNights} night stay
+        </span>
         <span className="text-sm">
           {formattedStartDate} — {formattedEndDate}
         </span>
