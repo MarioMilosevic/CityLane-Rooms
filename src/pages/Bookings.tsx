@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
 import HeadingContainer from "src/components/layout/HeadingContainer";
 import { bookingsSortOptions, bookingsTabs } from "src/utils/constants";
@@ -8,9 +7,7 @@ import ContentHeader from "src/components/layout/ContentHeader";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SingleBooking from "src/components/layout/SingleBooking";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
-import { useEffect } from "react";
-// import useFetchData from "src/hooks/useFetchData";
-// import { fetchBookings } from "src/api/BookingsApi";
+import { useEffect, useState } from "react";
 import { BookingType } from "src/types/types";
 import { useSearchParams } from "react-router-dom";
 import { fetchBookings } from "src/api/BookingsApi";
@@ -19,16 +16,16 @@ const Bookings = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
-  
-   const filterValue = searchParams.get("status") || "All";
+
+  const filterValue = searchParams.get("status") || "All";
   const sortValue = searchParams.get("sort") || "date (upcoming first)";
-  console.log("sort iz bookingsa",sortValue)
+
   useEffect(() => {
     const fetchAndSetBookings = async () => {
       try {
         setLoading(true);
         const data = await fetchBookings(filterValue, sortValue);
-        setBookings(data);
+        setBookings(data as BookingType[]);
       } catch (error) {
         console.error(error);
       } finally {
@@ -37,7 +34,6 @@ const Bookings = () => {
     };
     fetchAndSetBookings();
   }, [filterValue, sortValue]);
-
 
   return loading ? (
     <LoadingSpinner />
@@ -61,7 +57,7 @@ const Bookings = () => {
           {bookings.map((booking) => (
             <SingleBooking key={booking.id} {...booking} />
           ))}
-          </ContentRowWrapper>
+        </ContentRowWrapper>
       </ContentWrapper>
     </>
   );

@@ -4,6 +4,7 @@ import { subtractDates } from "src/utils/helpers";
 import { rooms } from "src/data/data-rooms";
 import { bookings } from "src/data/data-bookings";
 import { guests } from "src/data/data-guests";
+import { showToast } from "src/utils/toast";
 
 export const deleteGuests = async () => {
   try {
@@ -11,9 +12,6 @@ export const deleteGuests = async () => {
     if (error) console.log(error.message);
   } catch (error) {
     console.error(error);
-    throw new Error();
-    console.error(error);
-    throw new Error();
   }
 };
 
@@ -23,7 +21,6 @@ export const deleteRooms = async () => {
     if (error) console.log(error.message);
   } catch (error) {
     console.error(error);
-    throw new Error();
   }
 };
 
@@ -33,7 +30,6 @@ export const deleteBookings = async () => {
     if (error) console.log(error.message);
   } catch (error) {
     console.error(error);
-    throw new Error();
   }
 };
 
@@ -43,7 +39,6 @@ export const createGuests = async () => {
     if (error) console.log(error.message);
   } catch (error) {
     console.error(error);
-    throw new Error();
   }
 };
 
@@ -53,7 +48,6 @@ export const createRooms = async () => {
     if (error) console.log(error.message);
   } catch (error) {
     console.error(error);
-    throw new Error();
   }
 };
 
@@ -117,7 +111,7 @@ export const createBookings = async () => {
     if (error) console.error(error.message);
   } catch (error) {
     console.error(error);
-    throw new Error();
+    showToast('Unexpected error occured, try again', 'error')
   }
 };
 
@@ -131,7 +125,6 @@ export const uploadAll = async () => {
     await createBookings();
   } catch (error) {
     console.error(error);
-    throw new Error();
   }
 };
 
@@ -141,6 +134,5 @@ export const uploadBookings = async () => {
     await createBookings();
   } catch (error) {
     console.error(error);
-    throw new Error();
   }
 };

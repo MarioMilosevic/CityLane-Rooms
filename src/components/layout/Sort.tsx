@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { SelectProps } from "src/types/types";
 
-const Sort = ({ options }:SelectProps) => {
+const Sort = ({ options }: SelectProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -10,9 +10,7 @@ const Sort = ({ options }:SelectProps) => {
     setSearchParams(searchParams);
   };
 
-  const sortValue = searchParams.get('sort') || options[0]
-  console.log(sortValue)
-
+  const sortValue = searchParams.get("sort") || options[0];
 
   return (
     <select
