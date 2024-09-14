@@ -6,7 +6,6 @@ import Option from "../common/Option";
 import { useState } from "react";
 import useClickOutside from "src/hooks/useClickOutside";
 import { MdDelete, MdModeEditOutline } from "react-icons/md";
-import { filterBookings } from "src/api/BookingsApi";
 
 
 const SingleBooking = ({ numNights, roomId, roomPrice, startDate, endDate, status, totalPrice, Guests }) => {
@@ -36,7 +35,6 @@ const SingleBooking = ({ numNights, roomId, roomPrice, startDate, endDate, statu
         <Amount value={totalPrice} type="amount" />
         <OpenModalOptions clickHandler={() => setIsOptionsModalOpen(true)} />
       </div>
-      <button onClick={() => filterBookings('checked-out')}>Cisto test</button>
       {isOptionsModalOpen && (
         <OptionButton ref={modalRef}>
           <Option

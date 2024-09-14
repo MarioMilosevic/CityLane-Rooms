@@ -1,14 +1,18 @@
 import logo from "../../assets/images/logo.jpg";
 import { useState } from "react";
 import { links } from "../../utils/constants";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import Title from "../common/Title";
 import Link from "../common/Link";
 // import Uploader from "src/data/Uploader";
 
 const Sidebar = () => {
+   const [searchParams, setSearchParams] = useSearchParams();
+   const { pathname } = useLocation();
   const [activePageIndex, setActivePageIndex] = useState<number>(0);
   const navigate = useNavigate();
+
+const pageValue = searchParams.get('')
 
   const clickHandler = (path: string, index: number) => {
     setActivePageIndex(index);

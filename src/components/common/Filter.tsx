@@ -1,21 +1,25 @@
 import { useSearchParams, useLocation } from "react-router-dom";
-import { useState } from "react";
-import FilterButton from "./FilterButton";
 import { FilterProps } from "src/types/types";
+import FilterButton from "./FilterButton";
 
 const Filter = ({ options }: FilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
-  const handleClick = (value: string, index: number) => {
-    if (pathname === '/bookings') {
+  let filterValue: string;
+  if (pathname === "/bookings") {
+    filterValue = searchParams.get("status") || "All";
+  } else if (pathname === "/rooms") {
+    filterValue = searchParams.get("discount") || "All";
+  }
+
+  const handleClick = (value: string) => {
+    if (pathname === "/bookings") {
       searchParams.set("status", value);
-    } else if (pathname === '/rooms') {
+    } else if (pathname === "/rooms") {
       searchParams.set("discount", value);
     }
     setSearchParams(searchParams);
-    setActiveIndex(index);
   };
 
   return (
@@ -24,8 +28,8 @@ const Filter = ({ options }: FilterProps) => {
         <FilterButton
           key={index}
           text={option}
-          color={activeIndex === index ? "yellow" : "neutral"}
-          buttonHandler={() => handleClick(option, index)}
+          color={filterValue === option ? "yellow" : "neutral"}
+          buttonHandler={() => handleClick(option)}
         />
       ))}
     </>
