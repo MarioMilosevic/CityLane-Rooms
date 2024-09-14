@@ -13,7 +13,7 @@ import { useEffect } from "react";
 // import { fetchBookings } from "src/api/BookingsApi";
 import { BookingType } from "src/types/types";
 import { useSearchParams } from "react-router-dom";
-import { filterBookings } from "src/api/BookingsApi";
+import { fetchBookings } from "src/api/BookingsApi";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
@@ -27,7 +27,7 @@ const Bookings = () => {
     const fetchAndSetBookings = async () => {
       try {
         setLoading(true);
-        const data = await filterBookings(filterValue, sortValue);
+        const data = await fetchBookings(filterValue, sortValue);
         setBookings(data);
       } catch (error) {
         console.error(error);
