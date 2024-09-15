@@ -13,6 +13,9 @@ export const links = [
 
 export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
 
+export const itemsPerPage = 10
+
+
 export const bookingsSortOptions = [
   "date (upcoming first)",
   "date (past first)",

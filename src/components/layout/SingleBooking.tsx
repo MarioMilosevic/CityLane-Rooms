@@ -21,7 +21,6 @@ const SingleBooking = ({
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
 
   const currentDate = new Date();
-  console.log(currentDate)
   const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
   const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
   const timeDifference = formatDistance(parseISO(startDate), currentDate);
@@ -48,7 +47,6 @@ const SingleBooking = ({
         <span className="text-sm">
           {formattedStartDate} — {formattedEndDate}
         </span>
-        {/* <span>In 5 years → 3 night stay</span> */}
       </div>
       <Status status={status} />
       <div className="flex justify-between pr-6">

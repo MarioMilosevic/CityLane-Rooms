@@ -87,7 +87,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
         />
       </FormBlock>
       {isDirty && (
-        <ButtonWrapper>
+        <ButtonWrapper justify="end">
           <PrimaryActionButton
             text="Cancel"
             color="white"

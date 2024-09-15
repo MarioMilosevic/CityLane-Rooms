@@ -1,7 +1,7 @@
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { PageButtonProps } from "src/types/types";
 
-const PageButton = ({ direction }: PageButtonProps) => {
+const PageButton = ({ direction, clickHandler }: PageButtonProps) => {
   const directionOptions = {
     previous: {
       icon: <MdNavigateBefore />,
@@ -14,7 +14,7 @@ const PageButton = ({ direction }: PageButtonProps) => {
   };
 
   return (
-    <button className="flex items-center gap-1 px-2 py-1 rounded-md bg-yellow-500 text-yellow-50 active:bg-yellow-600">
+    <button className="flex items-center gap-1 px-2 py-1 rounded-md bg-yellow-500 text-yellow-50 active:bg-yellow-600" onClick={clickHandler}>
       {direction === "previous" ? (
         <>
           {directionOptions.previous.icon}

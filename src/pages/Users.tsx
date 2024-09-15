@@ -85,7 +85,7 @@ const Users = () => {
               error={errors.repeatPassword}
             />
           </FormBlock>
-          <ButtonWrapper>
+          <ButtonWrapper justify="end">
             <PrimaryActionButton
               text="Cancel"
               clickHandler={() => reset()}

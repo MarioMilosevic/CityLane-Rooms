@@ -161,7 +161,7 @@ const ModalForm = ({
             error={errors.image as FieldError}
           />
         </FormBlock>
-        <ButtonWrapper>
+        <ButtonWrapper justify="end">
           <PrimaryActionButton
             text="Cancel"
             clickHandler={() => setIsModalFormOpen(false)}

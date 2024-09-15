@@ -138,8 +138,15 @@ export type ContentHeaderWrapperProps = {
   children: ReactNode;
 };
 
+export type ButtonWrapperJustifyOptions = {
+  start: string;
+  between: string;
+  end: string;
+}
+
 export type ButtonWrapperProps = {
   children: ReactNode;
+  justify:keyof ButtonWrapperJustifyOptions
 };
 
 export type FilterProps = {
@@ -215,6 +222,7 @@ export type BookingType = {
 
 export type PageButtonProps = {
   direction: keyof PageButtonOptions;
+  clickHandler: () => void;
 }
 
 export type PageButtonOptions = {
