@@ -138,7 +138,7 @@ export type ContentHeaderWrapperProps = {
   children: ReactNode;
 };
 
-export type PrimaryActionButtonWrapperProps = {
+export type ButtonWrapperProps = {
   children: ReactNode;
 };
 
@@ -212,3 +212,12 @@ export type BookingType = {
   status: string;
   totalPrice: number;
 };
+
+export type PageButtonProps = {
+  direction: keyof PageButtonOptions;
+}
+
+export type PageButtonOptions = {
+  previous: string;
+  next: string;
+}

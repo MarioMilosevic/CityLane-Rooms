@@ -21,6 +21,7 @@ const SingleBooking = ({
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
 
   const currentDate = new Date();
+  console.log(currentDate)
   const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
   const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
   const timeDifference = formatDistance(parseISO(startDate), currentDate);
@@ -41,7 +42,7 @@ const SingleBooking = ({
       </div>
       <div className="flex flex-col">
         <span className="">
-          {status === "Checked out" ? "Over" : "In"} {timeDifference} →{" "}
+          {status === "Checked out" ? "Over" : "In"} {timeDifference} → {""}
           {numNights} night stay
         </span>
         <span className="text-sm">

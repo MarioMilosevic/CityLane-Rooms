@@ -4,7 +4,7 @@ import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import FormBlock from "../components/layout/FormBlock";
 import Label from "../components/layout/Label";
 import Input from "../components/layout/Input";
-import PrimaryActionButtonWrapper from "../components/layout/PrimaryActionButtonWrapper";
+import ButtonWrapper from "../components/layout/ButtonWrapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewUser } from "src/api/UsersApi";
@@ -85,7 +85,7 @@ const Users = () => {
               error={errors.repeatPassword}
             />
           </FormBlock>
-          <PrimaryActionButtonWrapper>
+          <ButtonWrapper>
             <PrimaryActionButton
               text="Cancel"
               clickHandler={() => reset()}
@@ -96,7 +96,7 @@ const Users = () => {
               type="submit"
               color="yellow"
             />
-          </PrimaryActionButtonWrapper>
+          </ButtonWrapper>
         </form>
       </ContentWrapper>
     </>

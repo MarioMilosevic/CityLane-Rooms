@@ -17,7 +17,7 @@ import Label from "./Label";
 import Input from "./Input";
 import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
-import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
+import ButtonWrapper from "./ButtonWrapper";
 
 const ModalForm = ({
   room,
@@ -161,7 +161,7 @@ const ModalForm = ({
             error={errors.image as FieldError}
           />
         </FormBlock>
-        <PrimaryActionButtonWrapper>
+        <ButtonWrapper>
           <PrimaryActionButton
             text="Cancel"
             clickHandler={() => setIsModalFormOpen(false)}
@@ -173,7 +173,7 @@ const ModalForm = ({
             color="yellow"
             isLoading={isButtonLoading}
           />
-        </PrimaryActionButtonWrapper>
+        </ButtonWrapper>
       </form>
     </div>
   );

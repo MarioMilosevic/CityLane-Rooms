@@ -10,7 +10,7 @@ import {
 } from "src/validation/settingsFormSchema";
 import { updateSettings } from "src/api/SettingsApi";
 import { showToast } from "src/utils/toast";
-import PrimaryActionButtonWrapper from "./PrimaryActionButtonWrapper";
+import ButtonWrapper from "./ButtonWrapper";
 import { SettingsFormProps } from "../../types/types";
 
 const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
@@ -87,7 +87,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
         />
       </FormBlock>
       {isDirty && (
-        <PrimaryActionButtonWrapper>
+        <ButtonWrapper>
           <PrimaryActionButton
             text="Cancel"
             color="white"
@@ -98,7 +98,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
             color="yellow"
             type="submit"
           />
-        </PrimaryActionButtonWrapper>
+        </ButtonWrapper>
       )}
     </form>
   );
