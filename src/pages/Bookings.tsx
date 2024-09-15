@@ -32,13 +32,17 @@ const Bookings = () => {
     const fetchAndSetBookings = async () => {
       try {
         setLoading(true);
-        const { data, count } = await fetchBookings(
+        const response = await fetchBookings(
           filterValue,
           sortValue,
           pageNumber
         );
-        setNumberOfBookings(count);
-        setBookings(data as BookingType[]);
+
+        if (response) {
+          const { data, count } = response;
+          setNumberOfBookings(count || 0);
+          setBookings(data as BookingType[]);
+        }
       } catch (error) {
         console.error(error);
       } finally {

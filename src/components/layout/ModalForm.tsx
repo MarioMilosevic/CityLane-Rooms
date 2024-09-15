@@ -5,10 +5,7 @@ import { createNewRoom, editRoomServer } from "src/api/RoomsApi";
 import { showToast } from "src/utils/toast";
 import { uploadImage } from "src/api/RoomsApi";
 import { RoomType } from "../../types/types";
-import {
-  newRoomSchema,
-  newRoomValues,
-} from "src/validation/newRoomSchema";
+import { newRoomSchema, newRoomValues } from "src/validation/newRoomSchema";
 import { FieldError, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useClickOutside from "../../hooks/useClickOutside";
@@ -19,11 +16,7 @@ import TextArea from "./TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
 
-const ModalForm = ({
-  room,
-  setIsModalFormOpen,
-  setRooms,
-}: ModalFormProps) => {
+const ModalForm = ({ room, setIsModalFormOpen, setRooms }: ModalFormProps) => {
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalFormOpen(false)
   );

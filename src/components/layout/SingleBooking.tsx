@@ -5,7 +5,11 @@ import OptionButton from "./OptionButton";
 import Option from "../common/Option";
 import useClickOutside from "src/hooks/useClickOutside";
 import { useState } from "react";
-import { MdDelete, MdModeEditOutline } from "react-icons/md";
+import {
+  MdOutlineRemoveRedEye,
+  MdOutlineFileDownload,
+  MdOutlineDeleteForever,
+} from "react-icons/md";
 import { format, formatDistance, parseISO } from "date-fns";
 
 const SingleBooking = ({
@@ -56,13 +60,20 @@ const SingleBooking = ({
       {isOptionsModalOpen && (
         <OptionButton ref={modalRef}>
           <Option
-            text="Edit"
-            icon={MdModeEditOutline}
+            text="See details"
+            icon={MdOutlineRemoveRedEye}
             clickHandler={() => console.log("nesto")}
           />
+          {status !== "Checked out" && (
+            <Option
+              text="Check in"
+              icon={MdOutlineFileDownload}
+              clickHandler={() => console.log("nesto")}
+            />
+          )}
           <Option
-            text="Delete"
-            icon={MdDelete}
+            text="Delete booking"
+            icon={MdOutlineDeleteForever}
             clickHandler={() => console.log("nesto")}
             // clickHandler={() => deleteHandler(room.id)}
           />
