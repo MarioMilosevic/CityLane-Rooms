@@ -2,7 +2,7 @@ import { useSearchParams, useLocation } from "react-router-dom";
 import { FilterProps } from "src/types/types";
 import FilterButton from "./FilterButton";
 
-const Filter = ({ options }: FilterProps) => {
+const Filter = ({ options, setPageNumber }: FilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { pathname } = useLocation();
 
@@ -14,8 +14,9 @@ const Filter = ({ options }: FilterProps) => {
   }
 
   const handleClick = (value: string) => {
-    if (pathname === "/bookings") {
+    if (pathname === "/bookings" && setPageNumber) {
       searchParams.set("status", value);
+      setPageNumber(1)
     } else if (pathname === "/rooms") {
       searchParams.set("discount", value);
     }

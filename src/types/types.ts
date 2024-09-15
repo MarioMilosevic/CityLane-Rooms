@@ -76,7 +76,6 @@ export type HeadingContainerProps = {
   children?: ReactNode;
 };
 
-
 export type filterAndSortType = {
   filter: string;
   sort: string;
@@ -85,6 +84,7 @@ export type filterAndSortType = {
 export type SearchFilterTabProps = {
   tabOptions: string[];
   sortOptions: string[];
+  setPageNumber?: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type FormBlockProps = {
@@ -142,16 +142,17 @@ export type ButtonWrapperJustifyOptions = {
   start: string;
   between: string;
   end: string;
-}
+};
 
 export type ButtonWrapperProps = {
   children: ReactNode;
-  justify:keyof ButtonWrapperJustifyOptions
+  justify: keyof ButtonWrapperJustifyOptions;
 };
 
 export type FilterProps = {
-  options:string[]
-}
+  options: string[];
+  setPageNumber?: React.Dispatch<React.SetStateAction<number>>;
+};
 
 export type SettingsType = {
   breakfastPrice: number;
@@ -193,14 +194,13 @@ export type TypeOptions = {
   amount: string;
 };
 
-
 export type SelectProps = {
-  options:string[]
-}
+  options: string[];
+};
 
 export type OpenModalOptionsProps = {
   clickHandler: () => void;
-}
+};
 
 export type BookingType = {
   created_at: string;
@@ -223,9 +223,16 @@ export type BookingType = {
 export type PageButtonProps = {
   direction: keyof PageButtonOptions;
   clickHandler: () => void;
-}
+  isDisabled: boolean;
+};
 
 export type PageButtonOptions = {
   previous: string;
   next: string;
-}
+};
+
+export type ShowResultsProps = {
+  to: number;
+  from: number;
+  numberOfBookings: number;
+};

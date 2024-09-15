@@ -8,11 +8,16 @@ import SingleBooking from "src/components/layout/SingleBooking";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
 import ButtonWrapper from "src/components/layout/ButtonWrapper";
 import PageButton from "src/components/common/PageButton";
-import { bookingsSortOptions, bookingsTabs, itemsPerPage } from "src/utils/constants";
+import {
+  bookingsSortOptions,
+  bookingsTabs,
+  itemsPerPage,
+} from "src/utils/constants";
 import { useEffect, useState } from "react";
 import { BookingType } from "src/types/types";
 import { useSearchParams } from "react-router-dom";
 import { fetchBookings } from "src/api/BookingsApi";
+import ShowResults from "src/components/layout/ShowResults";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
@@ -49,19 +54,12 @@ const Bookings = () => {
   const nextPage = () => {
     if (pageNumber <= numberOfBookings / itemsPerPage) {
       setPageNumber((prev) => prev + 1);
-    } else {
-      console.log("pageNumber je veci od 2");
     }
   };
-
-  console.log('bookings duzina', bookings.length)
-  console.log("count", numberOfBookings)
 
   const previousPage = () => {
     if (pageNumber > 1) {
       setPageNumber((prev) => prev - 1);
-    } else {
-      console.log("pageNumber nije veci od 1");
     }
   };
 
@@ -73,6 +71,7 @@ const Bookings = () => {
         <SearchFilterTab
           tabOptions={bookingsTabs}
           sortOptions={bookingsSortOptions}
+          setPageNumber={setPageNumber}
         />
       </HeadingContainer>
       <ContentWrapper>
@@ -87,20 +86,30 @@ const Bookings = () => {
           {bookings.map((booking) => (
             <SingleBooking key={booking.id} {...booking} />
           ))}
-          </ContentRowWrapper>
-          {numberOfBookings > itemsPerPage && 
-        <ButtonWrapper justify="between">
-          <div className="flex gap-4">
-            <p>
-              Showing {from} to {to} out of {numberOfBookings} results
-            </p>
-          </div>
-          <div className="flex gap-4">
-            <PageButton direction="previous" clickHandler={previousPage} />
-            <PageButton direction="next" clickHandler={nextPage} />
-          </div>
-        </ButtonWrapper>
-        }
+        </ContentRowWrapper>
+        {numberOfBookings > itemsPerPage && (
+          <ButtonWrapper justify="between">
+            <ShowResults
+              from={from}
+              to={to}
+              numberOfBookings={numberOfBookings}
+            />
+            <div className="flex gap-4">
+              <PageButton
+                isDisabled={pageNumber === 1 ? true : false}
+                direction="previous"
+                clickHandler={previousPage}
+              />
+              <PageButton
+                isDisabled={
+                  pageNumber > numberOfBookings / itemsPerPage ? true : false
+                }
+                direction="next"
+                clickHandler={nextPage}
+              />
+            </div>
+          </ButtonWrapper>
+        )}
       </ContentWrapper>
     </>
   );
