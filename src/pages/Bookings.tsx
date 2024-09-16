@@ -13,44 +13,46 @@ import {
   bookingsTabs,
   itemsPerPage,
 } from "src/utils/constants";
-import { useEffect, useState } from "react";
-import { BookingType } from "src/types/types";
-import { useSearchParams } from "react-router-dom";
-import { fetchBookings } from "src/api/BookingsApi";
+// import { useEffect, useState } from "react";
+// import { BookingType } from "src/types/types";
+// import { useSearchParams } from "react-router-dom";
+// import { fetchBookings } from "src/api/BookingsApi";
+import useFetchBookings from "src/hooks/useFetchBookings";
 import ShowResults from "src/components/layout/ShowResults";
 
 const Bookings = () => {
-  const [bookings, setBookings] = useState<BookingType[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [numberOfBookings, setNumberOfBookings] = useState<number>(0);
-  const [searchParams] = useSearchParams();
+  const {bookings, loading, numberOfBookings, currentPage} = useFetchBookings()
+  // const [bookings, setBookings] = useState<BookingType[]>([]);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [numberOfBookings, setNumberOfBookings] = useState<number>(0);
+  // const [searchParams] = useSearchParams();
 
-  const filterValue = searchParams.get("status") || "All";
-  const sortValue = searchParams.get("sort") || "date (upcoming first)";
-  const currentPage = Number(searchParams.get("page")) || 1;
-  useEffect(() => {
-    const fetchAndSetBookings = async () => {
-      try {
-        setLoading(true);
-        const response = await fetchBookings(
-          filterValue,
-          sortValue,
-          currentPage
-        );
+  // const filterValue = searchParams.get("status") || "All";
+  // const sortValue = searchParams.get("sort") || "date (upcoming first)";
+  // const currentPage = Number(searchParams.get("page")) || 1;
+  // useEffect(() => {
+  //   const fetchAndSetBookings = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const response = await fetchBookings(
+  //         filterValue,
+  //         sortValue,
+  //         currentPage
+  //       );
 
-        if (response) {
-          const { data, count } = response;
-          setNumberOfBookings(count || 0);
-          setBookings(data as BookingType[]);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAndSetBookings();
-  }, [filterValue, sortValue, currentPage]);
+  //       if (response) {
+  //         const { data, count } = response;
+  //         setNumberOfBookings(count || 0);
+  //         setBookings(data as BookingType[]);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchAndSetBookings();
+  // }, [filterValue, sortValue, currentPage]);
 
   const from = (currentPage - 1) * itemsPerPage + 1;
 
@@ -82,16 +84,12 @@ const Bookings = () => {
             <SingleBooking key={booking.id} {...booking} />
           ))}
         </ContentRowWrapper>
-        {numberOfBookings > itemsPerPage && (
-          <ButtonWrapper justify="between">
-            <ShowResults
-              from={from}
-              to={to}
-              numberOfBookings={numberOfBookings}
-            />
+        <ButtonWrapper justify="between">
+          <ShowResults from={from} to={to} numberOfItems={numberOfBookings} />
+          {numberOfBookings > itemsPerPage && (
             <Pagination numberOfItems={numberOfBookings} />
-          </ButtonWrapper>
-        )}
+          )}
+        </ButtonWrapper>
       </ContentWrapper>
     </>
   );

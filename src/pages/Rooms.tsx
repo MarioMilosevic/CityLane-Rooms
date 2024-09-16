@@ -1,7 +1,7 @@
-import { roomsSortOptions, roomsTabs } from "src/utils/constants";
+import { roomsSortOptions, roomsTabs, itemsPerPage } from "src/utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
-import { RoomType } from "src/types/types";
+// import { RoomType } from "src/types/types";
 import ContentWrapper from "src/components/layout/ContentWrapper";
 import ContentHeader from "src/components/layout/ContentHeader";
 import SingleRoom from "src/components/layout/SingleRoom";
@@ -10,19 +10,25 @@ import HeaderContainer from "src/components/layout/HeadingContainer";
 import ModalForm from "src/components/layout/ModalForm";
 import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
-import useFetchData from "src/hooks/useFetchData";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
 import { useSearchParams } from "react-router-dom";
-import { fetchAllRooms } from "src/api/RoomsApi";
+import ButtonWrapper from "src/components/layout/ButtonWrapper";
+import ShowResults from "src/components/layout/ShowResults";
+import Pagination from "src/components/layout/Pagination";
+import useFetchRooms from "src/hooks/useFetchRooms";
+
 const Rooms = () => {
-  const [rooms, setRooms] = useState<RoomType[]>([]);
-  const loading = useFetchData(setRooms, fetchAllRooms);
-  const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
+  const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
   const filterValue = searchParams.get("discount") || "All";
   const sortValue = searchParams.get("sort") || "name (A-Z)";
+  const currentPage = Number(searchParams.get("page")) || 1;
 
+  const { loading, rooms, setRooms, numberOfRooms } =
+    useFetchRooms(currentPage);
+  // const loading = useFetchData(setRooms, fetchAllRooms);
+  console.log(rooms);
   let displayedRooms;
 
   displayedRooms = rooms.filter((room) => {
@@ -57,7 +63,15 @@ const Rooms = () => {
     return 0;
   });
 
+  const showResultsFrom = (currentPage - 1) * itemsPerPage + 1; // 1 , 11 ,21, 31...
+  let showResultsTo = showResultsFrom + itemsPerPage - 1; // 10,20,30,40...
+  if (showResultsTo > numberOfRooms) {
+    showResultsTo = numberOfRooms;
+  }
+
+
   if (loading) return <LoadingSpinner />;
+
 
   return (
     <>
@@ -84,6 +98,14 @@ const Rooms = () => {
             ></SingleRoom>
           ))}
         </ContentRowWrapper>
+        <ButtonWrapper justify="between">
+          <ShowResults
+            from={showResultsFrom}
+            to={showResultsTo}
+            numberOfItems={numberOfRooms}
+          />
+          <Pagination numberOfItems={numberOfRooms} />
+        </ButtonWrapper>
         <PrimaryActionButton
           text="Add new room"
           color="yellow"

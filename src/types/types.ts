@@ -232,5 +232,5 @@ export type PageButtonOptions = {
 export type ShowResultsProps = {
   to: number;
   from: number;
-  numberOfBookings: number;
+  numberOfItems: number;
 };

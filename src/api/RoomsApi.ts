@@ -3,19 +3,25 @@ import { nanoid } from "nanoid";
 import supabase from "src/config/supabaseClient";
 import { getRoomImagePath } from "src/utils/helpers";
 import { newRoomValues } from "src/validation/newRoomSchema";
+import { itemsPerPage } from "src/utils/constants";
 const supabaseUrl = "https://xonugvplyyycodzjotuu.supabase.co";
 
-export const fetchAllRooms = async () => {
+export const fetchAllRooms = async (page:number) => {
   try {
-    const { data, error } = await supabase
+      const from = (page - 1) * itemsPerPage;
+      const to = from + itemsPerPage - 1;
+    const { data, error, count } = await supabase
       .from("Rooms")
-      .select("*")
-      .order("name", { ascending: true });
+      .select("*", {count:'exact'})
+      .order("name", { ascending: true })
+      .range(from, to);
 
     if (error || !data) {
       throw error || new Error("No data received");
     }
-    return data;
+    console.log(data)
+
+    return {data, count}
   } catch (error) {
     console.error("Error fetching rooms", error);
     throw Error;

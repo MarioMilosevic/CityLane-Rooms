@@ -10,15 +10,21 @@ const Pagination = ({ numberOfItems }: { numberOfItems: number }) => {
   const totalPages = Math.ceil(numberOfItems / itemsPerPage);
 
   const nextPage = () => {
-    if (pathname === "/bookings" && currentPage < totalPages) {
+    if (
+      (pathname === "/bookings" && currentPage < totalPages) ||
+      (pathname === "/rooms" && currentPage < totalPages)
+    ) {
+      console.log("uslo u next");
       searchParams.set("page", String(currentPage + 1));
       setSearchParams(searchParams);
     }
   };
 
   const previousPage = () => {
-    if (pathname === "/bookings" && currentPage <= totalPages) {
-      console.log("uslo");
+    if (
+      (pathname === "/bookings" && currentPage <= totalPages) ||
+      (pathname === "/rooms" && currentPage <= totalPages)
+    ) {
       searchParams.set("page", String(currentPage - 1));
       setSearchParams(searchParams);
     }
