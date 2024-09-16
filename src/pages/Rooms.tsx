@@ -15,14 +15,15 @@ import LoadingSpinner from "src/components/layout/LoadingSpinner";
 import ButtonWrapper from "src/components/layout/ButtonWrapper";
 import ShowResults from "src/components/layout/ShowResults";
 import Pagination from "src/components/layout/Pagination";
-import useFetchRooms from "src/hooks/useFetchRooms";
+import useFetchData from "src/hooks/useFetchData";
+import { fetchAllRooms } from "src/api/RoomsApi";
+import { RoomType } from "src/types/types";
 
 const Rooms = () => {
   const [searchParams] = useSearchParams();
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
   const currentPage = Number(searchParams.get("page")) || 1;
-
-  const { loading, rooms, setRooms, numberOfRooms } = useFetchRooms();
+  const { data:rooms, loading, setData:setRooms, numberOfItems:numberOfRooms} = useFetchData('rooms', fetchAllRooms)
 
   const showResultsFrom = (currentPage - 1) * itemsPerPage + 1; // 1 , 11 ,21, 31...
   let showResultsTo = showResultsFrom + itemsPerPage - 1; // 10,20,30,40...
@@ -52,8 +53,10 @@ const Rooms = () => {
           {rooms.map((room) => (
             <SingleRoom
               key={room.id}
-              room={room}
-              setRooms={setRooms}
+              room={room as RoomType}
+              setRooms={
+                setRooms as React.Dispatch<React.SetStateAction<RoomType[]>>
+              }
             ></SingleRoom>
           ))}
         </ContentRowWrapper>
@@ -77,7 +80,9 @@ const Rooms = () => {
         createPortal(
           <ModalForm
             setIsModalFormOpen={setIsModalFormOpen}
-            setRooms={setRooms}
+            setRooms={
+              setRooms as React.Dispatch<React.SetStateAction<RoomType[]>>
+            }
           />,
           document.body
         )}

@@ -1,18 +1,19 @@
 import supabase from "src/config/supabaseClient";
 import { itemsPerPage } from "src/utils/constants";
+import { BookingType } from "src/types/types";
 
 export const fetchBookings = async (
   filter: string,
   sort: string,
   page: number
-) => {
+): Promise<{ data: BookingType[]; count: number }> => {
   try {
     const from = (page - 1) * itemsPerPage;
     const to = from + itemsPerPage - 1;
 
     let query = supabase
       .from("Bookings")
-      .select(`*, Guests(*)`, {count:"exact"})
+      .select(`*, Guests(*)`, { count: "exact" })
       .range(from, to);
 
     if (filter !== "All") {
@@ -29,15 +30,17 @@ export const fetchBookings = async (
       query = query.order("totalPrice", { ascending: true });
     }
 
-    const { data,count, error } = await query;
+    const { data, count, error } = await query;
 
     if (error) {
-      console.error("Error fetching data", error);
-      return;
+      console.error("Error fetching bookings", error);
+      return { data: [], count: 0 }; 
     }
 
-    return { data, count };
+    return { data: data || [], count: count ?? 0 }; 
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching bookings", error);
+    return { data: [], count: 0 }; 
   }
 };
+

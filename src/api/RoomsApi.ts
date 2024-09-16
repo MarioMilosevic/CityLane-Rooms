@@ -10,7 +10,7 @@ export const fetchAllRooms = async (
   filterValue: string,
   sortValue: string,
   page: number
-) => {
+): Promise<{ data: RoomType[]; count: number }> => {
   try {
     const from = (page - 1) * itemsPerPage;
     const to = from + itemsPerPage - 1;
@@ -44,10 +44,10 @@ export const fetchAllRooms = async (
 
     if (error) {
       console.error("Error fetching data", error);
-      return;
+      return { data: [], count: 0 };
     }
 
-    return { data, count };
+    return { data: data || [], count: count ?? 0 };
   } catch (error) {
     console.error("Error fetching rooms", error);
     throw Error;

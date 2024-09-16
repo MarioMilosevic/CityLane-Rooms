@@ -13,17 +13,23 @@ import {
   bookingsTabs,
   itemsPerPage,
 } from "src/utils/constants";
-import useFetchBookings from "src/hooks/useFetchBookings";
+import useFetchData from "src/hooks/useFetchData";
 import ShowResults from "src/components/layout/ShowResults";
+import { fetchBookings } from "src/api/BookingsApi";
 
 const Bookings = () => {
-  const { bookings, loading, numberOfBookings, currentPage } =
-    useFetchBookings();
+
+  const {
+    data: bookings,
+    loading,
+    numberOfItems,
+    currentPage,
+  } = useFetchData("bookings", fetchBookings);
   const from = (currentPage - 1) * itemsPerPage + 1;
 
   let to = from + itemsPerPage - 1;
-  if (to > numberOfBookings) {
-    to = numberOfBookings;
+  if (to > numberOfItems) {
+    to = numberOfItems;
   }
 
   return loading ? (
@@ -50,9 +56,9 @@ const Bookings = () => {
           ))}
         </ContentRowWrapper>
         <ButtonWrapper justify="between">
-          <ShowResults from={from} to={to} numberOfItems={numberOfBookings} />
-          {numberOfBookings > itemsPerPage && (
-            <Pagination numberOfItems={numberOfBookings} />
+          <ShowResults from={from} to={to} numberOfItems={numberOfItems} />
+          {numberOfItems > itemsPerPage && (
+            <Pagination numberOfItems={numberOfItems} />
           )}
         </ButtonWrapper>
       </ContentWrapper>
