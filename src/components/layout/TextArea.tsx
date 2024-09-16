@@ -6,7 +6,7 @@ const TextArea = ({ id, error, zod }: TextAreaProps) => {
   return (
     <div className="w-full relative">
       <textarea
-        className="w-full p-2 rounded-md border outline-none transition-all duration-200 border-neutral-300 focus:outline-yellow-500 focus:border-none"
+        className="w-full p-2 rounded-md border outline-none transition-all duration-200 border-neutral-300 focus:outline-yellow-500 focus:border-none dark:bg-slate-500 dark:border-none dark:text-slate-50"
         id={id}
         onChange={zodOnchange}
         {...restZodProps}

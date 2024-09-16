@@ -2,7 +2,7 @@ import { FilterButtonColors, FilterButtonProps } from "../../types/types";
 
 const FilterButton = ({ text, color, buttonHandler }: FilterButtonProps) => {
   const filterTabColors: FilterButtonColors = {
-    neutral: "bg-neutral-50 text-neutral-950",
+    neutral: "bg-neutral-50 text-neutral-950 dark:bg-slate-500 dark:text-slate-50",
     yellow: "bg-yellow-500 text-yellow-50",
   };
 

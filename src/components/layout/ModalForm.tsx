@@ -97,12 +97,12 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms }: ModalFormProps) => {
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
       <form
-        className="overflow-scroll w-[800px] max-h-[80vh] flex flex-col bg-neutral-50 z-20 border px-8 py-8 relative"
+        className="overflow-scroll w-[800px] max-h-[80vh] flex flex-col bg-neutral-50 dark:bg-slate-600 z-20 border px-8 py-8 relative"
         ref={modalRef}
         onSubmit={handleSubmit(isEditingSession ? editCurrentRoom : addNewRoom)}
       >
         <PiXBold
-          className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200"
+          className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200 dark:text-slate-200 dark:hover:border-neutral-50 dark:hover:border"
           onClick={() => setIsModalFormOpen(false)}
         />
         <FormBlock size="big" direction="row">

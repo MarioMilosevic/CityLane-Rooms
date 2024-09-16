@@ -13,10 +13,10 @@ const Sidebar = () => {
     navigate(`/${path}`);
   };
   return (
-    <aside className="bg-neutral-50 w-[250px] flex flex-col border-r border-neutral-200">
+    <aside className="bg-neutral-50 w-[250px] flex flex-col border-r border-neutral-200 dark:bg-slate-600 dark:border-slate-700" >
       <img src={logo} alt={logo} className="w-full pb-6" />
       <Title title="CityLane Rooms" />
-      <div className="flex flex-col pl-2 pt-6">
+      <div className="flex flex-col pl-2 pt-6 gap-1">
         {links.map((link) => (
           <Link
             key={link.text}

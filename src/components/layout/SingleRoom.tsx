@@ -40,7 +40,7 @@ const SingleRoom = ({ room, setRooms }: ContentRowProps) => {
   };
 
   return (
-    <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative">
+    <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative dark:bg-slate-500">
       <div className="h-[60px]">
         <img
           src={image as string}
@@ -55,7 +55,7 @@ const SingleRoom = ({ room, setRooms }: ContentRowProps) => {
         {discount ? (
           <h4 className="text-green-500">{`$${formatPrice(discount)}`}</h4>
         ) : (
-          <h4 className="line-through text-neutral-500">{`$${formatPrice(
+          <h4 className="line-through text-neutral-500 dark:text-slate-300">{`$${formatPrice(
             regularPrice
           )}`}</h4>
         )}

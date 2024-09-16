@@ -37,7 +37,7 @@ const SingleBooking = ({
   const { countryFlag, email, fullName, nationalID, nationality } = Guests;
 
   return (
-    <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center py-1 bg-neutral-50 relative">
+    <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center py-1 bg-neutral-50 relative dark:bg-slate-500">
       <p className="pl-4">{roomId}</p>
       <div className="flex flex-col gap-2">
         <h2>{fullName}</h2>
