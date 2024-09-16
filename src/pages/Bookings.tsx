@@ -6,8 +6,8 @@ import ContentHeader from "src/components/layout/ContentHeader";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SingleBooking from "src/components/layout/SingleBooking";
 import LoadingSpinner from "src/components/layout/LoadingSpinner";
+import Pagination from "src/components/layout/Pagination";
 import ButtonWrapper from "src/components/layout/ButtonWrapper";
-import PageButton from "src/components/common/PageButton";
 import {
   bookingsSortOptions,
   bookingsTabs,
@@ -22,12 +22,12 @@ import ShowResults from "src/components/layout/ShowResults";
 const Bookings = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [pageNumber, setPageNumber] = useState<number>(1);
   const [numberOfBookings, setNumberOfBookings] = useState<number>(0);
   const [searchParams] = useSearchParams();
 
   const filterValue = searchParams.get("status") || "All";
   const sortValue = searchParams.get("sort") || "date (upcoming first)";
+  const currentPage = Number(searchParams.get("page")) || 1;
   useEffect(() => {
     const fetchAndSetBookings = async () => {
       try {
@@ -35,7 +35,7 @@ const Bookings = () => {
         const response = await fetchBookings(
           filterValue,
           sortValue,
-          pageNumber
+          currentPage
         );
 
         if (response) {
@@ -50,25 +50,14 @@ const Bookings = () => {
       }
     };
     fetchAndSetBookings();
-  }, [filterValue, sortValue, pageNumber]);
+  }, [filterValue, sortValue, currentPage]);
 
-  const from = (pageNumber - 1) * 10 + 1;
-  let to = from + 10 - 1;
+  const from = (currentPage - 1) * itemsPerPage + 1;
+
+  let to = from + itemsPerPage - 1;
   if (to > numberOfBookings) {
     to = numberOfBookings;
   }
-
-  const nextPage = () => {
-    if (pageNumber <= numberOfBookings / itemsPerPage) {
-      setPageNumber((prev) => prev + 1);
-    }
-  };
-
-  const previousPage = () => {
-    if (pageNumber > 1) {
-      setPageNumber((prev) => prev - 1);
-    }
-  };
 
   return loading ? (
     <LoadingSpinner />
@@ -78,7 +67,6 @@ const Bookings = () => {
         <SearchFilterTab
           tabOptions={bookingsTabs}
           sortOptions={bookingsSortOptions}
-          setPageNumber={setPageNumber}
         />
       </HeadingContainer>
       <ContentWrapper>
@@ -101,20 +89,7 @@ const Bookings = () => {
               to={to}
               numberOfBookings={numberOfBookings}
             />
-            <div className="flex gap-4">
-              <PageButton
-                isDisabled={pageNumber === 1 ? true : false}
-                direction="previous"
-                clickHandler={previousPage}
-              />
-              <PageButton
-                isDisabled={
-                  pageNumber > numberOfBookings / itemsPerPage ? true : false
-                }
-                direction="next"
-                clickHandler={nextPage}
-              />
-            </div>
+            <Pagination numberOfItems={numberOfBookings} />
           </ButtonWrapper>
         )}
       </ContentWrapper>

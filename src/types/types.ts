@@ -83,7 +83,6 @@ export type filterAndSortType = {
 export type SearchFilterTabProps = {
   tabOptions: string[];
   sortOptions: string[];
-  setPageNumber?: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type FormBlockProps = {

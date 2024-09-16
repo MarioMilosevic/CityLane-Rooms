@@ -5,12 +5,11 @@ import Sort from "../layout/Sort";
 const SearchFilterTab = ({
   tabOptions,
   sortOptions,
-  setPageNumber
 }: SearchFilterTabProps) => {
 
   return (
     <div className="flex items-center gap-2 text-sm">
-      <Filter options={tabOptions} setPageNumber={setPageNumber} />
+      <Filter options={tabOptions} />
       <Sort options={sortOptions} />
     </div>
   );

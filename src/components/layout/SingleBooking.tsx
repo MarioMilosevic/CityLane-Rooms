@@ -75,7 +75,6 @@ const SingleBooking = ({
             text="Delete booking"
             icon={MdOutlineDeleteForever}
             clickHandler={() => console.log("nesto")}
-            // clickHandler={() => deleteHandler(room.id)}
           />
         </OptionButton>
       )}

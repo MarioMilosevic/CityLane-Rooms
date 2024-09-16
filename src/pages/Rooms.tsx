@@ -23,7 +23,6 @@ const Rooms = () => {
   const filterValue = searchParams.get("discount") || "All";
   const sortValue = searchParams.get("sort") || "name (A-Z)";
 
-
   let displayedRooms;
 
   displayedRooms = rooms.filter((room) => {
