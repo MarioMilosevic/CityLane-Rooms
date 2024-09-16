@@ -15,10 +15,9 @@ const Filter = ({ options }: FilterProps) => {
 
   const handleClick = (value: string) => {
     if (pathname === "/bookings") {
-    // if (pathname === "/bookings" && setPageNumber) {
       searchParams.set("status", value);
-      // setPageNumber(1)
     } else if (pathname === "/rooms") {
+      console.log('uslo')
       searchParams.set("discount", value);
     }
     setSearchParams(searchParams);

@@ -1,32 +1,44 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { fetchAllRooms } from "src/api/RoomsApi";
 import { RoomType } from "src/types/types";
 
-const useFetchRooms = (page:number) =>
-  //   setData: React.Dispatch<React.SetStateAction<T>>,
-  //   fetchData: () => Promise<T>
-  {
-    const [rooms, setRooms] = useState<RoomType[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [numberOfRooms, setNumberOfRooms] = useState<number>(0)
+const useFetchRooms = () => {
+  const [rooms, setRooms] = useState<RoomType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [numberOfRooms, setNumberOfRooms] = useState<number>(0);
+  const [searchParams] = useSearchParams();
 
-    useEffect(() => {
-      const fetchAndSetData = async () => {
-        try {
-          setLoading(true);
-            const { data, count } = await fetchAllRooms(page);
-            setRooms(data);
-            setNumberOfRooms(count as number)
-        } catch (error) {
-          console.error("Error fetching rooms", error);
-          setRooms([]);
-        } finally {
-          setLoading(false);
+  const filterValue = searchParams.get("discount") || "All";
+  const sortValue = searchParams.get("sort") || "by name (A-Z)";
+  const currentPage = Number(searchParams.get("page")) || 1;
+
+  useEffect(() => {
+    const fetchAndSetRooms = async () => {
+      try {
+        setLoading(true);
+        const response = await fetchAllRooms(
+          filterValue,
+          sortValue,
+          currentPage
+        );
+
+        if (response) {
+          const { data, count } = response;
+          setNumberOfRooms(count || 0);
+          setRooms(data);
         }
-      };
-      fetchAndSetData();
-    }, [page]);
-    return { rooms, loading, setRooms, numberOfRooms };
-  };
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAndSetRooms();
+  }, [filterValue, sortValue, currentPage]);
+
+  return { rooms, loading, numberOfRooms, currentPage, setRooms };
+};
 
 export default useFetchRooms;

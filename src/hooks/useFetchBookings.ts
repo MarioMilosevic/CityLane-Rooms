@@ -38,7 +38,6 @@ const useFetchBookings = () => {
     fetchAndSetBookings();
   }, [filterValue, sortValue, currentPage]);
 
-  // Return the state values
   return { bookings, loading, numberOfBookings, currentPage };
 };
 

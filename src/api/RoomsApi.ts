@@ -6,22 +6,48 @@ import { newRoomValues } from "src/validation/newRoomSchema";
 import { itemsPerPage } from "src/utils/constants";
 const supabaseUrl = "https://xonugvplyyycodzjotuu.supabase.co";
 
-export const fetchAllRooms = async (page:number) => {
+export const fetchAllRooms = async (
+  filterValue: string,
+  sortValue: string,
+  page: number
+) => {
   try {
-      const from = (page - 1) * itemsPerPage;
-      const to = from + itemsPerPage - 1;
-    const { data, error, count } = await supabase
+    const from = (page - 1) * itemsPerPage;
+    const to = from + itemsPerPage - 1;
+
+    let query = supabase
       .from("Rooms")
-      .select("*", {count:'exact'})
-      .order("name", { ascending: true })
+      .select("*", { count: "exact" })
       .range(from, to);
 
-    if (error || !data) {
-      throw error || new Error("No data received");
+    if (filterValue === "With discount") {
+      query = query.gt("discount", 0);
+    } else if (filterValue === "No discount") {
+      query = query.eq("discount", 0);
     }
-    console.log(data)
 
-    return {data, count}
+    if (sortValue === "name (A-Z)") {
+      query = query.order("name", { ascending: true });
+    } else if (sortValue === "name (Z-A)") {
+      query = query.order("name", { ascending: false });
+    } else if (sortValue === "price (low first)") {
+      query = query.order("regularPrice", { ascending: false });
+    } else if (sortValue === "price (high first)") {
+      query = query.order("regularPrice", { ascending: true });
+    } else if (sortValue === "capacity (low first)") {
+      query = query.order("capacity", { ascending: false });
+    } else if (sortValue === "capacity (high first)") {
+      query = query.order("capacity", { ascending: true });
+    }
+
+    const { data, count, error } = await query;
+
+    if (error) {
+      console.error("Error fetching data", error);
+      return;
+    }
+
+    return { data, count };
   } catch (error) {
     console.error("Error fetching rooms", error);
     throw Error;
