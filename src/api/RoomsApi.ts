@@ -2,6 +2,7 @@ import { RoomType } from "src/types/types";
 import { nanoid } from "nanoid";
 import supabase from "src/config/supabaseClient";
 import { getRoomImagePath } from "src/utils/helpers";
+import { newRoomValues } from "src/validation/newRoomSchema";
 const supabaseUrl = "https://xonugvplyyycodzjotuu.supabase.co";
 
 export const fetchAllRooms = async () => {
@@ -61,7 +62,7 @@ export const deleteRoomFromServer = async (roomId: number) => {
   }
 };
 
-export const createNewRoom = async (newRoom: RoomType) => {
+export const createNewRoom = async (newRoom: newRoomValues) => {
   const { data, error } = await supabase
     .from("Rooms")
     .insert([newRoom])

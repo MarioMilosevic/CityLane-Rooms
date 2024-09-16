@@ -3,30 +3,22 @@ import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import FormBlock from "../components/layout/FormBlock";
 import Input from "../components/layout/Input";
 import Label from "../components/layout/Label";
-import { getSession, loginUser } from "src/api/LoginApi";
+import LoadingSpinner from "src/components/layout/LoadingSpinner";
+import useRetrieveSession from "src/hooks/useRetrieveSession";
+import { loginUser } from "src/api/LoginApi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   loginUserFormValues,
   loginUserSchema,
 } from "src/validation/loginUserSchema";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "src/utils/toast";
 import { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    const retrieveSession = async () => {
-      const {session} = await getSession();
-      if (session) {
-        console.log('uslo')
-        navigate("/bookings");
-      }
-    };
-    retrieveSession();
-  }, [navigate]);
+  const loading = useRetrieveSession(navigate);
 
   const form = useForm<loginUserFormValues>({
     defaultValues: {
@@ -34,21 +26,20 @@ const Login = () => {
       password: "",
     },
     resolver: zodResolver(loginUserSchema),
-    mode:'onSubmit'
+    mode: "onSubmit",
   });
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    
   } = form;
 
   const onSubmit = async (formData: loginUserFormValues) => {
     try {
       const response = await loginUser(formData);
       if (response) {
-        navigate('/bookings')
+        navigate("/bookings");
         reset();
       }
     } catch (error) {
@@ -56,6 +47,8 @@ const Login = () => {
       console.error(error);
     }
   };
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <main className="flex flex-col items-center w-full pt-36">
@@ -66,8 +59,8 @@ const Login = () => {
           alt="Company logo"
           className="rounded-full w-[100px] h-[100px]"
         />
-        <h2 className="text-2xl text-yellow-800 text-center">CityLane Rooms</h2>
-        <h1 className="text-3xl font-medium">Log into your account</h1>
+        <h2 className="text-2xl text-yellow-800 dark:text-yellow-500 text-center">CityLane Rooms</h2>
+        <h1 className="text-3xl font-medium dark:text-neutral-50">Log into your account</h1>
       </div>
       <form
         className="w-[500px] pt-24 flex flex-col"

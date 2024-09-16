@@ -1,7 +1,7 @@
 const LoadingSpinner = () => {
   return (
     <div
-      className="flex justify-center items-center min-h-[50vh]"
+      className="flex justify-center items-center min-h-[50vh] w-full"
       role="status"
     >
       <svg

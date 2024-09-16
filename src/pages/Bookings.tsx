@@ -53,7 +53,10 @@ const Bookings = () => {
   }, [filterValue, sortValue, pageNumber]);
 
   const from = (pageNumber - 1) * 10 + 1;
-  const to = from + 10 - 1;
+  let to = from + 10 - 1;
+  if (to > numberOfBookings) {
+    to = numberOfBookings;
+  }
 
   const nextPage = () => {
     if (pageNumber <= numberOfBookings / itemsPerPage) {

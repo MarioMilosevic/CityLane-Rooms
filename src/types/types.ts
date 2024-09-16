@@ -59,7 +59,6 @@ export type ContentRowProps = {
 
 export type buttonColorOptions = {
   white: string;
-  blue: string;
   yellow: string;
 };
 

@@ -8,11 +8,10 @@ const PrimaryActionButton = ({
   isLoading,
 }: PrimaryActionButtonProps) => {
   const buttonColorOptions = {
-    blue: "bg-sky-500 enabled:hover:bg-sky-600 text-sky-100 enabled:hover:text-sky-50",
     white:
-      "border border-neutral-400 bg-neutral-50 enabled:hover:bg-neutral-200 text-neutral-800 enabled:hover:text-neutral-900",
+      "border border-neutral-400 bg-neutral-50 dark:bg-slate-600 enabled:hover:bg-neutral-200 text-neutral-800 enabled:hover:text-neutral-900",
     yellow:
-      "bg-yellow-500 enabled:hover:bg-yellow-600 text-yellow-100 enabled:hover:text-yellow-50",
+      "bg-yellow-500 enabled:hover:bg-yellow-600 text-yellow-100 dark:bg-yellow-600 dark:enabled:hover:bg-yellow-700 enabled:hover:text-yellow-50",
   };
   return (
     <button

@@ -6,15 +6,30 @@ import Users from "./pages/Users";
 import SharedLayout from "./components/layout/SharedLayout";
 import Login from "./pages/Login";
 import ErrorRoute from "./pages/ErrorRoute";
+import { useEffect, useState } from "react";
+
+
 
 function App() {
+  const [theme, setTheme] = useState<string>('light')
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [theme])
+
+  const handleThemeSwitch = () => {
+    setTheme((theme === "dark" ? "light" : 'dark'))
+  }
   return (
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<ErrorRoute />} />
         <Route index element={<Navigate to="/login" replace />} />
         <Route path="login" element={<Login />} />
-        <Route path="/" element={<SharedLayout />}>
+        <Route path="/" element={<SharedLayout theme={theme} handleThemeSwitch={handleThemeSwitch } />}>
           <Route path="bookings" element={<Bookings />} />
           <Route path="rooms" element={<Rooms />} />
           <Route path="users" element={<Users />} />

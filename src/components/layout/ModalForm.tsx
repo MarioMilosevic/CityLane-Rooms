@@ -46,7 +46,7 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms }: ModalFormProps) => {
     setRooms((prev) => [...prev, newRoom]);
   };
 
-  const addNewRoom = async (formData: RoomType) => {
+  const addNewRoom = async (formData: newRoomValues) => {
     try {
       setIsButtonLoading(true);
       const imageFile = formData.image[0];
@@ -70,19 +70,23 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms }: ModalFormProps) => {
     );
   };
 
-  const editCurrentRoom = async (formData: RoomType) => {
+  const editCurrentRoom = async (formData: newRoomValues) => {
     if (room) {
       try {
         setIsButtonLoading(true);
-        const response = await editRoomServer(room.id, {
+        const updatedRoom: RoomType = {
+          ...room,
           ...formData,
           image: formData.image,
-        });
+        };
+        const response = await editRoomServer(room.id, updatedRoom);
         if (response) {
           editRoom(room.id, response);
+          showToast("Room updated successfully!", "success");
         }
       } catch (error) {
-        console.error("Error occured: ", error);
+        console.error("Error occurred: ", error);
+        showToast("Unable to update room. Please try again later.", "error");
       } finally {
         setIsButtonLoading(false);
         setIsModalFormOpen(false);
