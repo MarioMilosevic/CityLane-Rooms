@@ -25,7 +25,8 @@ const Bookings = () => {
     numberOfItems,
     currentPage,
   } = useFetchData("bookings", fetchBookings);
-  const from = (currentPage - 1) * itemsPerPage + 1;
+  const from = (currentPage - 1) * itemsPerPage + 1
+    console.log("bookings" ,bookings);
 
   let to = from + itemsPerPage - 1;
   if (to > numberOfItems) {

@@ -17,9 +17,9 @@ const Filter = ({ options }: FilterProps) => {
     if (pathname === "/bookings") {
       searchParams.set("status", value);
     } else if (pathname === "/rooms") {
-      console.log('uslo')
       searchParams.set("discount", value);
     }
+    searchParams.set('page', "1")
     setSearchParams(searchParams);
   };
 

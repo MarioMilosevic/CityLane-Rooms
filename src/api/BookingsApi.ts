@@ -8,8 +8,8 @@ export const fetchBookings = async (
   page: number
 ): Promise<{ data: BookingType[]; count: number }> => {
   try {
-    const from = (page - 1) * itemsPerPage;
-    const to = from + itemsPerPage - 1;
+    const from = (page - 1) * itemsPerPage; // 0, 10, 20
+    const to = from + itemsPerPage - 1;  // 9 , 19, 29
 
     let query = supabase
       .from("Bookings")
