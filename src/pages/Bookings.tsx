@@ -16,6 +16,7 @@ import {
 import useFetchData from "src/hooks/useFetchData";
 import ShowResults from "src/components/layout/ShowResults";
 import { fetchBookings } from "src/api/BookingsApi";
+import { BookingType } from "src/types/types";
 
 const Bookings = () => {
   const {
@@ -31,7 +32,6 @@ const Bookings = () => {
     showResultsTo = numberOfItems;
   }
 
-  console.log(bookings)
 
   return loading ? (
     <LoadingSpinner />
@@ -53,7 +53,7 @@ const Bookings = () => {
         </ContentHeaderWrapper>
         <ContentRowWrapper>
           {bookings.map((booking) => (
-            <SingleBooking key={booking.id} {...booking} />
+            <SingleBooking key={booking.id} booking={booking as BookingType} />
           ))}
         </ContentRowWrapper>
         <ButtonWrapper justify="between">

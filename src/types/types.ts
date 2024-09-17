@@ -60,6 +60,7 @@ export type ContentRowProps = {
 export type buttonColorOptions = {
   white: string;
   yellow: string;
+  red: string;
 };
 
 export type PrimaryActionButtonProps = {
@@ -214,8 +215,9 @@ export type BookingType = {
   roomId: number;
   roomPrice: number;
   startDate: string;
-  status: string;
+  status: keyof StatusOptions;
   totalPrice: number;
+  Guests: GuestType;
 };
 
 export type PageButtonProps = {
@@ -233,4 +235,18 @@ export type ShowResultsProps = {
   showResultsTo: number;
   showResultsFrom: number;
   numberOfItems: number;
+};
+
+export type GuestType = {
+  countryFlag: string;
+  created_at: string;
+  email: string;
+  fullName: string;
+  id: number;
+  nationalID: string;
+  nationality: string;
+};
+
+export type SingleBookingProps = {
+  booking: BookingType;
 };

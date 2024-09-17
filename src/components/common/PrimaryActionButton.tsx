@@ -12,6 +12,8 @@ const PrimaryActionButton = ({
       "border border-neutral-400 bg-neutral-50 dark:bg-slate-300 dark:hover:bg-slate-400 enabled:hover:bg-neutral-200 text-neutral-800 enabled:hover:text-neutral-900",
     yellow:
       "bg-yellow-500 enabled:hover:bg-yellow-600 text-yellow-100 dark:bg-yellow-600 dark:enabled:hover:bg-yellow-700 enabled:hover:text-yellow-50",
+    red:
+      "bg-red-500 enabled:hover:bg-red-600 text-red-100 dark:bg-red-600 dark:enabled:hover:bg-red-700 enabled:hover:text-red-50",
   };
   return (
     <button

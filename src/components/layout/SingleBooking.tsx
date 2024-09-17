@@ -12,20 +12,22 @@ import {
   MdOutlineDeleteForever,
 } from "react-icons/md";
 import { format, formatDistance, parseISO } from "date-fns";
+import { SingleBookingProps } from "src/types/types";
 
-const SingleBooking = ({
-  numNights,
-  roomId,
-  startDate,
-  endDate,
-  status,
-  totalPrice,
-  Guests,
-  id
-}) => {
+const SingleBooking = ({ booking }: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const currentDate = new Date();
+  const {
+    numNights,
+    roomId,
+    startDate,
+    endDate,
+    status,
+    totalPrice,
+    Guests: { email, fullName },
+    id,
+  } = booking;
   const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
   const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
   const timeDifference = formatDistance(parseISO(startDate), currentDate);
@@ -33,15 +35,10 @@ const SingleBooking = ({
     () => setIsOptionsModalOpen(false),
     isOptionsModalOpen
   );
-  const { email, fullName} = Guests;
 
   const seeDetails = (bookingId: number) => {
-    navigate(`/bookings/${bookingId}`)
-    console.log(bookingId)
-    console.log('see details')
-  }
-
-
+    navigate(`/bookings/${bookingId}`);
+  };
 
   return (
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center py-1 bg-neutral-50 relative dark:bg-slate-500">
