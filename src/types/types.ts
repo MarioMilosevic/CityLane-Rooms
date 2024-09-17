@@ -230,7 +230,7 @@ export type PageButtonOptions = {
 };
 
 export type ShowResultsProps = {
-  to: number;
-  from: number;
+  showResultsTo: number;
+  showResultsFrom: number;
   numberOfItems: number;
 };

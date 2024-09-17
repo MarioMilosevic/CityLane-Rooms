@@ -5,6 +5,7 @@ import OptionButton from "./OptionButton";
 import Option from "../common/Option";
 import useClickOutside from "src/hooks/useClickOutside";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   MdOutlineRemoveRedEye,
   MdOutlineFileDownload,
@@ -15,26 +16,32 @@ import { format, formatDistance, parseISO } from "date-fns";
 const SingleBooking = ({
   numNights,
   roomId,
-  roomPrice,
   startDate,
   endDate,
   status,
   totalPrice,
   Guests,
+  id
 }) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
-
+  const navigate = useNavigate()
   const currentDate = new Date();
   const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
   const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
   const timeDifference = formatDistance(parseISO(startDate), currentDate);
-
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsOptionsModalOpen(false),
     isOptionsModalOpen
   );
+  const { email, fullName} = Guests;
 
-  const { countryFlag, email, fullName, nationalID, nationality } = Guests;
+  const seeDetails = (bookingId: number) => {
+    navigate(`/bookings/${bookingId}`)
+    console.log(bookingId)
+    console.log('see details')
+  }
+
+
 
   return (
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center py-1 bg-neutral-50 relative dark:bg-slate-500">
@@ -62,7 +69,7 @@ const SingleBooking = ({
           <Option
             text="See details"
             icon={MdOutlineRemoveRedEye}
-            clickHandler={() => console.log("nesto")}
+            clickHandler={() => seeDetails(id)}
           />
           {status !== "Checked out" && (
             <Option

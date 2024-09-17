@@ -62,8 +62,8 @@ const Rooms = () => {
         </ContentRowWrapper>
         <ButtonWrapper justify="between">
           <ShowResults
-            from={showResultsFrom}
-            to={showResultsTo}
+            showResultsFrom={showResultsFrom}
+            showResultsTo={showResultsTo}
             numberOfItems={numberOfRooms}
           />
           {numberOfRooms > itemsPerPage && (

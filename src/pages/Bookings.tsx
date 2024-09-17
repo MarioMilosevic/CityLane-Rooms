@@ -18,20 +18,20 @@ import ShowResults from "src/components/layout/ShowResults";
 import { fetchBookings } from "src/api/BookingsApi";
 
 const Bookings = () => {
-
   const {
     data: bookings,
     loading,
     numberOfItems,
     currentPage,
   } = useFetchData("bookings", fetchBookings);
-  const from = (currentPage - 1) * itemsPerPage + 1
-    console.log("bookings" ,bookings);
 
-  let to = from + itemsPerPage - 1;
-  if (to > numberOfItems) {
-    to = numberOfItems;
+  const showResultsFrom = (currentPage - 1) * itemsPerPage + 1
+  let showResultsTo = showResultsFrom + itemsPerPage - 1;
+  if (showResultsTo > numberOfItems) {
+    showResultsTo = numberOfItems;
   }
+
+  console.log(bookings)
 
   return loading ? (
     <LoadingSpinner />
@@ -57,7 +57,7 @@ const Bookings = () => {
           ))}
         </ContentRowWrapper>
         <ButtonWrapper justify="between">
-          <ShowResults from={from} to={to} numberOfItems={numberOfItems} />
+          <ShowResults showResultsFrom={showResultsFrom} showResultsTo={showResultsTo} numberOfItems={numberOfItems} />
           {numberOfItems > itemsPerPage && (
             <Pagination numberOfItems={numberOfItems} />
           )}
