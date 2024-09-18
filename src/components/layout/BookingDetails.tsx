@@ -28,8 +28,10 @@ const BookingDetails = () => {
   };
 
   const deleteHandler = async () => {
-    deleteBooking(fetchedBookingId, guestId);
-    navigate("/bookings");
+    if (bookingData) {
+      deleteBooking(bookingData.fetchedBookingId, bookingData.guestId);
+      navigate("/bookings");
+    }
   };
 
   return (
@@ -39,7 +41,7 @@ const BookingDetails = () => {
         bookingId={bookingId as string}
         goBack={goBack}
       />
-      <BookingSection data={bookingData} />
+      {bookingData && <BookingSection data={bookingData} />}
       <ButtonWrapper justify="end">
         {bookingData?.status !== "Checked out" && (
           <PrimaryActionButton color="yellow" text="Check out" />
@@ -64,4 +66,3 @@ const BookingDetails = () => {
 };
 
 export default BookingDetails;
-

@@ -56,7 +56,11 @@ const Bookings = () => {
             <SingleBooking
               key={booking.id}
               booking={booking as BookingType}
-              setBookings={setBookings}
+              setBookings={
+                setBookings as React.Dispatch<
+                  React.SetStateAction<BookingType[]>
+                >
+              }
             />
           ))}
         </ContentRowWrapper>

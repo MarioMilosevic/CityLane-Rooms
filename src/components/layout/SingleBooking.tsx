@@ -47,7 +47,7 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
 
   const deleteHandler = async () => {
     await deleteBooking(bookingId, guestId);
-    setBookings((prev) => prev.filter((booking) => booking.id !== id));
+    setBookings((prev) => prev.filter((booking) => booking.id !== bookingId));
   };
 
   const updateHandler = () => {

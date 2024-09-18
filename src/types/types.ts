@@ -272,3 +272,30 @@ export type BookingHeaderProps = {
   bookingId: string;
   goBack: () => void;
 };
+
+export type BookingSectionData = {
+  data: {
+    numNights: number;
+    roomId: number;
+    startingDay: string;
+    formattedStartDate: string;
+    timeDifference: string;
+    endingDay: string;
+    formattedEndDate: string;
+    countryFlag: string;
+    fullName: string;
+    numGuests: number;
+    email: string;
+    nationalID: string;
+    observations: string;
+    hasBreakfast: boolean;
+    isPaidClass: string;
+    totalPrice: number;
+    roomPrice: number;
+    extrasPrice: number;
+    createdDay: string;
+    formattedCreatedDate: string;
+    isPaid: boolean;
+    status: keyof StatusOptions;
+  }
+};

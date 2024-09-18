@@ -3,8 +3,9 @@ import { BiMessageDetail } from "react-icons/bi";
 import { PiHouseLineBold } from "react-icons/pi";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { CiCircleCheck } from "react-icons/ci";
+import { BookingSectionData } from "src/types/types";
 
-const BookingSection = ({ data }) => {
+const BookingSection = ({ data }:BookingSectionData) => {
   const {
     numNights,
     roomId,
@@ -28,7 +29,7 @@ const BookingSection = ({ data }) => {
     formattedCreatedDate,
     isPaid,
     status,
-  } = data;
+  } = data
 
   return (
     <section className="bg-neutral-50">
