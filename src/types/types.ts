@@ -17,6 +17,16 @@ export type RoomsState = {
   rooms: RoomType[];
 };
 
+export type TitleProps = {
+  title: string;
+  position:keyof TitleOptions
+}
+
+export type TitleOptions = {
+  left: string;
+  center: string;
+}
+
 export type LinkProps = {
   link: { text: string; icon: IconType };
   isSelected: boolean;

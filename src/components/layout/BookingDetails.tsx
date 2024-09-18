@@ -6,7 +6,7 @@ import { CiCircleCheck } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BookingType } from "src/types/types";
-import { fetchSingleBooking } from "src/api/BookingsApi";
+import { fetchSingleBooking, deleteBooking } from "src/api/BookingsApi";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
 import Status from "./Status";
@@ -53,6 +53,7 @@ const BookingDetails = () => {
     roomPrice,
     status,
     totalPrice,
+    id:fetchedBookingId,
     Guests: {
       id: guestId,
       countryFlag,
@@ -83,7 +84,7 @@ const BookingDetails = () => {
     <div className="min-h-[50vh] flex flex-col">
       <div className="flex justify-between items-center py-8">
         <div className="flex gap-4">
-          <Title title={`Booking #${bookingId}`} />
+          <Title title={`Booking #${bookingId}`} position="left" />
           <Status status={status} />
         </div>
         <button onClick={goBack} className="flex items-center gap-2">
@@ -158,7 +159,7 @@ const BookingDetails = () => {
         {status !== "Checked out" && (
           <PrimaryActionButton color="yellow" text="Check out" />
         )}
-        <PrimaryActionButton color="red" text="Delete booking" />
+        <PrimaryActionButton color="red" text="Delete booking" clickHandler={() => deleteBooking(fetchedBookingId, guestId)}/>
         <PrimaryActionButton color="white" text="Back" clickHandler={goBack} />
       </ButtonWrapper>
     </div>

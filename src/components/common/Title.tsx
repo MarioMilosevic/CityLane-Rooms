@@ -1,5 +1,11 @@
-const Title = ({ title }:{title:string}) => {
-  return <h1 className="text-3xl font-medium text-center">{title}</h1>;
+import { TitleProps } from "src/types/types";
+
+const Title = ({ title, position }: TitleProps) => {
+  const titlePositionOptions = {
+    left:'text-left',
+    center:'text-center',
+  }
+  return <h1 className={`text-3xl font-medium ${titlePositionOptions[position]}`}>{title}</h1>;
 };
 
 export default Title;

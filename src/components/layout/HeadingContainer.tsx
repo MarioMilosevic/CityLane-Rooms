@@ -7,7 +7,7 @@ const HeadingContainer = ({
 }: HeadingContainerProps) => {
   return (
     <header className="flex justify-between py-8">
-      <Title title={title} />
+      <Title title={title} position="left"/>
       {children}
     </header>
   );

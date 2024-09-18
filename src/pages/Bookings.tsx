@@ -24,6 +24,7 @@ const Bookings = () => {
     loading,
     numberOfItems,
     currentPage,
+    setData:setBookings
   } = useFetchData("bookings", fetchBookings);
 
   const showResultsFrom = (currentPage - 1) * itemsPerPage + 1

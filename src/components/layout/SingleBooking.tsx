@@ -4,6 +4,8 @@ import Status from "./Status";
 import OptionButton from "./OptionButton";
 import Option from "../common/Option";
 import useClickOutside from "src/hooks/useClickOutside";
+import { createPortal } from "react-dom";
+import DeleteBookingModal from "./DeleteBookingModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -13,9 +15,11 @@ import {
 } from "react-icons/md";
 import { format, formatDistance, parseISO } from "date-fns";
 import { SingleBookingProps } from "src/types/types";
+import { deleteBooking } from "src/api/BookingsApi";
 
 const SingleBooking = ({ booking }: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
   const navigate = useNavigate();
   const currentDate = new Date();
   const {
@@ -25,7 +29,7 @@ const SingleBooking = ({ booking }: SingleBookingProps) => {
     endDate,
     status,
     totalPrice,
-    Guests: { email, fullName },
+    Guests: { email, fullName, id:guestId },
     id,
   } = booking;
   const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
@@ -35,6 +39,7 @@ const SingleBooking = ({ booking }: SingleBookingProps) => {
     () => setIsOptionsModalOpen(false),
     isOptionsModalOpen
   );
+  console.log('guestId', guestId)
 
   const seeDetails = (bookingId: number) => {
     navigate(`/bookings/${bookingId}`);
@@ -78,10 +83,16 @@ const SingleBooking = ({ booking }: SingleBookingProps) => {
           <Option
             text="Delete booking"
             icon={MdOutlineDeleteForever}
-            clickHandler={() => console.log("nesto")}
+            clickHandler={() => setIsDeleteModalOpen(true)}
           />
         </OptionButton>
       )}
+      {isDeleteModalOpen &&
+        createPortal(
+          <DeleteBookingModal closeModal={() => setIsDeleteModalOpen(false)}
+          />,
+          document.body
+        )}
     </li>
   );
 };

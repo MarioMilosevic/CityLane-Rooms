@@ -19,7 +19,7 @@ const useFetchSettings = () => {
       }
     };
     fetchAndSetSettings();
-  }, [settings, setSettings]);
+  }, []);
   return { settings, setSettings, loading };
 };
 

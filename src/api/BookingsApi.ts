@@ -9,7 +9,7 @@ export const fetchBookings = async (
 ): Promise<{ data: BookingType[]; count: number }> => {
   try {
     const from = (page - 1) * itemsPerPage; // 0, 10, 20
-    const to = from + itemsPerPage - 1;  // 9 , 19, 29
+    const to = from + itemsPerPage - 1; // 9 , 19, 29
 
     let query = supabase
       .from("Bookings")
@@ -34,13 +34,13 @@ export const fetchBookings = async (
 
     if (error) {
       console.error("Error fetching bookings", error);
-      return { data: [], count: 0 }; 
+      return { data: [], count: 0 };
     }
 
-    return { data: data || [], count: count ?? 0 }; 
+    return { data: data || [], count: count ?? 0 };
   } catch (error) {
     console.error("Error fetching bookings", error);
-    return { data: [], count: 0 }; 
+    return { data: [], count: 0 };
   }
 };
 
@@ -51,10 +51,10 @@ export const fetchSingleBooking = async (id: number) => {
       .select(
         `
         *,
-        Guests!guestId(*)  // Fetch the related Guest using the guestId foreign key
-      `
+        Guests!guestId(*)       `
       )
-      .eq("id", id).single()
+      .eq("id", id)
+      .single();
 
     if (error) throw error;
     return data;
@@ -64,3 +64,28 @@ export const fetchSingleBooking = async (id: number) => {
   }
 };
 
+export const deleteBooking = async (bookingId: number, guestId: number) => {
+  try {
+    const deleteBookingPromise = supabase
+      .from("Bookings")
+      .delete()
+      .eq("id", bookingId);
+
+    const deleteGuestPromise = supabase
+      .from("Guests")
+      .delete()
+      .eq("id", guestId);
+
+    const [deleteBookingResult, deleteGuestResult] = await Promise.all([
+      deleteBookingPromise,
+      deleteGuestPromise,
+    ]);
+
+    if (deleteBookingResult.error) throw deleteBookingResult.error;
+    if (deleteGuestResult.error) throw deleteGuestResult.error;
+
+    console.log("Booking and associated guest deleted successfully.");
+  } catch (error) {
+    console.error("Error occurred while deleting booking and guest:", error);
+  }
+};
