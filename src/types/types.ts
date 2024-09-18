@@ -19,13 +19,13 @@ export type RoomsState = {
 
 export type TitleProps = {
   title: string;
-  position:keyof TitleOptions
-}
+  position: keyof TitleOptions;
+};
 
 export type TitleOptions = {
   left: string;
   center: string;
-}
+};
 
 export type LinkProps = {
   link: { text: string; icon: IconType };
@@ -184,7 +184,7 @@ export type UserType = {
 };
 
 export type StatusProps = {
-  status: keyof StatusOptions | string
+  status: keyof StatusOptions | string;
 };
 
 export type StatusOptions = {
@@ -259,4 +259,10 @@ export type GuestType = {
 
 export type SingleBookingProps = {
   booking: BookingType;
+};
+
+export type DeleteBookingModalProps = {
+  closeModal: () => void;
+  bookingId: number;
+  guestId: number;
 };

@@ -15,11 +15,10 @@ import {
 } from "react-icons/md";
 import { format, formatDistance, parseISO } from "date-fns";
 import { SingleBookingProps } from "src/types/types";
-import { deleteBooking } from "src/api/BookingsApi";
 
 const SingleBooking = ({ booking }: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const currentDate = new Date();
   const {
@@ -29,7 +28,7 @@ const SingleBooking = ({ booking }: SingleBookingProps) => {
     endDate,
     status,
     totalPrice,
-    Guests: { email, fullName, id:guestId },
+    Guests: { email, fullName, id: guestId },
     id,
   } = booking;
   const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
@@ -39,7 +38,7 @@ const SingleBooking = ({ booking }: SingleBookingProps) => {
     () => setIsOptionsModalOpen(false),
     isOptionsModalOpen
   );
-  console.log('guestId', guestId)
+  console.log("guestId", guestId);
 
   const seeDetails = (bookingId: number) => {
     navigate(`/bookings/${bookingId}`);
@@ -89,7 +88,10 @@ const SingleBooking = ({ booking }: SingleBookingProps) => {
       )}
       {isDeleteModalOpen &&
         createPortal(
-          <DeleteBookingModal closeModal={() => setIsDeleteModalOpen(false)}
+          <DeleteBookingModal
+            closeModal={() => setIsDeleteModalOpen(false)}
+            bookingId={id}
+            guestId={guestId}
           />,
           document.body
         )}

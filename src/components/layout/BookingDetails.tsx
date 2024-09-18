@@ -15,10 +15,13 @@ import LoadingSpinner from "./LoadingSpinner";
 import Amount from "../common/Amount";
 import { format, formatDistance, parseISO } from "date-fns";
 import { initialSingleBookingState } from "src/utils/constants";
+import DeleteBookingModal from "./DeleteBookingModal";
+import { createPortal } from "react-dom";
 
 const BookingDetails = () => {
   const { bookingId } = useParams();
   const [loading, setLoading] = useState<boolean>(true);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [singleBooking, setSingleBooking] = useState<BookingType>(
     initialSingleBookingState
   );
@@ -53,7 +56,7 @@ const BookingDetails = () => {
     roomPrice,
     status,
     totalPrice,
-    id:fetchedBookingId,
+    id: fetchedBookingId,
     Guests: {
       id: guestId,
       countryFlag,
@@ -159,9 +162,22 @@ const BookingDetails = () => {
         {status !== "Checked out" && (
           <PrimaryActionButton color="yellow" text="Check out" />
         )}
-        <PrimaryActionButton color="red" text="Delete booking" clickHandler={() => deleteBooking(fetchedBookingId, guestId)}/>
+        <PrimaryActionButton
+          color="red"
+          text="Delete booking"
+          clickHandler={() => setIsDeleteModalOpen(true)}
+        />
         <PrimaryActionButton color="white" text="Back" clickHandler={goBack} />
       </ButtonWrapper>
+      {isDeleteModalOpen &&
+        createPortal(
+          <DeleteBookingModal
+            closeModal={() => setIsDeleteModalOpen(false)}
+            bookingId={fetchedBookingId}
+            guestId={guestId}
+          />,
+          document.body
+        )}
     </div>
   );
 };
