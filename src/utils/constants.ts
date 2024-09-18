@@ -13,8 +13,7 @@ export const links = [
 
 export const bookingsTabs = ["All", "Checked out", "Checked in", "Unconfirmed"];
 
-export const itemsPerPage = 10
-
+export const itemsPerPage = 10;
 
 export const bookingsSortOptions = [
   "date (upcoming first)",
@@ -41,4 +40,31 @@ export const initialSettingsState = {
   maxGuests: 0,
   maxNights: 0,
   minNights: 0,
+};
+
+export const initialSingleBookingState = {
+  created_at: "",
+  endDate: "",
+  extrasPrice: 0,
+  guestId: 0,
+  hasBreakfast: false,
+  id: 0,
+  isPaid: false,
+  numGuests: 0,
+  numNights: 0,
+  observations: "",
+  roomId: 0,
+  roomPrice: 0,
+  startDate: "",
+  status: "",
+  totalPrice: 0,
+  Guests: {
+    countryFlag: "",
+    created_at: "",
+    email: "",
+    fullName: "",
+    id: 0,
+    nationalID: "",
+    nationality: "",
+  },
 };

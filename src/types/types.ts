@@ -174,7 +174,7 @@ export type UserType = {
 };
 
 export type StatusProps = {
-  status: keyof StatusOptions;
+  status: keyof StatusOptions | string
 };
 
 export type StatusOptions = {
