@@ -86,3 +86,16 @@ export const deleteBooking = async (bookingId: number, guestId: number) => {
     console.error("Unable to delete booking", error);
   }
 };
+
+export const updateStatus = async (bookingId: number, status: "string") => {
+  try {
+    const { error } = await supabase
+      .from("Bookings")
+      .update({ status: status })
+      .eq("id", bookingId);
+
+    if (error) throw new Error("Unable to check in");
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+  }
+};

@@ -17,6 +17,7 @@ import { format, formatDistance, parseISO } from "date-fns";
 import { initialSingleBookingState } from "src/utils/constants";
 import DeleteBookingModal from "./DeleteBookingModal";
 import { createPortal } from "react-dom";
+import BookingHeader from "./BookingHeader";
 
 const BookingDetails = () => {
   const { bookingId } = useParams();
@@ -83,23 +84,14 @@ const BookingDetails = () => {
     navigate("/bookings");
   };
 
-  const onDelete = async () => {
+  const deleteHandler = async () => {
     deleteBooking(fetchedBookingId, guestId)
     navigate('/bookings')
   }
 
   return (
     <div className="min-h-[50vh] flex flex-col">
-      <div className="flex justify-between items-center py-8">
-        <div className="flex gap-4">
-          <Title title={`Booking #${bookingId}`} position="left" />
-          <Status status={status} />
-        </div>
-        <button onClick={goBack} className="flex items-center gap-2">
-          <BiArrowBack size={22} />
-          <span className="font-medium">Back</span>
-        </button>
-      </div>
+      <BookingHeader status={status} bookingId={bookingId} goBack={goBack} />
       <section className="bg-neutral-50">
         <header className="p-4 flex items-center justify-between bg-yellow-500 text-yellow-100 rounded-md">
           <div className="flex items-center gap-4">
@@ -178,9 +170,7 @@ const BookingDetails = () => {
         createPortal(
           <DeleteBookingModal
             closeModal={() => setIsDeleteModalOpen(false)}
-            deleteHandler={onDelete}
-            // bookingId={fetchedBookingId}
-            // guestId={guestId}
+            deleteHandler={deleteHandler}
           />,
           document.body
         )}

@@ -259,10 +259,16 @@ export type GuestType = {
 
 export type SingleBookingProps = {
   booking: BookingType;
+  setBookings: React.Dispatch<React.SetStateAction<BookingType[]>>;
 };
 
 export type DeleteBookingModalProps = {
   closeModal: () => void;
-  bookingId: number;
-  guestId: number;
+  deleteHandler: () => void;
+};
+
+export type BookingHeaderProps = {
+  status: keyof StatusOptions;
+  bookingId: string;
+  goBack: () => void;
 };

@@ -17,6 +17,7 @@ import { format, formatDistance, parseISO } from "date-fns";
 import { SingleBookingProps } from "src/types/types";
 import { deleteBooking } from "src/api/BookingsApi";
 
+
 const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
@@ -30,7 +31,7 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
     status,
     totalPrice,
     Guests: { email, fullName, id: guestId },
-    id,
+    id:bookingId
   } = booking;
   const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
   const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
@@ -40,15 +41,19 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
     isOptionsModalOpen
   );
 
-  const seeDetails = (bookingId: number) => {
+  const seeDetails = () => {
     navigate(`/bookings/${bookingId}`);
   };
 
   const deleteHandler = async () => {
-    console.log(id)
-    await deleteBooking(id, guestId);
+    await deleteBooking(bookingId, guestId);
     setBookings((prev) => prev.filter((booking) => booking.id !== id));
   };
+
+  const updateHandler = () => {
+    navigate(`/bookings/checkIn/${bookingId}`)
+  }
+
 
   return (
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center py-1 bg-neutral-50 relative dark:bg-slate-500">
@@ -76,13 +81,19 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
           <Option
             text="See details"
             icon={MdOutlineRemoveRedEye}
-            clickHandler={() => seeDetails(id)}
+            clickHandler={seeDetails}
           />
           {status !== "Checked out" && (
             <Option
-              text="Check in"
+              text={
+                status === "Unconfirmed"
+                  ? "Check in"
+                  : status === "Checked in"
+                  ? "Check out"
+                  : ""
+              }
               icon={MdOutlineFileDownload}
-              clickHandler={() => console.log("nesto")}
+              clickHandler={updateHandler}
             />
           )}
           <Option
@@ -97,8 +108,6 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
           <DeleteBookingModal
             closeModal={() => setIsDeleteModalOpen(false)}
             deleteHandler={deleteHandler}
-            // bookingId={id}
-            // guestId={guestId}
           />,
           document.body
         )}
