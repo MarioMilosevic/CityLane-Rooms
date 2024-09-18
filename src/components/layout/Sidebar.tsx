@@ -9,9 +9,6 @@ const Sidebar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  console.log(pathname);
-  console.log(pathname.slice(1));
-
   const clickHandler = (path: string) => {
     navigate(`/${path}`);
   };

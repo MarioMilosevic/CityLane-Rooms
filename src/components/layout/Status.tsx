@@ -9,7 +9,7 @@ const Status = ({ status }: StatusProps) => {
 
   return (
     <span
-      className={`${statusOptions[status]} uppercase flex justify-center items-center font-normal rounded-full text-xs w-[120px] px-2 py-1`}
+      className={`${statusOptions[status]} uppercase flex justify-center items-center font-medium rounded-full text-xs  w-[120px] px-2 py-1`}
     >
       {status}
     </span>

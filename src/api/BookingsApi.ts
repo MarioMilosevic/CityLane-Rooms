@@ -44,3 +44,23 @@ export const fetchBookings = async (
   }
 };
 
+export const fetchSingleBooking = async (id: number) => {
+  try {
+    const { data, error } = await supabase
+      .from("Bookings")
+      .select(
+        `
+        *,
+        Guests!guestId(*)  // Fetch the related Guest using the guestId foreign key
+      `
+      )
+      .eq("id", id).single()
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error("Error occurred:", error);
+    return null;
+  }
+};
+
