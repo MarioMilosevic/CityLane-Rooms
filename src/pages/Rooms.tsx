@@ -2,6 +2,8 @@ import { roomsSortOptions, roomsTabs, itemsPerPage } from "src/utils/constants";
 import { createPortal } from "react-dom";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { fetchAllRooms } from "src/api/RoomsApi";
+import { RoomType } from "src/types/types";
 import ContentWrapper from "src/components/layout/ContentWrapper";
 import ContentHeader from "src/components/layout/ContentHeader";
 import SingleRoom from "src/components/layout/SingleRoom";
@@ -16,14 +18,12 @@ import ButtonWrapper from "src/components/layout/ButtonWrapper";
 import ShowResults from "src/components/layout/ShowResults";
 import Pagination from "src/components/layout/Pagination";
 import useFetchData from "src/hooks/useFetchData";
-import { fetchAllRooms } from "src/api/RoomsApi";
-import { RoomType } from "src/types/types";
 
 const Rooms = () => {
   const [searchParams] = useSearchParams();
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
-  const currentPage = Number(searchParams.get("page")) || 1;
   const { data:rooms, loading, setData:setRooms, numberOfItems:numberOfRooms} = useFetchData('rooms', fetchAllRooms)
+  const currentPage = Number(searchParams.get("page")) || 1;
 
   const showResultsFrom = (currentPage - 1) * itemsPerPage + 1; // 1 , 11 ,21, 31...
   let showResultsTo = showResultsFrom + itemsPerPage - 1; // 10,20,30,40...

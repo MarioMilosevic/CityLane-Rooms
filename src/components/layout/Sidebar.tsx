@@ -3,7 +3,7 @@ import { links } from "../../utils/constants";
 import { useNavigate, useLocation } from "react-router-dom";
 import Title from "../common/Title";
 import Link from "../common/Link";
-// import Uploader from "src/data/Uploader";
+import Uploader from "src/data/Uploader";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -28,7 +28,7 @@ const Sidebar = () => {
           />
         ))}
       </div>
-      {/* <Uploader/> */}
+      <Uploader/>
     </aside>
   );
 };

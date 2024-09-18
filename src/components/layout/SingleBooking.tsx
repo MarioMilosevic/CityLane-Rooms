@@ -4,8 +4,8 @@ import Status from "./Status";
 import OptionButton from "./OptionButton";
 import Option from "../common/Option";
 import useClickOutside from "src/hooks/useClickOutside";
-import { createPortal } from "react-dom";
 import DeleteBookingModal from "./DeleteBookingModal";
+import { createPortal } from "react-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -15,8 +15,9 @@ import {
 } from "react-icons/md";
 import { format, formatDistance, parseISO } from "date-fns";
 import { SingleBookingProps } from "src/types/types";
+import { deleteBooking } from "src/api/BookingsApi";
 
-const SingleBooking = ({ booking }: SingleBookingProps) => {
+const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -38,10 +39,15 @@ const SingleBooking = ({ booking }: SingleBookingProps) => {
     () => setIsOptionsModalOpen(false),
     isOptionsModalOpen
   );
-  console.log("guestId", guestId);
 
   const seeDetails = (bookingId: number) => {
     navigate(`/bookings/${bookingId}`);
+  };
+
+  const deleteHandler = async () => {
+    console.log(id)
+    await deleteBooking(id, guestId);
+    setBookings((prev) => prev.filter((booking) => booking.id !== id));
   };
 
   return (
@@ -90,8 +96,9 @@ const SingleBooking = ({ booking }: SingleBookingProps) => {
         createPortal(
           <DeleteBookingModal
             closeModal={() => setIsDeleteModalOpen(false)}
-            bookingId={id}
-            guestId={guestId}
+            deleteHandler={deleteHandler}
+            // bookingId={id}
+            // guestId={guestId}
           />,
           document.body
         )}

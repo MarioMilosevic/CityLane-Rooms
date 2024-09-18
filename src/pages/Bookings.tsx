@@ -24,15 +24,14 @@ const Bookings = () => {
     loading,
     numberOfItems,
     currentPage,
-    setData:setBookings
+    setData: setBookings,
   } = useFetchData("bookings", fetchBookings);
 
-  const showResultsFrom = (currentPage - 1) * itemsPerPage + 1
+  const showResultsFrom = (currentPage - 1) * itemsPerPage + 1;
   let showResultsTo = showResultsFrom + itemsPerPage - 1;
   if (showResultsTo > numberOfItems) {
     showResultsTo = numberOfItems;
   }
-
 
   return loading ? (
     <LoadingSpinner />
@@ -54,11 +53,19 @@ const Bookings = () => {
         </ContentHeaderWrapper>
         <ContentRowWrapper>
           {bookings.map((booking) => (
-            <SingleBooking key={booking.id} booking={booking as BookingType} />
+            <SingleBooking
+              key={booking.id}
+              booking={booking as BookingType}
+              setBookings={setBookings}
+            />
           ))}
         </ContentRowWrapper>
         <ButtonWrapper justify="between">
-          <ShowResults showResultsFrom={showResultsFrom} showResultsTo={showResultsTo} numberOfItems={numberOfItems} />
+          <ShowResults
+            showResultsFrom={showResultsFrom}
+            showResultsTo={showResultsTo}
+            numberOfItems={numberOfItems}
+          />
           {numberOfItems > itemsPerPage && (
             <Pagination numberOfItems={numberOfItems} />
           )}

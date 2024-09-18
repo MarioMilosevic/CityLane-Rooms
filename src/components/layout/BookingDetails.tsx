@@ -6,7 +6,7 @@ import { CiCircleCheck } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BookingType } from "src/types/types";
-import { fetchSingleBooking, deleteBooking } from "src/api/BookingsApi";
+import { deleteBooking, fetchSingleBooking } from "src/api/BookingsApi";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
 import Status from "./Status";
@@ -82,6 +82,11 @@ const BookingDetails = () => {
   const goBack = () => {
     navigate("/bookings");
   };
+
+  const onDelete = async () => {
+    deleteBooking(fetchedBookingId, guestId)
+    navigate('/bookings')
+  }
 
   return (
     <div className="min-h-[50vh] flex flex-col">
@@ -173,8 +178,9 @@ const BookingDetails = () => {
         createPortal(
           <DeleteBookingModal
             closeModal={() => setIsDeleteModalOpen(false)}
-            bookingId={fetchedBookingId}
-            guestId={guestId}
+            deleteHandler={onDelete}
+            // bookingId={fetchedBookingId}
+            // guestId={guestId}
           />,
           document.body
         )}

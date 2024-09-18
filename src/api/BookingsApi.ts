@@ -1,6 +1,7 @@
 import supabase from "src/config/supabaseClient";
 import { itemsPerPage } from "src/utils/constants";
 import { BookingType } from "src/types/types";
+import { showToast } from "src/utils/toast";
 
 export const fetchBookings = async (
   filter: string,
@@ -66,26 +67,22 @@ export const fetchSingleBooking = async (id: number) => {
 
 export const deleteBooking = async (bookingId: number, guestId: number) => {
   try {
-    const deleteBookingPromise = supabase
+    const { error: deleteBookingError } = await supabase
       .from("Bookings")
       .delete()
       .eq("id", bookingId);
+    if (deleteBookingError) throw deleteBookingError;
 
-    const deleteGuestPromise = supabase
+    const { error: deleteGuestError } = await supabase
       .from("Guests")
       .delete()
       .eq("id", guestId);
 
-    const [deleteBookingResult, deleteGuestResult] = await Promise.all([
-      deleteBookingPromise,
-      deleteGuestPromise,
-    ]);
+    if (deleteGuestError) throw deleteGuestError;
 
-    if (deleteBookingResult.error) throw deleteBookingResult.error;
-    if (deleteGuestResult.error) throw deleteGuestResult.error;
-
-    console.log("Booking and associated guest deleted successfully.");
+    console.log("Booking and its guest deleted successfully.");
+    showToast("Booking deleted successfully", "success");
   } catch (error) {
-    console.error("Error occurred while deleting booking and guest:", error);
+    console.error("Unable to delete booking", error);
   }
 };

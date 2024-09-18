@@ -1,17 +1,25 @@
 import PrimaryActionButton from "../common/PrimaryActionButton";
-import { PiXBold } from "react-icons/pi";
 import ButtonWrapper from "./ButtonWrapper";
 import Title from "../common/Title";
-import { deleteBooking } from "src/api/BookingsApi";
+import { PiXBold } from "react-icons/pi";
+// import { deleteBooking } from "src/api/BookingsApi";
 import { DeleteBookingModalProps } from "src/types/types";
 import useClickOutside from "src/hooks/useClickOutside";
+import { useNavigate } from "react-router-dom";
 
 const DeleteBookingModal = ({
   closeModal,
-  bookingId,
-  guestId,
+    deleteHandler
 }: DeleteBookingModalProps) => {
   const modalRef = useClickOutside<HTMLFormElement>(closeModal);
+  const navigate = useNavigate();
+
+  const onDelete = () => {
+        deleteHandler()
+      closeModal();
+    navigate("/bookings");
+  };
+  
 
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
@@ -37,7 +45,7 @@ const DeleteBookingModal = ({
           <PrimaryActionButton
             text="Delete"
             color="red"
-            clickHandler={() => deleteBooking(bookingId, guestId)}
+            clickHandler={onDelete}
           />
         </ButtonWrapper>
       </form>
