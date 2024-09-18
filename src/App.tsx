@@ -10,31 +10,34 @@ import { useEffect, useState } from "react";
 import BookingDetails from "./components/layout/BookingDetails";
 import EditBooking from "./components/layout/EditBooking";
 
-
-
 function App() {
-  const [theme, setTheme] = useState<string>('light')
+  const [theme, setTheme] = useState<string>("light");
   useEffect(() => {
     if (theme === "dark") {
-      document.documentElement.classList.add('dark')
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark')
+      document.documentElement.classList.remove("dark");
     }
-  }, [theme])
+  }, [theme]);
 
   const handleThemeSwitch = () => {
-    setTheme((theme === "dark" ? "light" : 'dark'))
-  }
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
   return (
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<ErrorRoute />} />
         <Route index element={<Navigate to="/login" replace />} />
         <Route path="login" element={<Login />} />
-        <Route path="/" element={<SharedLayout theme={theme} handleThemeSwitch={handleThemeSwitch } />}>
+        <Route
+          path="/"
+          element={
+            <SharedLayout theme={theme} handleThemeSwitch={handleThemeSwitch} />
+          }
+        >
           <Route path="bookings" element={<Bookings />} />
-          <Route path="bookings/:bookingId" element={<BookingDetails/>} />
-          <Route path="bookings/checkIn/:bookingId" element={<EditBooking/>} />
+          <Route path="bookings/:bookingId" element={<BookingDetails />} />
+          <Route path="bookings/checkIn/:bookingId" element={<EditBooking />} />
           <Route path="rooms" element={<Rooms />} />
           <Route path="users" element={<Users />} />
           <Route path="settings" element={<Settings />} />
@@ -45,5 +48,3 @@ function App() {
 }
 
 export default App;
-
-
