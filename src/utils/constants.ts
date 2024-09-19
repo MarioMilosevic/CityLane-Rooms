@@ -42,7 +42,7 @@ export const initialSettingsState = {
   minNights: 0,
 };
 
-export const breakfastPrice = 10
+export const pricePerBreakfast = 10
 
 // export const initialSingleBookingState = {
 //   created_at: "",
