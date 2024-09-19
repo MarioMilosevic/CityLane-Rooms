@@ -5,6 +5,7 @@ import { rooms } from "src/data/data-rooms";
 import { bookings } from "src/data/data-bookings";
 import { guests } from "src/data/data-guests";
 import { showToast } from "src/utils/toast";
+import { breakfastPrice } from "src/utils/constants";
 
 export const deleteGuests = async () => {
   try {
@@ -72,7 +73,7 @@ export const createBookings = async () => {
       const numNights = subtractDates(booking.endDate, booking.startDate);
       const roomPrice = numNights * (room.regularPrice - room.discount);
       const extrasPrice = booking.hasBreakfast
-        ? numNights * 10 * booking.numGuests
+        ? numNights * breakfastPrice * booking.numGuests
         : 0;
       const totalPrice = roomPrice + extrasPrice;
 
@@ -111,7 +112,7 @@ export const createBookings = async () => {
     if (error) console.error(error.message);
   } catch (error) {
     console.error(error);
-    showToast('Unexpected error occured, try again', 'error')
+    showToast("Unexpected error occured, try again", "error");
   }
 };
 

@@ -264,7 +264,7 @@ export type SingleBookingProps = {
 
 export type DeleteBookingModalProps = {
   closeModal: () => void;
-  deleteHandler: () => void;
+  children:ReactNode
 };
 
 export type BookingHeaderProps = {
@@ -297,5 +297,11 @@ export type BookingSectionData = {
     formattedCreatedDate: string;
     isPaid: boolean;
     status: keyof StatusOptions;
-  }
+  };
+};
+
+
+export type CheckboxSectionProps = {
+  children: ReactNode;
+  zod: UseFormRegisterReturn;
 };

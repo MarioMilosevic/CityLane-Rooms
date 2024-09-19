@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { deleteBooking } from "src/api/BookingsApi";
 import { createPortal } from "react-dom";
+import { BookingType } from "src/types/types";
+import { showToast } from "src/utils/toast";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
 import LoadingSpinner from "./LoadingSpinner";
-import DeleteBookingModal from "./DeleteBookingModal";
+import BookingModal from "./BookingModal";
 import BookingHeader from "./BookingHeader";
 import useFetchSingleBooking from "src/hooks/useFetchSingleBooking";
 import BookingSection from "./BookingSection";
 import useBookingData from "src/hooks/useBookingData";
-import { BookingType } from "src/types/types";
 
 const BookingDetails = () => {
   const { bookingId } = useParams();
@@ -31,7 +32,12 @@ const BookingDetails = () => {
     if (bookingData) {
       deleteBooking(bookingData.fetchedBookingId, bookingData.guestId);
       navigate("/bookings");
+      showToast("Booking deleted successfully", "success");
     }
+  };
+
+  const checkOut = () => {
+    navigate(`/bookings/checkIn/${bookingId}`);
   };
 
   return (
@@ -44,7 +50,11 @@ const BookingDetails = () => {
       {bookingData && <BookingSection data={bookingData} />}
       <ButtonWrapper justify="end">
         {bookingData?.status !== "Checked out" && (
-          <PrimaryActionButton color="yellow" text="Check out" />
+          <PrimaryActionButton
+            color="yellow"
+            text="Check out"
+            clickHandler={checkOut}
+          />
         )}
         <PrimaryActionButton
           color="red"
@@ -55,10 +65,20 @@ const BookingDetails = () => {
       </ButtonWrapper>
       {isDeleteModalOpen &&
         createPortal(
-          <DeleteBookingModal
-            closeModal={() => setIsDeleteModalOpen(false)}
-            deleteHandler={deleteHandler}
-          />,
+          <BookingModal closeModal={() => setIsDeleteModalOpen(false)}>
+            <ButtonWrapper justify="end">
+              <PrimaryActionButton
+                text="Cancel"
+                color="white"
+                clickHandler={() => setIsDeleteModalOpen(false)}
+              />
+              <PrimaryActionButton
+                text="Delete"
+                color="red"
+                clickHandler={deleteHandler}
+              />
+            </ButtonWrapper>
+          </BookingModal>,
           document.body
         )}
     </div>

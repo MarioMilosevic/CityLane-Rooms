@@ -1,25 +1,13 @@
-import PrimaryActionButton from "../common/PrimaryActionButton";
-import ButtonWrapper from "./ButtonWrapper";
 import Title from "../common/Title";
 import { PiXBold } from "react-icons/pi";
-// import { deleteBooking } from "src/api/BookingsApi";
 import { DeleteBookingModalProps } from "src/types/types";
 import useClickOutside from "src/hooks/useClickOutside";
-import { useNavigate } from "react-router-dom";
 
-const DeleteBookingModal = ({
+const BookingModal = ({
+  children,
   closeModal,
-    deleteHandler
 }: DeleteBookingModalProps) => {
   const modalRef = useClickOutside<HTMLFormElement>(closeModal);
-  const navigate = useNavigate();
-
-  const onDelete = () => {
-        deleteHandler()
-      closeModal();
-    navigate("/bookings");
-  };
-  
 
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
@@ -36,21 +24,10 @@ const DeleteBookingModal = ({
           Are you sure you want to delete this booking permanently? <br /> This
           action cannot be undone.
         </p>
-        <ButtonWrapper justify="end">
-          <PrimaryActionButton
-            text="Cancel"
-            color="white"
-            clickHandler={closeModal}
-          />
-          <PrimaryActionButton
-            text="Delete"
-            color="red"
-            clickHandler={onDelete}
-          />
-        </ButtonWrapper>
+        {children}
       </form>
     </div>
   );
 };
 
-export default DeleteBookingModal;
+export default BookingModal;
