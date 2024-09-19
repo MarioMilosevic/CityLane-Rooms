@@ -13,20 +13,23 @@ import CheckboxSection from "./CheckboxSection";
 import LoadingSpinner from "./LoadingSpinner";
 import ButtonWrapper from "./ButtonWrapper";
 import Amount from "../common/Amount";
+import { createPortal } from "react-dom";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatPrice } from "src/utils/helpers";
 import { useForm } from "react-hook-form";
 import { checkInBooking, checkOutBooking } from "src/api/BookingsApi";
 import { showToast } from "src/utils/toast";
+import BookingModal from "./BookingModal";
+import { useState } from "react";
 
 const CheckInBooking = () => {
   const { bookingId } = useParams();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { loading, singleBooking } = useFetchSingleBooking(bookingId as string);
   const bookingData = useBookingData(singleBooking as BookingType, loading);
 
-  console.log("ovo je checkIN");
 
   const {
     register,
@@ -48,7 +51,6 @@ const CheckInBooking = () => {
 
   if (loading || !bookingData) return <LoadingSpinner />;
 
-console.log(isValid)
 
   const breakfastChecked = watch("breakfast");
 
@@ -58,22 +60,21 @@ console.log(isValid)
   const totalPrice = bookingData.totalPrice + totalBreakfastPrice;
 
   const onSubmitCheckIn = async (formData: editBookingFormValues) => {
-    console.log("za check in");
-    // const updatedBooking: Partial<BookingType> = {
-    //   hasBreakfast: formData.breakfast,
-    //   isPaid: true,
-    //   extrasPrice: totalBreakfastPrice,
-    //   totalPrice: totalPrice,
-    //   status: "Checked in",
-    // };
-    // await checkInBooking(Number(bookingId), updatedBooking);
-    // showToast(`${bookingData.fullName} checked in`, "success");
-    // goBack();
+    const updatedBooking: Partial<BookingType> = {
+      hasBreakfast: formData.breakfast,
+      isPaid: true,
+      extrasPrice: totalBreakfastPrice,
+      totalPrice: totalPrice,
+      status: "Checked in",
+    };
+    await checkInBooking(Number(bookingId), updatedBooking);
+    showToast(`${bookingData.fullName} checked in`, "success");
+    goBack();
   };
 
   const checkOut = async () => {
-     await checkOutBooking(Number(bookingId), "Checked out");
-    goBack()
+    await checkOutBooking(Number(bookingId), "Checked out");
+    goBack();
   };
 
   return (
@@ -120,22 +121,21 @@ console.log(isValid)
           </CheckboxSection>
         )}
         <ButtonWrapper justify="end">
-          {bookingData.status === "Unconfirmed" && 
-          <PrimaryActionButton
-          isDisabled={!isValid}
-          color="yellow"
-          text={`Check in booking #${bookingId}`}
-            type="submit"
-            />
-          }
-          {bookingData.status === "Checked in" && 
-          
+          {bookingData.status === "Unconfirmed" && (
             <PrimaryActionButton
-            color="yellow"
-            text={`Check out booking #${bookingId}`}
-            clickHandler={checkOut}
-          />
-          }
+              isDisabled={!isValid}
+              color="yellow"
+              text={`Check in booking #${bookingId}`}
+              type="submit"
+            />
+          )}
+          {bookingData.status === "Checked in" && (
+            <PrimaryActionButton
+              color="yellow"
+              text={`Check out booking #${bookingId}`}
+              clickHandler={() => setIsModalOpen(true)}
+            />
+          )}
           <PrimaryActionButton
             color="white"
             text="Back"
@@ -143,6 +143,31 @@ console.log(isValid)
           />
         </ButtonWrapper>
       </form>
+      {isModalOpen &&
+        createPortal(
+          <BookingModal
+            title="Check out booking"
+            closeModal={() => setIsModalOpen(false)}
+          >
+            <p>
+              Are you sure you want to check out {" "}
+              <span className="font-medium text-lg">{bookingData.fullName}</span>?
+            </p>
+            <ButtonWrapper justify="end">
+              <PrimaryActionButton
+                text="Cancel"
+                color="white"
+                clickHandler={() => setIsModalOpen(false)}
+              />
+              <PrimaryActionButton
+                text="Check out"
+                color="yellow"
+                clickHandler={checkOut}
+              />
+            </ButtonWrapper>
+          </BookingModal>,
+          document.body
+        )}
     </div>
   );
 };

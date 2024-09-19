@@ -6,6 +6,7 @@ import useClickOutside from "src/hooks/useClickOutside";
 const BookingModal = ({
   children,
   closeModal,
+  title,
 }: DeleteBookingModalProps) => {
   const modalRef = useClickOutside<HTMLFormElement>(closeModal);
 
@@ -19,11 +20,7 @@ const BookingModal = ({
           className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200 dark:text-slate-200 dark:hover:border-neutral-50 dark:hover:border"
           onClick={closeModal}
         />
-        <Title title="Delete booking" position="left" />
-        <p>
-          Are you sure you want to delete this booking permanently? <br /> This
-          action cannot be undone.
-        </p>
+        <Title title={title} position="left" />
         {children}
       </form>
     </div>

@@ -20,7 +20,6 @@ import Option from "../common/Option";
 import useClickOutside from "src/hooks/useClickOutside";
 import BookingModal from "./BookingModal";
 
-
 const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
@@ -34,7 +33,7 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
     status,
     totalPrice,
     Guests: { email, fullName, id: guestId },
-    id:bookingId
+    id: bookingId,
   } = booking;
   const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
   const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
@@ -51,13 +50,12 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
   const deleteHandler = async () => {
     await deleteBooking(bookingId, guestId);
     setBookings((prev) => prev.filter((booking) => booking.id !== bookingId));
-    showToast('Booking deleted successfully', 'success')
+    showToast("Booking deleted successfully", "success");
   };
 
   const updateHandler = () => {
-    navigate(`/bookings/checkIn/${bookingId}`)
-  }
-
+    navigate(`/bookings/checkIn/${bookingId}`);
+  };
 
   return (
     <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center py-1 bg-neutral-50 relative dark:bg-slate-500">
@@ -98,7 +96,6 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
               }
               icon={MdOutlineFileDownload}
               clickHandler={updateHandler}
-              // clickHandler={updateHandler}
             />
           )}
           <Option
@@ -110,8 +107,15 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
       )}
       {isDeleteModalOpen &&
         createPortal(
-          <BookingModal closeModal={() => setIsDeleteModalOpen(false)}>
+          <BookingModal
+            title="Delete booking"
+            closeModal={() => setIsDeleteModalOpen(false)}
+          >
             <ButtonWrapper justify="end">
+              <p>
+                Are you sure you want to delete this booking permanently? <br />{" "}
+                This action cannot be undone.
+              </p>
               <PrimaryActionButton
                 text="Cancel"
                 color="white"

@@ -31,7 +31,7 @@ const BookingDetails = () => {
   const deleteHandler = async () => {
     if (bookingData) {
       deleteBooking(bookingData.fetchedBookingId, bookingData.guestId);
-      navigate("/bookings");
+      goBack();
       showToast("Booking deleted successfully", "success");
     }
   };
@@ -39,7 +39,7 @@ const BookingDetails = () => {
   const checkIn = () => {
     navigate(`/bookings/checkIn/${bookingId}`);
   };
-  console.log("see details");
+
   return (
     <div className="min-h-[50vh] flex flex-col">
       <BookingHeader
@@ -71,8 +71,12 @@ const BookingDetails = () => {
       </ButtonWrapper>
       {isDeleteModalOpen &&
         createPortal(
-          <BookingModal closeModal={() => setIsDeleteModalOpen(false)}>
+          <BookingModal title="Delete booking" closeModal={() => setIsDeleteModalOpen(false)}>
             <ButtonWrapper justify="end">
+              <p>
+                Are you sure you want to delete this booking permanently? <br />{" "}
+                This action cannot be undone.
+              </p>
               <PrimaryActionButton
                 text="Cancel"
                 color="white"

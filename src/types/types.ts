@@ -265,7 +265,8 @@ export type SingleBookingProps = {
 
 export type DeleteBookingModalProps = {
   closeModal: () => void;
-  children:ReactNode
+  children: ReactNode
+  title:string
 };
 
 export type BookingHeaderProps = {
