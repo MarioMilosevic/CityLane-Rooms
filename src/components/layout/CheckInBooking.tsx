@@ -17,7 +17,7 @@ import PrimaryActionButton from "../common/PrimaryActionButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatPrice } from "src/utils/helpers";
 import { useForm } from "react-hook-form";
-import { checkInBooking } from "src/api/BookingsApi";
+import { checkInBooking, checkOutBooking } from "src/api/BookingsApi";
 import { showToast } from "src/utils/toast";
 
 const CheckInBooking = () => {
@@ -25,6 +25,8 @@ const CheckInBooking = () => {
   const navigate = useNavigate();
   const { loading, singleBooking } = useFetchSingleBooking(bookingId as string);
   const bookingData = useBookingData(singleBooking as BookingType, loading);
+
+  console.log("ovo je checkIN");
 
   const {
     register,
@@ -46,6 +48,8 @@ const CheckInBooking = () => {
 
   if (loading || !bookingData) return <LoadingSpinner />;
 
+console.log(isValid)
+
   const breakfastChecked = watch("breakfast");
 
   const totalBreakfastPrice = breakfastChecked
@@ -53,29 +57,40 @@ const CheckInBooking = () => {
     : 0;
   const totalPrice = bookingData.totalPrice + totalBreakfastPrice;
 
-  const onSubmit = async (formData: editBookingFormValues) => {
-    const updatedBooking:Partial<BookingType> = {
-      hasBreakfast: formData.breakfast,
-      isPaid: true,
-      extrasPrice: totalBreakfastPrice,
-      totalPrice: totalPrice,
-      status:"Checked in"
-    };
-    await checkInBooking(Number(bookingId), updatedBooking)
-    showToast(`${bookingData.fullName} checked in`, 'success')
+  const onSubmitCheckIn = async (formData: editBookingFormValues) => {
+    console.log("za check in");
+    // const updatedBooking: Partial<BookingType> = {
+    //   hasBreakfast: formData.breakfast,
+    //   isPaid: true,
+    //   extrasPrice: totalBreakfastPrice,
+    //   totalPrice: totalPrice,
+    //   status: "Checked in",
+    // };
+    // await checkInBooking(Number(bookingId), updatedBooking);
+    // showToast(`${bookingData.fullName} checked in`, "success");
+    // goBack();
+  };
+
+  const checkOut = async () => {
+     await checkOutBooking(Number(bookingId), "Checked out");
     goBack()
   };
 
   return (
     <div className="min-h-[50vh] flex flex-col gap-8">
       <BookingHeader
+        title={`${
+          bookingData.status === "Unconfirmed" ? "Check in" : "Check out"
+        } #${bookingId}`}
         status={bookingData?.status}
-        bookingId={bookingId as string}
         goBack={goBack}
       />
       <BookingSection data={bookingData} />
-      <form className="flex flex-col gap-8" onSubmit={handleSubmit(onSubmit)}>
-        {!bookingData.hasBreakfast && 
+      <form
+        className="flex flex-col gap-8"
+        onSubmit={handleSubmit(onSubmitCheckIn)}
+      >
+        {!bookingData.hasBreakfast && bookingData.status === "Unconfirmed" && (
           <CheckboxSection zod={{ ...register("breakfast") }}>
             <span>Want to add breakfast for:</span>
             <Amount
@@ -85,9 +100,10 @@ const CheckInBooking = () => {
                 pricePerBreakfast
               }
               type="amount"
-              />
+            />
           </CheckboxSection>
-            }
+        )}
+        {bookingData.status === "Unconfirmed" && (
           <CheckboxSection zod={{ ...register("confirmation") }}>
             <span>
               I confirm that {bookingData?.fullName} has paid the total amount
@@ -102,16 +118,31 @@ const CheckInBooking = () => {
               </span>
             )}
           </CheckboxSection>
-          <ButtonWrapper justify="end">
-            <PrimaryActionButton
-              isDisabled={!isValid}
-              color="yellow"
-              text={`Check in booking #${bookingId}`}
-              type="submit"
+        )}
+        <ButtonWrapper justify="end">
+          {bookingData.status === "Unconfirmed" && 
+          <PrimaryActionButton
+          isDisabled={!isValid}
+          color="yellow"
+          text={`Check in booking #${bookingId}`}
+            type="submit"
             />
-            <PrimaryActionButton color="white" text="Back" clickHandler={goBack}/>
-          </ButtonWrapper>
-        </form>
+          }
+          {bookingData.status === "Checked in" && 
+          
+            <PrimaryActionButton
+            color="yellow"
+            text={`Check out booking #${bookingId}`}
+            clickHandler={checkOut}
+          />
+          }
+          <PrimaryActionButton
+            color="white"
+            text="Back"
+            clickHandler={goBack}
+          />
+        </ButtonWrapper>
+      </form>
     </div>
   );
 };

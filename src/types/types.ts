@@ -270,7 +270,7 @@ export type DeleteBookingModalProps = {
 
 export type BookingHeaderProps = {
   status: keyof StatusOptions | undefined;
-  bookingId: string;
+  title: string;
   goBack: () => void;
 };
 

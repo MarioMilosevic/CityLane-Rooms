@@ -8,6 +8,7 @@ const PrimaryActionButton = ({
   isLoading,
 isDisabled
 }: PrimaryActionButtonProps) => {
+  console.log(isDisabled)
   const buttonColorOptions = {
     white:
       "border border-neutral-400 bg-neutral-50 dark:bg-slate-300 dark:hover:bg-slate-400 enabled:hover:bg-neutral-200 text-neutral-800 enabled:hover:text-neutral-900",
@@ -26,7 +27,7 @@ isDisabled
        ${buttonColorOptions[color]} ${buttonClass} flex items-center justify-center gap-4 mt-8 font-medium text-lg text-center px-4 py-2 rounded-md transition-all duration-200`}
       type={type}
       {...(type !== "submit" && { onClick: clickHandler })}
-      disabled={isDisabled}
+      // disabled={isDisabled}
     >
       {text}
       {isLoading && (

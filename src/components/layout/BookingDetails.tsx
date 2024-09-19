@@ -25,7 +25,7 @@ const BookingDetails = () => {
   if (loading || !bookingData) return <LoadingSpinner />;
 
   const goBack = () => {
-    navigate("/bookings");
+    navigate(-1);
   };
 
   const deleteHandler = async () => {
@@ -36,19 +36,15 @@ const BookingDetails = () => {
     }
   };
 
-  const checkOut = () => {
+  const checkIn = () => {
     navigate(`/bookings/checkIn/${bookingId}`);
   };
-
-  // const checkIn = () => {
-  //   navigate(`/bookings/checkOut/${bookingId}`);
-  // }
-
+  console.log("see details");
   return (
     <div className="min-h-[50vh] flex flex-col">
       <BookingHeader
         status={bookingData?.status}
-        bookingId={bookingId as string}
+        title={`Booking #${bookingId}`}
         goBack={goBack}
       />
       <BookingSection data={bookingData} />
@@ -63,14 +59,14 @@ const BookingDetails = () => {
                 ? "Check out"
                 : ""
             }
-            clickHandler={checkOut}
+            clickHandler={checkIn}
           />
         )}
-          <PrimaryActionButton
-            color="red"
-            text="Delete booking"
-            clickHandler={() => setIsDeleteModalOpen(true)}
-          />
+        <PrimaryActionButton
+          color="red"
+          text="Delete booking"
+          clickHandler={() => setIsDeleteModalOpen(true)}
+        />
         <PrimaryActionButton color="white" text="Back" clickHandler={goBack} />
       </ButtonWrapper>
       {isDeleteModalOpen &&

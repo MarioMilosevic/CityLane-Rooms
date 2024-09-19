@@ -2,15 +2,13 @@ import { BookingHeaderProps } from "src/types/types";
 import Title from "../common/Title";
 import Status from "./Status";
 import { BiArrowBack } from "react-icons/bi";
-// import {  useLocation } from "react-router-dom";
 
-
-const BookingHeader = ({ status, bookingId, goBack }: BookingHeaderProps) => {
+const BookingHeader = ({ status, goBack, title }: BookingHeaderProps) => {
 
   return (
     <div className="flex justify-between items-center py-8">
       <div className="flex gap-4">
-        <Title title={`Booking #${bookingId}`} position="left" />
+        <Title title={title} position="left" />
         <Status status={status as string} />
       </div>
       <button onClick={goBack} className="flex items-center gap-2">

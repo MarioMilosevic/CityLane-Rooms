@@ -98,6 +98,7 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
               }
               icon={MdOutlineFileDownload}
               clickHandler={updateHandler}
+              // clickHandler={updateHandler}
             />
           )}
           <Option

@@ -91,8 +91,6 @@ export const checkInBooking = async (
   bookingId: number,
   updatedBooking: Partial<BookingType>
 ) => {
-  console.log(bookingId);
-  console.log(updatedBooking);
   try {
     const { error } = await supabase
       .from("Bookings")
@@ -100,6 +98,18 @@ export const checkInBooking = async (
       .eq("id", bookingId);
 
     if (error) throw new Error("Unable to check in");
+  } catch (error) {
+    console.error("Unexpected error occured", error);
+  }
+};
+
+export const checkOutBooking = async (bookingId: number, status: string) => {
+  try {
+    const { error } = await supabase
+      .from("Bookings")
+      .update({ status: status })
+      .eq("id", bookingId);
+    if (error) throw new Error("Unable to check out");
   } catch (error) {
     console.error("Unexpected error occured", error);
   }
