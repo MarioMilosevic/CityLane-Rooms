@@ -22,7 +22,7 @@ const BookingDetails = () => {
 
   const bookingData = useBookingData(singleBooking as BookingType, loading);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading || !bookingData) return <LoadingSpinner />;
 
   const goBack = () => {
     navigate("/bookings");
@@ -40,6 +40,10 @@ const BookingDetails = () => {
     navigate(`/bookings/checkIn/${bookingId}`);
   };
 
+  // const checkIn = () => {
+  //   navigate(`/bookings/checkOut/${bookingId}`);
+  // }
+
   return (
     <div className="min-h-[50vh] flex flex-col">
       <BookingHeader
@@ -47,20 +51,26 @@ const BookingDetails = () => {
         bookingId={bookingId as string}
         goBack={goBack}
       />
-      {bookingData && <BookingSection data={bookingData} />}
+      <BookingSection data={bookingData} />
       <ButtonWrapper justify="end">
         {bookingData?.status !== "Checked out" && (
           <PrimaryActionButton
             color="yellow"
-            text="Check out"
+            text={
+              bookingData.status === "Unconfirmed"
+                ? "Check in"
+                : bookingData?.status === "Checked in"
+                ? "Check out"
+                : ""
+            }
             clickHandler={checkOut}
           />
         )}
-        <PrimaryActionButton
-          color="red"
-          text="Delete booking"
-          clickHandler={() => setIsDeleteModalOpen(true)}
-        />
+          <PrimaryActionButton
+            color="red"
+            text="Delete booking"
+            clickHandler={() => setIsDeleteModalOpen(true)}
+          />
         <PrimaryActionButton color="white" text="Back" clickHandler={goBack} />
       </ButtonWrapper>
       {isDeleteModalOpen &&

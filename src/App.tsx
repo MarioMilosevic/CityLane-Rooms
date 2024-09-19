@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import ErrorRoute from "./pages/ErrorRoute";
 import { useEffect, useState } from "react";
 import BookingDetails from "./components/layout/BookingDetails";
-import EditBooking from "./components/layout/EditBooking";
+import CheckInBooking from "./components/layout/CheckInBooking";
 
 function App() {
   const [theme, setTheme] = useState<string>("light");
@@ -37,7 +37,7 @@ function App() {
         >
           <Route path="bookings" element={<Bookings />} />
           <Route path="bookings/:bookingId" element={<BookingDetails />} />
-          <Route path="bookings/checkIn/:bookingId" element={<EditBooking />} />
+          <Route path="bookings/checkIn/:bookingId" element={<CheckInBooking />} />
           <Route path="rooms" element={<Rooms />} />
           <Route path="users" element={<Users />} />
           <Route path="settings" element={<Settings />} />

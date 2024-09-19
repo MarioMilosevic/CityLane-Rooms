@@ -87,11 +87,16 @@ export const deleteBooking = async (bookingId: number, guestId: number) => {
   }
 };
 
-export const updateStatus = async (bookingId: number, status: "string") => {
+export const checkInBooking = async (
+  bookingId: number,
+  updatedBooking: Partial<BookingType>
+) => {
+  console.log(bookingId);
+  console.log(updatedBooking);
   try {
     const { error } = await supabase
       .from("Bookings")
-      .update({ status: status })
+      .update(updatedBooking)
       .eq("id", bookingId);
 
     if (error) throw new Error("Unable to check in");

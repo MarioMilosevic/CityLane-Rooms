@@ -79,6 +79,7 @@ export type PrimaryActionButtonProps = {
   type?: "submit" | "button";
   clickHandler?: () => void;
   isLoading?: boolean;
+  isDisabled?: boolean;
 };
 
 export type HeadingContainerProps = {
