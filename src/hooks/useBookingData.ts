@@ -33,6 +33,8 @@ const useBookingData = (singleBooking: BookingType, loading: boolean) => {
   const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
   const formattedCreatedDate = format(new Date(created_at), "MMM dd yyyy");
   const timeDifference = formatDistance(parseISO(startDate), currentDate);
+  // diffenrence in days
+  // subtract dates
   const createdDay = format(created_at, "EEEE").slice(0, 3);
   const startingDay = format(startDate, "EEEE").slice(0, 3);
   const endingDay = format(endDate, "EEEE").slice(0, 3);

@@ -73,15 +73,15 @@ export const deleteBooking = async (bookingId: number, guestId: number) => {
       .eq("id", bookingId);
     if (deleteBookingError) throw deleteBookingError;
 
-    const { error: deleteGuestError } = await supabase
-      .from("Guests")
-      .delete()
-      .eq("id", guestId);
+    // const { error: deleteGuestError } = await supabase
+    //   .from("Guests")
+    //   .delete()
+    //   .eq("id", guestId);
 
-    if (deleteGuestError) throw deleteGuestError;
+    // if (deleteGuestError) throw deleteGuestError;
 
     console.log("Booking and its guest deleted successfully.");
-    showToast("Booking deleted successfully", "success");
+    // showToast("Booking deleted successfully", "success");
   } catch (error) {
     console.error("Unable to delete booking", error);
   }

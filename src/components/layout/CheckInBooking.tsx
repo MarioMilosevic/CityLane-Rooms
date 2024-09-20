@@ -8,7 +8,6 @@ import { pricePerBreakfast } from "src/utils/constants";
 import BookingHeader from "./BookingHeader";
 import useFetchSingleBooking from "src/hooks/useFetchSingleBooking";
 import BookingSection from "./BookingSection";
-import useBookingData from "src/hooks/useBookingData";
 import CheckboxSection from "./CheckboxSection";
 import LoadingSpinner from "./LoadingSpinner";
 import ButtonWrapper from "./ButtonWrapper";
@@ -28,7 +27,6 @@ const CheckInBooking = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { loading, singleBooking } = useFetchSingleBooking(bookingId as string);
-  const bookingData = useBookingData(singleBooking as BookingType, loading);
 
 
   const {
@@ -49,15 +47,15 @@ const CheckInBooking = () => {
     navigate("/bookings");
   };
 
-  if (loading || !bookingData) return <LoadingSpinner />;
+  if (loading || !singleBooking) return <LoadingSpinner />;
 
 
   const breakfastChecked = watch("breakfast");
 
   const totalBreakfastPrice = breakfastChecked
-    ? bookingData?.numNights * bookingData?.numGuests * pricePerBreakfast
+    ? singleBooking?.numNights * singleBooking?.numGuests * pricePerBreakfast
     : 0;
-  const totalPrice = bookingData.totalPrice + totalBreakfastPrice;
+  const totalPrice = singleBooking.totalPrice + totalBreakfastPrice;
 
   const onSubmitCheckIn = async (formData: editBookingFormValues) => {
     const updatedBooking: Partial<BookingType> = {
@@ -68,7 +66,7 @@ const CheckInBooking = () => {
       status: "Checked in",
     };
     await checkInBooking(Number(bookingId), updatedBooking);
-    showToast(`${bookingData.fullName} checked in`, "success");
+    showToast(`${singleBooking.fullName} checked in`, "success");
     goBack();
   };
 
@@ -81,39 +79,39 @@ const CheckInBooking = () => {
     <div className="min-h-[50vh] flex flex-col gap-8">
       <BookingHeader
         title={`${
-          bookingData.status === "Unconfirmed" ? "Check in" : "Check out"
+          singleBooking.status === "Unconfirmed" ? "Check in" : "Check out"
         } #${bookingId}`}
-        status={bookingData?.status}
+        status={singleBooking?.status}
         goBack={goBack}
       />
-      <BookingSection data={bookingData} />
+      <BookingSection data={singleBooking as BookingType} />
       <form
         className="flex flex-col gap-8"
         onSubmit={handleSubmit(onSubmitCheckIn)}
       >
-        {!bookingData.hasBreakfast && bookingData.status === "Unconfirmed" && (
+        {!singleBooking.hasBreakfast && singleBooking.status === "Unconfirmed" && (
           <CheckboxSection zod={{ ...register("breakfast") }}>
             <span>Want to add breakfast for:</span>
             <Amount
               value={
-                bookingData?.numNights *
-                bookingData?.numGuests *
+                singleBooking?.numNights *
+                singleBooking?.numGuests *
                 pricePerBreakfast
               }
               type="amount"
             />
           </CheckboxSection>
         )}
-        {bookingData.status === "Unconfirmed" && (
+        {singleBooking.status === "Unconfirmed" && (
           <CheckboxSection zod={{ ...register("confirmation") }}>
             <span>
-              I confirm that {bookingData?.fullName} has paid the total amount
+              I confirm that {singleBooking?.fullName} has paid the total amount
               of{" "}
             </span>
             <Amount value={totalPrice} type="amount" />
             {totalBreakfastPrice > 0 && (
               <span>
-                {`($${formatPrice(bookingData.totalPrice)} + $${formatPrice(
+                {`($${formatPrice(singleBooking.totalPrice)} + $${formatPrice(
                   totalBreakfastPrice
                 )})`}
               </span>
@@ -121,7 +119,7 @@ const CheckInBooking = () => {
           </CheckboxSection>
         )}
         <ButtonWrapper justify="end">
-          {bookingData.status === "Unconfirmed" && (
+          {singleBooking.status === "Unconfirmed" && (
             <PrimaryActionButton
               isDisabled={!isValid}
               color="yellow"
@@ -129,7 +127,7 @@ const CheckInBooking = () => {
               type="submit"
             />
           )}
-          {bookingData.status === "Checked in" && (
+          {singleBooking.status === "Checked in" && (
             <PrimaryActionButton
               color="yellow"
               text={`Check out booking #${bookingId}`}
@@ -151,7 +149,7 @@ const CheckInBooking = () => {
           >
             <p>
               Are you sure you want to check out {" "}
-              <span className="font-medium text-lg">{bookingData.fullName}</span>?
+              <span className="font-medium text-lg">{singleBooking.fullName}</span>?
             </p>
             <ButtonWrapper justify="end">
               <PrimaryActionButton
