@@ -56,7 +56,7 @@ const BookingDetails = () => {
   };
 
   const checkOut = async () => {
-    await checkOutBooking(Number(bookingId), "Checked out");
+    await checkOutBooking(Number(bookingId));
     setSingleBooking((prev) => {
       if (!prev) return prev;
 

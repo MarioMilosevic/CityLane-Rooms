@@ -7,8 +7,9 @@ import {
   MdOutlineDeleteForever,
 } from "react-icons/md";
 import { SingleBookingProps } from "src/types/types";
-import { deleteBooking } from "src/api/BookingsApi";
+import { deleteBooking, checkOutBooking } from "src/api/BookingsApi";
 import { showToast } from "src/utils/toast";
+import { formatDate, timeDifference } from "src/utils/helpers";
 import Amount from "../common/Amount";
 import OpenModalOptions from "./OpenModalOptions";
 import Status from "./Status";
@@ -18,7 +19,6 @@ import PrimaryActionButton from "../common/PrimaryActionButton";
 import Option from "../common/Option";
 import useClickOutside from "src/hooks/useClickOutside";
 import BookingModal from "./BookingModal";
-import { formatDate, timeDifference } from "src/utils/helpers";
 
 const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
@@ -50,8 +50,21 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
     showToast("Booking deleted successfully", "success");
   };
 
-  const updateHandler = () => {
+  const goToCheckIn = () => {
     navigate(`/bookings/checkIn/${bookingId}`);
+  };
+
+  const checkOut = async () => {
+    const checkedOutBooking = await checkOutBooking(bookingId);
+    if (checkedOutBooking) {
+      setBookings((prev) =>
+        prev.map((booking) =>
+          booking.id === bookingId
+            ? { ...booking, status: "Checked out" }
+            : booking
+        )
+      );
+    }
   };
 
   return (
@@ -63,7 +76,8 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
       </div>
       <div className="flex flex-col">
         <span className="text-base">
-          {status === "Checked out" ? "Over" : "In"} {timeDifference(startDate)} → {""}
+          {status === "Checked out" ? "Over" : "In"} {timeDifference(startDate)}{" "}
+          → {""}
           {numNights} night stay
         </span>
         <span className="text-sm">
@@ -92,7 +106,7 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
                   : ""
               }
               icon={MdOutlineFileDownload}
-              clickHandler={updateHandler}
+              clickHandler={status === "Checked in" ? checkOut : goToCheckIn}
             />
           )}
           <Option

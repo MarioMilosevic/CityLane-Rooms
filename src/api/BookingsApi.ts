@@ -94,13 +94,15 @@ export const checkInBooking = async (
   }
 };
 
-export const checkOutBooking = async (bookingId: number, status: string) => {
+export const checkOutBooking = async (bookingId: number) => {
   try {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("Bookings")
-      .update({ status: status })
-      .eq("id", bookingId).select()
+      .update({ status: "Checked out" })
+      .eq("id", bookingId)
+      .select();
     if (error) throw new Error("Unable to check out");
+    return data;
   } catch (error) {
     console.error("Unexpected error occured", error);
   }
@@ -110,15 +112,16 @@ export const toggleHasBreakfast = async (value: boolean, bookingId: number) => {
   try {
     const { data, error } = await supabase
       .from("Bookings")
-      .update({ hasBreakfast:value})
-      .eq("id", bookingId).select()
+      .update({ hasBreakfast: value })
+      .eq("id", bookingId)
+      .select();
 
     if (error) {
-      console.error('Unable to update booking', error)
-      return
+      console.error("Unable to update booking", error);
+      return;
     }
-    return data
+    return data;
   } catch (error) {
-    console.error('Unexpected error occured', error)
+    console.error("Unexpected error occured", error);
   }
 };
