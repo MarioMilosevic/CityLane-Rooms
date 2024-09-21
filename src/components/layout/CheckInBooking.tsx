@@ -32,7 +32,7 @@ const CheckInBooking = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    // watch,
     formState: { isValid },
   } = useForm<editBookingFormValues>({
     defaultValues: {
@@ -50,7 +50,7 @@ const CheckInBooking = () => {
   if (loading || !singleBooking) return <LoadingSpinner />;
 
 
-  const breakfastChecked = watch("breakfast");
+  // const breakfastChecked = watch("breakfast");
 
   const totalBreakfastPrice = breakfastChecked
     ? singleBooking?.numNights * singleBooking?.numGuests * pricePerBreakfast
@@ -84,7 +84,7 @@ const CheckInBooking = () => {
         status={singleBooking?.status}
         goBack={goBack}
       />
-      <BookingSection data={singleBooking as BookingType} />
+      <BookingSection booking={singleBooking as BookingType} />
       <form
         className="flex flex-col gap-8"
         onSubmit={handleSubmit(onSubmitCheckIn)}

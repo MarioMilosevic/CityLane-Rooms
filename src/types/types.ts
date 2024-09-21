@@ -276,29 +276,23 @@ export type BookingHeaderProps = {
 };
 
 export type BookingSectionData = {
-  data: {
-    numNights: number;
-    roomId: number;
-    startingDay: string;
-    formattedStartDate: string;
-    timeDifference: string;
-    endingDay: string;
-    formattedEndDate: string;
-    countryFlag: string;
-    fullName: string;
-    numGuests: number;
-    email: string;
-    nationalID: string;
-    observations: string;
-    hasBreakfast: boolean;
-    isPaidClass: string;
-    totalPrice: number;
-    roomPrice: number;
+  booking: {
+    Guests: GuestType;
+    created_at: string;
+    endDate: string;
     extrasPrice: number;
-    createdDay: string;
-    formattedCreatedDate: string;
+    guestId: number;
+    hasBreakfast: boolean;
+    id: number;
     isPaid: boolean;
+    numGuests: number;
+    numNights: number;
+    observations: string;
+    roomId: number;
+    roomPrice: number;
+    startDate: string;
     status: keyof StatusOptions;
+    totalPrice: number;
   };
 };
 

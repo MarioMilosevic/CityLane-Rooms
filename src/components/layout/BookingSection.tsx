@@ -4,32 +4,29 @@ import { PiHouseLineBold } from "react-icons/pi";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { CiCircleCheck } from "react-icons/ci";
 import { BookingSectionData } from "src/types/types";
+import { formatDate, formatDay, timeDifference } from "src/utils/helpers";
 
-const BookingSection = ({ data }:BookingSectionData) => {
+const BookingSection = ({ booking }: BookingSectionData) => {
   const {
-    numNights,
-    roomId,
-    startingDay,
-    formattedStartDate,
-    timeDifference,
-    endingDay,
-    formattedEndDate,
-    countryFlag,
-    fullName,
-    numGuests,
-    email,
-    nationalID,
-    observations,
-    hasBreakfast,
-    isPaidClass,
-    totalPrice,
-    roomPrice,
+    Guests: { countryFlag, email, fullName, nationalID },
+    created_at: booking_created_at,
+    endDate,
     extrasPrice,
-    createdDay,
-    formattedCreatedDate,
     isPaid,
+    numGuests,
+    numNights,
+    observations,
+    roomId,
+    roomPrice,
+    startDate,
     status,
-  } = data
+    hasBreakfast,
+    totalPrice,
+  } = booking;
+
+  const isPaidClass = isPaid
+    ? "bg-green-300 text-green-900"
+    : "bg-yellow-200 text-yellow-900";
 
   return (
     <section className="bg-neutral-50">
@@ -41,9 +38,9 @@ const BookingSection = ({ data }:BookingSectionData) => {
           </p>
         </div>
         <p>
-          {startingDay}, {formattedStartDate} (
-          {status === "Checked out" ? "Over" : "In"} {timeDifference}) —{" "}
-          {endingDay}, {formattedEndDate}
+          {formatDay(startDate)}, {formatDate(startDate)} (
+          {status === "Checked out" ? "Over" : "In"} {timeDifference(startDate)}
+          ) — {formatDay(endDate)}, {formatDate(endDate)}
         </p>
       </header>
       <section className="pt-8 pb-4 px-4 flex flex-col gap-6">
@@ -92,7 +89,7 @@ const BookingSection = ({ data }:BookingSectionData) => {
         </div>
       </section>
       <footer className="text-xs flex justify-end px-4 py-4 font-light">
-        Booked {createdDay}, {formattedCreatedDate}
+        Booked {formatDay(booking_created_at)}, {formatDate(booking_created_at)}
       </footer>
     </section>
   );

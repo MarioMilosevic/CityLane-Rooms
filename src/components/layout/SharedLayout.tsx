@@ -15,7 +15,7 @@ const SharedLayout = ({
     <>
       <Toaster />
       <Sidebar />
-      <div className="w-full">
+      <div className="w-full bg-neutral-100 dark:bg-slate-700">
         <Navigation handleThemeSwitch={handleThemeSwitch} theme={theme} />
         <MainContainer>
           <Outlet />

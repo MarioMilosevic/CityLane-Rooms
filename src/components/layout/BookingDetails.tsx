@@ -20,8 +20,6 @@ const BookingDetails = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
-console.log(singleBooking)
-
   if (loading || !singleBooking) return <LoadingSpinner />;
 
   const goBack = () => {
@@ -29,9 +27,9 @@ console.log(singleBooking)
   };
 
   const deleteHandler = async () => {
-      deleteBooking(singleBooking.id, singleBooking.guestId);
-      goBack();
-      showToast("Booking deleted successfully", "success");
+    deleteBooking(singleBooking.id, singleBooking.guestId);
+    goBack();
+    showToast("Booking deleted successfully", "success");
   };
 
   const checkIn = () => {
@@ -45,7 +43,7 @@ console.log(singleBooking)
         title={`Booking #${bookingId}`}
         goBack={goBack}
       />
-      <BookingSection data={singleBooking as BookingType} />
+      <BookingSection booking={singleBooking as BookingType} />
       <ButtonWrapper justify="end">
         {singleBooking.status !== "Checked out" && (
           <PrimaryActionButton
@@ -69,7 +67,10 @@ console.log(singleBooking)
       </ButtonWrapper>
       {isDeleteModalOpen &&
         createPortal(
-          <BookingModal title="Delete booking" closeModal={() => setIsDeleteModalOpen(false)}>
+          <BookingModal
+            title="Delete booking"
+            closeModal={() => setIsDeleteModalOpen(false)}
+          >
             <ButtonWrapper justify="end">
               <p>
                 Are you sure you want to delete this booking permanently? <br />{" "}
@@ -95,20 +96,7 @@ console.log(singleBooking)
 
 export default BookingDetails;
 
-// da promjenim one funkcije
 
-// const currentDate = new Date();
-// const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
-// const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
-// const formattedCreatedDate = format(new Date(created_at), "MMM dd yyyy");
-// const timeDifference = formatDistance(parseISO(startDate), currentDate);
-// const createdDay = format(created_at, "EEEE").slice(0, 3);
-// const startingDay = format(startDate, "EEEE").slice(0, 3);
-// const endingDay = format(endDate, "EEEE").slice(0, 3);
-// const isPaidClass = isPaid
-  // ? "bg-green-300 text-green-900"
-// : "bg-yellow-200 text-yellow-900";
-  
 // za check In kada kliknem check out da se rerenderuje i prikaze delete booking a gore check out
-// da posaljem request kada izaberem dorucak i dobijem dorucak nazad 
+// da posaljem request kada izaberem dorucak i dobijem dorucak nazad
 // da ono dugme bude sivo pa kada se strikira da postane zuto

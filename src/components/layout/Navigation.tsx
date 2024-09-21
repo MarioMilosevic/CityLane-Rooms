@@ -23,7 +23,7 @@ const Navigation = ({
   };
 
   return (
-    <nav className="flex justify-end gap-4 w-full h-[50px] py-2 pr-2 border-b border-neutral-200">
+    <nav className="flex justify-end gap-4 mx-12 h-[50px] py-2 bg-neutral-50 dark:bg-slate-700">
       <div className="flex gap-2 justify-center items-center h-full">
         <img
           src={userPicture}
