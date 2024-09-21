@@ -10,7 +10,7 @@ const useFetchSettings = () => {
       try {
         setLoading(true);
         const data = await fetchSettings();
-        setSettings(data);
+        setSettings(data as SettingsType);
       } catch (error) {
         console.error("Error fetching rooms", error);
         setSettings(initialSettingsState);

@@ -10,6 +10,7 @@ import useFetchSingleBooking from "src/hooks/useFetchSingleBooking";
 import BookingSection from "./BookingSection";
 import CheckboxSection from "./CheckboxSection";
 import LoadingSpinner from "./LoadingSpinner";
+import BookingModal from "./BookingModal";
 import ButtonWrapper from "./ButtonWrapper";
 import Amount from "../common/Amount";
 import { createPortal } from "react-dom";
@@ -17,22 +18,29 @@ import PrimaryActionButton from "../common/PrimaryActionButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatPrice } from "src/utils/helpers";
 import { useForm } from "react-hook-form";
-import { checkInBooking, checkOutBooking } from "src/api/BookingsApi";
+import { checkInBooking, checkOutBooking, toggleHasBreakfast } from "src/api/BookingsApi";
 import { showToast } from "src/utils/toast";
-import BookingModal from "./BookingModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchSettings } from "src/api/SettingsApi";
 
 const CheckInBooking = () => {
   const { bookingId } = useParams();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { loading, singleBooking } = useFetchSingleBooking(bookingId as string);
-
+  const [breakfastPrice, setBreakfastPrice] = useState<number>(0);
+  useEffect(() => {
+    const fetchBreakfastPrice = async () => {
+      const { breakfastPrice } = await fetchSettings("breakfastPrice");
+      // console.log(breakfastPrice);
+      setBreakfastPrice(breakfastPrice);
+    };
+    fetchBreakfastPrice();
+  }, []);
 
   const {
     register,
     handleSubmit,
-    // watch,
     formState: { isValid },
   } = useForm<editBookingFormValues>({
     defaultValues: {
@@ -48,13 +56,11 @@ const CheckInBooking = () => {
   };
 
   if (loading || !singleBooking) return <LoadingSpinner />;
+  // console.log(singleBooking);
 
+  const totalBreakfastPrice =
+    singleBooking.numGuests * singleBooking.numNights * breakfastPrice;
 
-  // const breakfastChecked = watch("breakfast");
-
-  const totalBreakfastPrice = breakfastChecked
-    ? singleBooking?.numNights * singleBooking?.numGuests * pricePerBreakfast
-    : 0;
   const totalPrice = singleBooking.totalPrice + totalBreakfastPrice;
 
   const onSubmitCheckIn = async (formData: editBookingFormValues) => {
@@ -66,7 +72,7 @@ const CheckInBooking = () => {
       status: "Checked in",
     };
     await checkInBooking(Number(bookingId), updatedBooking);
-    showToast(`${singleBooking.fullName} checked in`, "success");
+    showToast(`${singleBooking.Guests.fullName} checked in`, "success");
     goBack();
   };
 
@@ -74,6 +80,12 @@ const CheckInBooking = () => {
     await checkOutBooking(Number(bookingId), "Checked out");
     goBack();
   };
+
+  const handleBreakfast = async (e) => {
+    console.log(e.target.checked)
+    // console.log('radi')
+    await toggleHasBreakfast(e.target.checked, singleBooking.id)
+  }
 
   return (
     <div className="min-h-[50vh] flex flex-col gap-8">
@@ -89,33 +101,32 @@ const CheckInBooking = () => {
         className="flex flex-col gap-8"
         onSubmit={handleSubmit(onSubmitCheckIn)}
       >
-        {!singleBooking.hasBreakfast && singleBooking.status === "Unconfirmed" && (
-          <CheckboxSection zod={{ ...register("breakfast") }}>
-            <span>Want to add breakfast for:</span>
-            <Amount
-              value={
-                singleBooking?.numNights *
-                singleBooking?.numGuests *
-                pricePerBreakfast
-              }
-              type="amount"
-            />
-          </CheckboxSection>
-        )}
+        {!singleBooking.hasBreakfast &&
+          singleBooking.status === "Unconfirmed" && (
+            <CheckboxSection zod={{ ...register("breakfast") }} changeHandler={(e) => handleBreakfast(e)}>
+              <span>Want to add breakfast for:</span>
+              <Amount value={totalBreakfastPrice} type="amount" />
+            </CheckboxSection>
+          )}
         {singleBooking.status === "Unconfirmed" && (
           <CheckboxSection zod={{ ...register("confirmation") }}>
             <span>
-              I confirm that {singleBooking?.fullName} has paid the total amount
-              of{" "}
+              I confirm that {singleBooking?.Guests.fullName} has paid the total
+              amount of{" "}
             </span>
             <Amount value={totalPrice} type="amount" />
-            {totalBreakfastPrice > 0 && (
+            {/* {singleBooking.hasBreakfast ? (
+              <span>
+                {`$${formatPrice(singleBooking.totalPrice)} + $${formatPrice(singleBooking.)}`}
+              </span>
+            )} */}
+            {/* {totalBreakfastPrice > 0 && (
               <span>
                 {`($${formatPrice(singleBooking.totalPrice)} + $${formatPrice(
                   totalBreakfastPrice
                 )})`}
               </span>
-            )}
+            )} */}
           </CheckboxSection>
         )}
         <ButtonWrapper justify="end">
@@ -148,8 +159,11 @@ const CheckInBooking = () => {
             closeModal={() => setIsModalOpen(false)}
           >
             <p>
-              Are you sure you want to check out {" "}
-              <span className="font-medium text-lg">{singleBooking.fullName}</span>?
+              Are you sure you want to check out{" "}
+              <span className="font-medium text-lg">
+                {singleBooking.fullName}
+              </span>
+              ?
             </p>
             <ButtonWrapper justify="end">
               <PrimaryActionButton

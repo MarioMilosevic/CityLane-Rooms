@@ -1,7 +1,6 @@
 import supabase from "src/config/supabaseClient";
 import { itemsPerPage } from "src/utils/constants";
 import { BookingType } from "src/types/types";
-import { showToast } from "src/utils/toast";
 
 export const fetchBookings = async (
   filter: string,
@@ -65,7 +64,7 @@ export const fetchSingleBooking = async (id: number) => {
   }
 };
 
-export const deleteBooking = async (bookingId: number, guestId: number) => {
+export const deleteBooking = async (bookingId: number) => {
   try {
     const { error: deleteBookingError } = await supabase
       .from("Bookings")
@@ -73,15 +72,7 @@ export const deleteBooking = async (bookingId: number, guestId: number) => {
       .eq("id", bookingId);
     if (deleteBookingError) throw deleteBookingError;
 
-    // const { error: deleteGuestError } = await supabase
-    //   .from("Guests")
-    //   .delete()
-    //   .eq("id", guestId);
-
-    // if (deleteGuestError) throw deleteGuestError;
-
     console.log("Booking and its guest deleted successfully.");
-    // showToast("Booking deleted successfully", "success");
   } catch (error) {
     console.error("Unable to delete booking", error);
   }
@@ -112,5 +103,22 @@ export const checkOutBooking = async (bookingId: number, status: string) => {
     if (error) throw new Error("Unable to check out");
   } catch (error) {
     console.error("Unexpected error occured", error);
+  }
+};
+
+export const toggleHasBreakfast = async (value: boolean, bookingId: number) => {
+  try {
+    const { data, error } = await supabase
+      .from("Bookings")
+      .update({ hasBreakfast:value})
+      .eq("id", bookingId)
+
+    if (error) {
+      console.error('Unable to update booking', error)
+      return
+    }
+    return data
+  } catch (error) {
+    console.error('Unexpected error occured', error)
   }
 };
