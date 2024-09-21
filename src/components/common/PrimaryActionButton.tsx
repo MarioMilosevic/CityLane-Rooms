@@ -14,6 +14,7 @@ const PrimaryActionButton = ({
     yellow:
       "bg-yellow-500 enabled:hover:bg-yellow-600 text-yellow-100 dark:bg-yellow-600 dark:enabled:hover:bg-yellow-700 enabled:hover:text-yellow-50",
     red: "bg-red-500 enabled:hover:bg-red-600 text-red-100 dark:bg-red-600 dark:enabled:hover:bg-red-700 enabled:hover:text-red-50",
+    gray: "bg-neutral-500 border border-neutral-50 dark:bg-slate-800 dark:hover:bg-slate-900 text-neutral-100 hover:text-neutral-50 hover:bg-neutral-600",
   };
 
   const buttonClass = isDisabled

@@ -40,7 +40,6 @@ const BookingDetails = () => {
 
   if (loading || !singleBooking) return <LoadingSpinner />;
 
-  console.log(singleBooking);
 
   const goBack = () => {
     navigate(-1);

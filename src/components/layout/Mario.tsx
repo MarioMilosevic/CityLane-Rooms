@@ -19,6 +19,7 @@ import { checkInBooking, toggleHasBreakfast } from "src/api/BookingsApi";
 import { showToast } from "src/utils/toast";
 import { useEffect, useState } from "react";
 import { fetchSettings } from "src/api/SettingsApi";
+// const { loading, singleBooking } = useFetchSingleBooking(bookingId as string);
 
 const CheckInBooking = () => {
   const { bookingId } = useParams();
@@ -26,6 +27,8 @@ const CheckInBooking = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [singleBooking, setSingleBooking] = useState<BookingType>();
   const [breakfastPrice, setBreakfastPrice] = useState<number>(0);
+  const [willPayBreakfast, setWillPayBreakfast] = useState<boolean>(false);
+  const [confirmCheckIn, setConfirmCheckIn] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchBreakfastPriceAndSingleBooking = async () => {
@@ -36,9 +39,9 @@ const CheckInBooking = () => {
         ]);
 
         const { breakfastPrice } = settingsResult;
-        setBreakfastPrice(breakfastPrice as number);
+        setBreakfastPrice(breakfastPrice);
         setSingleBooking(singleBooking);
-        // setWillPayBreakfast(singleBooking.hasBreakfast)
+        setWillPayBreakfast(singleBooking.hasBreakfast);
       } catch (error) {
         console.error("Unexpected error", error);
       } finally {
@@ -62,49 +65,34 @@ const CheckInBooking = () => {
     mode: "onChange",
   });
 
+  const goBack = () => {
+    navigate("/bookings");
+  };
+
   if (loading || !singleBooking) return <LoadingSpinner />;
 
   const totalBreakfastPrice =
     singleBooking.numGuests * singleBooking.numNights * breakfastPrice;
 
-  const totalPrice = singleBooking.hasBreakfast
-    ? singleBooking.totalPrice + totalBreakfastPrice
-    : singleBooking.totalPrice;
+  const totalPriceWithBreakfast =
+    singleBooking.totalPrice + totalBreakfastPrice;
 
-  const handleBreakfast = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const checkedValue = e.target.checked;
-      const response = await toggleHasBreakfast(checkedValue, singleBooking.id);
-      if (response) {
-        setSingleBooking((prev) => {
-          if (!prev) return prev;
-          return {
-            ...prev,
-            hasBreakfast: checkedValue,
-          };
-        });
-      }
-    } catch (error) {
-      console.error("Error occurred", error);
-    }
-  };
-
-  const goBack = () => {
-    navigate("/bookings");
-  };
-
-  const onSubmit = async (formData: editBookingFormValues) => {
-    const updateExtrasPrice = formData.breakfast ? totalBreakfastPrice : 0
+  const onSubmitCheckIn = async (formData: editBookingFormValues) => {
     const updatedBooking: Partial<BookingType> = {
       hasBreakfast: formData.breakfast,
       isPaid: true,
-      extrasPrice: updateExtrasPrice,
-      totalPrice: totalPrice,
+      extrasPrice: totalBreakfastPrice,
+      totalPrice: totalPriceWithBreakfast,
       status: "Checked in",
     };
     await checkInBooking(Number(bookingId), updatedBooking);
     showToast(`${singleBooking.Guests.fullName} checked in`, "success");
     goBack();
+  };
+
+  const handleBreakfast = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checkedValue = e.target.checked;
+    setWillPayBreakfast(checkedValue);
   };
 
   return (
@@ -117,8 +105,11 @@ const CheckInBooking = () => {
         goBack={goBack}
       />
       <BookingSection booking={singleBooking as BookingType} />
-      <form className="flex flex-col gap-8" onSubmit={handleSubmit(onSubmit)}>
-        {!singleBooking.extrasPrice &&
+      <form
+        className="flex flex-col gap-8"
+        onSubmit={handleSubmit(onSubmitCheckIn)}
+      >
+        {!singleBooking.hasBreakfast &&
           singleBooking.status === "Unconfirmed" && (
             <CheckboxSection
               zod={{ ...register("breakfast") }}
@@ -134,8 +125,15 @@ const CheckInBooking = () => {
               I confirm that {singleBooking?.Guests.fullName} has paid the total
               amount of{" "}
             </span>
-            <Amount value={totalPrice} type="amount" />
-            {singleBooking.hasBreakfast && (
+            <Amount
+              value={
+                willPayBreakfast
+                  ? totalPriceWithBreakfast
+                  : singleBooking.totalPrice
+              }
+              type="amount"
+            />
+            {willPayBreakfast && (
               <span>{`($${formatPrice(
                 singleBooking.totalPrice
               )} + $${formatPrice(totalBreakfastPrice)})`}</span>
@@ -147,11 +145,18 @@ const CheckInBooking = () => {
           {singleBooking.status === "Unconfirmed" && (
             <PrimaryActionButton
               isDisabled={!isValid}
-              color={isValid ? "yellow" : "gray"}
+              color="yellow"
               text={`Check in booking #${bookingId}`}
               type="submit"
             />
           )}
+          {/* {singleBooking.status === "Checked in" && (
+            <PrimaryActionButton
+              color="yellow"
+              text={`Check out booking #${bookingId}`}
+              clickHandler={() => setIsModalOpen(true)}
+            />
+          )} */}
           <PrimaryActionButton
             color="white"
             text="Back"

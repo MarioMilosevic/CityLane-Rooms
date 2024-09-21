@@ -6,7 +6,6 @@ import {
   MdOutlineFileDownload,
   MdOutlineDeleteForever,
 } from "react-icons/md";
-import { format, formatDistance, parseISO } from "date-fns";
 import { SingleBookingProps } from "src/types/types";
 import { deleteBooking } from "src/api/BookingsApi";
 import { showToast } from "src/utils/toast";
@@ -19,12 +18,12 @@ import PrimaryActionButton from "../common/PrimaryActionButton";
 import Option from "../common/Option";
 import useClickOutside from "src/hooks/useClickOutside";
 import BookingModal from "./BookingModal";
+import { formatDate, timeDifference } from "src/utils/helpers";
 
 const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-  const currentDate = new Date();
   const {
     numNights,
     roomId,
@@ -32,12 +31,10 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
     endDate,
     status,
     totalPrice,
-    Guests: { email, fullName, id: guestId },
+    Guests: { email, fullName },
     id: bookingId,
   } = booking;
-  const formattedStartDate = format(new Date(startDate), "MMM dd yyyy");
-  const formattedEndDate = format(new Date(endDate), "MMM dd yyyy");
-  const timeDifference = formatDistance(parseISO(startDate), currentDate);
+
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsOptionsModalOpen(false),
     isOptionsModalOpen
@@ -48,7 +45,7 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
   };
 
   const deleteHandler = async () => {
-    await deleteBooking(bookingId, guestId);
+    await deleteBooking(bookingId);
     setBookings((prev) => prev.filter((booking) => booking.id !== bookingId));
     showToast("Booking deleted successfully", "success");
   };
@@ -65,12 +62,12 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
         <h3 className="text-sm">{email}</h3>
       </div>
       <div className="flex flex-col">
-        <span className="">
-          {status === "Checked out" ? "Over" : "In"} {timeDifference} → {""}
+        <span className="text-base">
+          {status === "Checked out" ? "Over" : "In"} {timeDifference(startDate)} → {""}
           {numNights} night stay
         </span>
         <span className="text-sm">
-          {formattedStartDate} — {formattedEndDate}
+          {formatDate(startDate)} — {formatDate(endDate)}
         </span>
       </div>
       <Status status={status} />

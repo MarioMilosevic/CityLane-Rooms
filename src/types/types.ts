@@ -71,6 +71,7 @@ export type buttonColorOptions = {
   white: string;
   yellow: string;
   red: string;
+  gray:string
 };
 
 export type PrimaryActionButtonProps = {
@@ -300,4 +301,5 @@ export type BookingSectionData = {
 export type CheckboxSectionProps = {
   children: ReactNode;
   zod: UseFormRegisterReturn;
+  changeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 };
