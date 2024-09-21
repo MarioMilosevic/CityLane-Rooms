@@ -301,5 +301,5 @@ export type BookingSectionData = {
 export type CheckboxSectionProps = {
   children: ReactNode;
   zod: UseFormRegisterReturn;
-  changeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
+  changeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };

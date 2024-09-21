@@ -5,7 +5,8 @@ import { rooms } from "src/data/data-rooms";
 import { bookings } from "src/data/data-bookings";
 import { guests } from "src/data/data-guests";
 import { showToast } from "src/utils/toast";
-import { pricePerBreakfast } from "src/utils/constants";
+
+const pricePerBreakfast = 10
 
 export const deleteGuests = async () => {
   try {
