@@ -4,9 +4,7 @@ import {
 } from "src/validation/editBookingSchema";
 import { useParams, useNavigate } from "react-router-dom";
 import { BookingType } from "src/types/types";
-import { pricePerBreakfast } from "src/utils/constants";
 import BookingHeader from "./BookingHeader";
-import useFetchSingleBooking from "src/hooks/useFetchSingleBooking";
 import BookingSection from "./BookingSection";
 import CheckboxSection from "./CheckboxSection";
 import LoadingSpinner from "./LoadingSpinner";
@@ -16,27 +14,49 @@ import Amount from "../common/Amount";
 import { createPortal } from "react-dom";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { fetchSingleBooking } from "src/api/BookingsApi";
 import { formatPrice } from "src/utils/helpers";
 import { useForm } from "react-hook-form";
-import { checkInBooking, checkOutBooking, toggleHasBreakfast } from "src/api/BookingsApi";
+import {
+  checkInBooking,
+  checkOutBooking,
+  toggleHasBreakfast,
+} from "src/api/BookingsApi";
 import { showToast } from "src/utils/toast";
 import { useEffect, useState } from "react";
 import { fetchSettings } from "src/api/SettingsApi";
+// const { loading, singleBooking } = useFetchSingleBooking(bookingId as string);
 
 const CheckInBooking = () => {
   const { bookingId } = useParams();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { loading, singleBooking } = useFetchSingleBooking(bookingId as string);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [singleBooking, setSingleBooking] = useState<BookingType>();
   const [breakfastPrice, setBreakfastPrice] = useState<number>(0);
+  const [imaDorucak, setImaDorucak] = useState<boolean>(false)
+
   useEffect(() => {
-    const fetchBreakfastPrice = async () => {
-      const { breakfastPrice } = await fetchSettings("breakfastPrice");
-      // console.log(breakfastPrice);
-      setBreakfastPrice(breakfastPrice);
+    const fetchBreakfastPriceAndSingleBooking = async () => {
+      try {
+        const [settingsResult, singleBooking] = await Promise.all([
+          fetchSettings("breakfastPrice"),
+          fetchSingleBooking(Number(bookingId)),
+        ]);
+
+        const { breakfastPrice } = settingsResult;
+        setBreakfastPrice(breakfastPrice);
+        setSingleBooking(singleBooking);
+        setImaDorucak(singleBooking.hasBreakfast)
+      } catch (error) {
+        console.error("Unexpected error", error);
+      } finally {
+        setLoading(false);
+      }
     };
-    fetchBreakfastPrice();
-  }, []);
+
+    fetchBreakfastPriceAndSingleBooking();
+  }, [bookingId]);
 
   const {
     register,
@@ -57,11 +77,13 @@ const CheckInBooking = () => {
 
   if (loading || !singleBooking) return <LoadingSpinner />;
   // console.log(singleBooking);
-
-  const totalBreakfastPrice =
+  const totalBreakfastPrice = // 80
     singleBooking.numGuests * singleBooking.numNights * breakfastPrice;
 
-  const totalPrice = singleBooking.totalPrice + totalBreakfastPrice;
+  const totalPrice = singleBooking.hasBreakfast
+    ? singleBooking.totalPrice + totalBreakfastPrice
+    : singleBooking.totalPrice;
+  console.log(totalPrice);
 
   const onSubmitCheckIn = async (formData: editBookingFormValues) => {
     const updatedBooking: Partial<BookingType> = {
@@ -82,10 +104,9 @@ const CheckInBooking = () => {
   };
 
   const handleBreakfast = async (e) => {
-    console.log(e.target.checked)
-    // console.log('radi')
-    await toggleHasBreakfast(e.target.checked, singleBooking.id)
-  }
+    await toggleHasBreakfast(e.target.checked, singleBooking.id);
+    setImaDorucak(e.target.checked)
+  };
 
   return (
     <div className="min-h-[50vh] flex flex-col gap-8">
@@ -103,7 +124,10 @@ const CheckInBooking = () => {
       >
         {!singleBooking.hasBreakfast &&
           singleBooking.status === "Unconfirmed" && (
-            <CheckboxSection zod={{ ...register("breakfast") }} changeHandler={(e) => handleBreakfast(e)}>
+            <CheckboxSection
+              zod={{ ...register("breakfast") }}
+              changeHandler={(e) => handleBreakfast(e)}
+            >
               <span>Want to add breakfast for:</span>
               <Amount value={totalBreakfastPrice} type="amount" />
             </CheckboxSection>
@@ -114,7 +138,7 @@ const CheckInBooking = () => {
               I confirm that {singleBooking?.Guests.fullName} has paid the total
               amount of{" "}
             </span>
-            <Amount value={totalPrice} type="amount" />
+            <Amount value={singleBooking.totalPrice} type="amount" />
             {/* {singleBooking.hasBreakfast ? (
               <span>
                 {`$${formatPrice(singleBooking.totalPrice)} + $${formatPrice(singleBooking.)}`}

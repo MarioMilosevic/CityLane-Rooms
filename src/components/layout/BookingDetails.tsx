@@ -1,39 +1,71 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { deleteBooking } from "src/api/BookingsApi";
+import { useState, useEffect } from "react";
+import {
+  deleteBooking,
+  checkOutBooking,
+  fetchSingleBooking,
+} from "src/api/BookingsApi";
 import { createPortal } from "react-dom";
-// import { BookingType } from "src/types/types";
 import { showToast } from "src/utils/toast";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
 import LoadingSpinner from "./LoadingSpinner";
 import BookingModal from "./BookingModal";
 import BookingHeader from "./BookingHeader";
-import useFetchSingleBooking from "src/hooks/useFetchSingleBooking";
 import BookingSection from "./BookingSection";
 import { BookingType } from "src/types/types";
 
 const BookingDetails = () => {
   const { bookingId } = useParams();
-  const { loading, singleBooking } = useFetchSingleBooking(bookingId as string);
+  const [singleBooking, setSingleBooking] = useState<BookingType>();
+  const [loading, setLoading] = useState<boolean>(true);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchBooking = async () => {
+      try {
+        const result = await fetchSingleBooking(Number(bookingId));
+        setSingleBooking(result);
+      } catch (error) {
+        console.error("Error occured", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBooking();
+  }, [bookingId]);
+
   const navigate = useNavigate();
 
   if (loading || !singleBooking) return <LoadingSpinner />;
+
+  console.log(singleBooking);
 
   const goBack = () => {
     navigate(-1);
   };
 
   const deleteHandler = async () => {
-    deleteBooking(singleBooking.id, singleBooking.guestId);
+    deleteBooking(singleBooking.id);
     goBack();
     showToast("Booking deleted successfully", "success");
   };
 
   const checkIn = () => {
     navigate(`/bookings/checkIn/${bookingId}`);
+  };
+
+  const checkOut = async () => {
+    await checkOutBooking(Number(bookingId), "Checked out");
+    setSingleBooking((prev) => {
+      if (!prev) return prev;
+
+      return {
+        ...prev,
+        status: "Checked out",
+      };
+    });
   };
 
   return (
@@ -55,7 +87,13 @@ const BookingDetails = () => {
                 ? "Check out"
                 : ""
             }
-            clickHandler={checkIn}
+            clickHandler={
+              singleBooking.status === "Unconfirmed"
+                ? checkIn
+                : singleBooking.status === "Checked in"
+                ? checkOut
+                : undefined
+            }
           />
         )}
         <PrimaryActionButton
@@ -95,7 +133,6 @@ const BookingDetails = () => {
 };
 
 export default BookingDetails;
-
 
 // za check In kada kliknem check out da se rerenderuje i prikaze delete booking a gore check out
 // da posaljem request kada izaberem dorucak i dobijem dorucak nazad

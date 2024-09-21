@@ -96,11 +96,12 @@ export const checkInBooking = async (
 
 export const checkOutBooking = async (bookingId: number, status: string) => {
   try {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("Bookings")
       .update({ status: status })
-      .eq("id", bookingId);
+      .eq("id", bookingId).select()
     if (error) throw new Error("Unable to check out");
+    console.log(data)
   } catch (error) {
     console.error("Unexpected error occured", error);
   }
