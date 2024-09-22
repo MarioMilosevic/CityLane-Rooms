@@ -9,6 +9,7 @@ import {
 } from "src/validation/updateUserData";
 import { useForm, FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { updateUserEmail } from "src/api/AccountApi";
 
 const UpdateUserForm = () => {
   const form = useForm<updateUserDataFormValues>({
@@ -28,8 +29,12 @@ const UpdateUserForm = () => {
     reset,
   } = form;
 
-  const onSubmit = () => {
+  const onSubmit = async (formData: updateUserDataFormValues) => {
     console.log("submit");
+    console.log(formData);
+    const { emailAddress } = formData;
+    const emailResponse = await updateUserEmail(emailAddress);
+    console.log(emailResponse);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -48,7 +53,7 @@ const UpdateUserForm = () => {
         <Label id="Full name" />
         <Input
           id="Full name"
-          type="email"
+          type="text"
           zod={{ ...register("fullName") }}
           error={errors.fullName}
         />

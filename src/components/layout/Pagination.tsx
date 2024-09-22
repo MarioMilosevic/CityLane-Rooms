@@ -14,7 +14,6 @@ const Pagination = ({ numberOfItems }: { numberOfItems: number }) => {
       (pathname === "/bookings" && currentPage < totalPages) ||
       (pathname === "/rooms" && currentPage < totalPages)
     ) {
-      console.log("uslo u next");
       searchParams.set("page", String(currentPage + 1));
       setSearchParams(searchParams);
     }
