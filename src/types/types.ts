@@ -27,7 +27,7 @@ export type TitleOptions = {
   center: string;
 };
 
-export type LinkProps = {
+export type PageLinkProps = {
   link: { text: string; icon: IconType };
   isSelected: boolean;
   clickHandler: MouseEventHandler<HTMLButtonElement>;
@@ -302,4 +302,5 @@ export type CheckboxSectionProps = {
   children: ReactNode;
   zod: UseFormRegisterReturn;
   changeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checked?:boolean
 };

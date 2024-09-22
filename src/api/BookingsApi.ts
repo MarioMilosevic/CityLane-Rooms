@@ -100,7 +100,8 @@ export const checkOutBooking = async (bookingId: number) => {
       .from("Bookings")
       .update({ status: "Checked out" })
       .eq("id", bookingId)
-      .select();
+      .select()
+      .single();
     if (error) throw new Error("Unable to check out");
     return data;
   } catch (error) {

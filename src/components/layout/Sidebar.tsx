@@ -2,7 +2,7 @@ import logo from "../../assets/images/logo.jpg";
 import { links } from "../../utils/constants";
 import { useNavigate, useLocation } from "react-router-dom";
 import Title from "../common/Title";
-import Link from "../common/Link";
+import PageLink from "../common/PageLink";
 // import Uploader from "src/data/Uploader";
 
 const Sidebar = () => {
@@ -18,7 +18,7 @@ const Sidebar = () => {
       <Title title="CityLane Rooms" position="center" />
       <div className="flex flex-col pt-6 gap-1">
         {links.map((link) => (
-          <Link
+          <PageLink
             key={link.text}
             link={link}
             isSelected={pathname

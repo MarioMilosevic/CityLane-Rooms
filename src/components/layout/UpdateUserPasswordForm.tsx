@@ -9,29 +9,31 @@ import {
 } from "src/validation/updatePasswordSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { updateUserPassword } from "src/api/AccountApi";
 const UpdateUserPasswordForm = () => {
   const form = useForm<updatePasswordFormValues>({
     defaultValues: {
       password: "",
       repeatPassword: "",
-      },
-      resolver:zodResolver(updateUserPasswordSchema)
+    },
+    resolver: zodResolver(updateUserPasswordSchema),
   });
 
   const {
     register,
     handleSubmit,
-      formState: { errors },
-
+    formState: { errors },
+    reset,
   } = form;
 
-    const onSubmit = () => {
-        console.log('submit')
-    }
-    
+  const onSubmit = async (formData: updatePasswordFormValues) => {
+    await updateUserPassword(formData.password);
+    // reset()
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="text-xl py-4">Update password</h2>
+      <h2 className="text-xl pb-4">Update password</h2>
       <FormBlock size="small" direction="row">
         <Label id="New password (min 8 chars)" />
         <Input
@@ -51,8 +53,12 @@ const UpdateUserPasswordForm = () => {
         />
       </FormBlock>
       <ButtonWrapper justify="end">
-        <PrimaryActionButton text="Cancel" color="white" />
-        <PrimaryActionButton text="Update password" color="yellow" />
+        <PrimaryActionButton text="Cancel" color="white" clickHandler={() => reset()} />
+        <PrimaryActionButton
+          text="Update password"
+          color="yellow"
+          type="submit"
+        />
       </ButtonWrapper>
     </form>
   );

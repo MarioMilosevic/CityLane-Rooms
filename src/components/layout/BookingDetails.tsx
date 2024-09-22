@@ -55,15 +55,18 @@ const BookingDetails = () => {
   };
 
   const checkOut = async () => {
-    await checkOutBooking(Number(bookingId));
-    setSingleBooking((prev) => {
-      if (!prev) return prev;
-
-      return {
-        ...prev,
-        status: "Checked out",
-      };
-    });
+    const response = await checkOutBooking(Number(bookingId));
+    if (response) {
+      setSingleBooking((prev) => {
+        if (!prev) return prev;
+        
+        return {
+          ...prev,
+          status: "Checked out",
+        };
+      });
+      showToast(`${singleBooking.Guests.fullName} has been checked out`, 'success')
+    }
   };
 
   return (
