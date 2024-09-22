@@ -10,7 +10,7 @@ import { createPortal } from "react-dom";
 import { showToast } from "src/utils/toast";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../common/LoadingSpinner";
 import BookingModal from "./BookingModal";
 import BookingHeader from "./BookingHeader";
 import BookingSection from "./BookingSection";
@@ -39,7 +39,6 @@ const BookingDetails = () => {
   const navigate = useNavigate();
 
   if (loading || !singleBooking) return <LoadingSpinner />;
-
 
   const goBack = () => {
     navigate(-1);

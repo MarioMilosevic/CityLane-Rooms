@@ -5,7 +5,7 @@ import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentHeader from "src/components/layout/ContentHeader";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SingleBooking from "src/components/layout/SingleBooking";
-import LoadingSpinner from "src/components/layout/LoadingSpinner";
+import LoadingSpinner from "src/components/common/LoadingSpinner";
 import Pagination from "src/components/layout/Pagination";
 import ButtonWrapper from "src/components/layout/ButtonWrapper";
 import {

@@ -1,12 +1,8 @@
-import { Navigate, Outlet } from "react-router-dom"
-import LoadingSpinner from "src/components/layout/LoadingSpinner"
+import { Navigate, Outlet } from "react-router-dom";
+import LoadingSpinner from "src/components/common/LoadingSpinner";
 
 const ProtectedRoute = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default ProtectedRoute
+export default ProtectedRoute;

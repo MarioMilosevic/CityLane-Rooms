@@ -1,6 +1,6 @@
-import Label from "./Label";
+import Label from "../common/Label";
 import FormBlock from "./FormBlock";
-import Input from "./Input";
+import Input from "../common/Input";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -22,6 +22,10 @@ const Navigation = ({
     }
   };
 
+  const goToAccount = () => {
+    navigate('/account')
+  }
+
   return (
     <nav className="flex justify-end gap-4 mx-12 h-[50px] py-2 bg-neutral-50 dark:bg-slate-700">
       <div className="flex gap-2 justify-center items-center h-full">
@@ -33,7 +37,7 @@ const Navigation = ({
         <span className="text-sm lowercase">Mario</span>
       </div>
       <div className="flex items-center gap-4">
-        <FaUser className="cursor-pointer" />
+        <FaUser className="cursor-pointer" onClick={goToAccount}/>
         {theme === "light" ? (
           <FaSun className="cursor-pointer" onClick={handleThemeSwitch} />
         ) : theme === "dark" ? (

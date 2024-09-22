@@ -13,7 +13,7 @@ import ModalForm from "src/components/layout/ModalForm";
 import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
-import LoadingSpinner from "src/components/layout/LoadingSpinner";
+import LoadingSpinner from "src/components/common/LoadingSpinner";
 import ButtonWrapper from "src/components/layout/ButtonWrapper";
 import ShowResults from "src/components/layout/ShowResults";
 import Pagination from "src/components/layout/Pagination";
@@ -22,7 +22,12 @@ import useFetchData from "src/hooks/useFetchData";
 const Rooms = () => {
   const [searchParams] = useSearchParams();
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
-  const { data:rooms, loading, setData:setRooms, numberOfItems:numberOfRooms} = useFetchData('rooms', fetchAllRooms)
+  const {
+    data: rooms,
+    loading,
+    setData: setRooms,
+    numberOfItems: numberOfRooms,
+  } = useFetchData("rooms", fetchAllRooms);
   const currentPage = Number(searchParams.get("page")) || 1;
 
   const showResultsFrom = (currentPage - 1) * itemsPerPage + 1; // 1 , 11 ,21, 31...

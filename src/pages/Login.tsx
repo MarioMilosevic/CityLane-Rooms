@@ -1,9 +1,9 @@
 import logo from "src/assets/images/logo.jpg";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import FormBlock from "../components/layout/FormBlock";
-import Input from "../components/layout/Input";
-import Label from "../components/layout/Label";
-import LoadingSpinner from "src/components/layout/LoadingSpinner";
+import Input from "../components/common/Input";
+import Label from "../components/common/Label";
+import LoadingSpinner from "src/components/common/LoadingSpinner";
 import useRetrieveSession from "src/hooks/useRetrieveSession";
 import { loginUser } from "src/api/LoginApi";
 import { useForm } from "react-hook-form";
@@ -59,8 +59,12 @@ const Login = () => {
           alt="Company logo"
           className="rounded-full w-[100px] h-[100px]"
         />
-        <h2 className="text-2xl text-yellow-800 dark:text-yellow-500 text-center">CityLane Rooms</h2>
-        <h1 className="text-3xl font-medium dark:text-neutral-50">Log into your account</h1>
+        <h2 className="text-2xl text-yellow-800 dark:text-yellow-500 text-center">
+          CityLane Rooms
+        </h2>
+        <h1 className="text-3xl font-medium dark:text-neutral-50">
+          Log into your account
+        </h1>
       </div>
       <form
         className="w-[500px] pt-24 flex flex-col"

@@ -13,7 +13,7 @@ import { formatDate, timeDifference } from "src/utils/helpers";
 import Amount from "../common/Amount";
 import OpenModalOptions from "./OpenModalOptions";
 import Status from "./Status";
-import OptionButton from "./OptionButton";
+import OptionButton from "../common/OptionButton";
 import ButtonWrapper from "./ButtonWrapper";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import Option from "../common/Option";
@@ -22,7 +22,9 @@ import BookingModal from "./BookingModal";
 
 const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<"delete" | "checkout" | null>(
+    null
+  );
   const navigate = useNavigate();
   const {
     numNights,
@@ -48,6 +50,7 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
     await deleteBooking(bookingId);
     setBookings((prev) => prev.filter((booking) => booking.id !== bookingId));
     showToast("Booking deleted successfully", "success");
+    closeModal();
   };
 
   const goToCheckIn = () => {
@@ -65,6 +68,15 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
         )
       );
     }
+    closeModal();
+  };
+
+  const openModal = (type: "delete" | "checkout") => {
+    setModalType(type);
+  };
+
+  const closeModal = () => {
+    setModalType(null);
   };
 
   return (
@@ -106,36 +118,43 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
                   : ""
               }
               icon={MdOutlineFileDownload}
-              clickHandler={status === "Checked in" ? checkOut : goToCheckIn}
+              clickHandler={
+                status === "Checked in"
+                  ? () => openModal("checkout")
+                  : goToCheckIn
+              }
             />
           )}
           <Option
             text="Delete booking"
             icon={MdOutlineDeleteForever}
-            clickHandler={() => setIsDeleteModalOpen(true)}
+            clickHandler={() => openModal("delete")}
           />
         </OptionButton>
       )}
-      {isDeleteModalOpen &&
+      {modalType &&
         createPortal(
           <BookingModal
-            title="Delete booking"
-            closeModal={() => setIsDeleteModalOpen(false)}
+            title={
+              modalType === "delete" ? "Delete booking" : "Check out booking"
+            }
+            closeModal={closeModal}
           >
             <ButtonWrapper justify="end">
               <p>
-                Are you sure you want to delete this booking permanently? <br />{" "}
-                This action cannot be undone.
+                {modalType === "delete"
+                  ? "Are you sure you want to delete this booking permanently? This action cannot be undone."
+                  : `Are you sure you want to check out ${fullName}? This action cannot be undone.`}
               </p>
               <PrimaryActionButton
                 text="Cancel"
                 color="white"
-                clickHandler={() => setIsDeleteModalOpen(false)}
+                clickHandler={closeModal}
               />
               <PrimaryActionButton
-                text="Delete"
-                color="red"
-                clickHandler={deleteHandler}
+                text={modalType === "delete" ? "Delete" : "Check out"}
+                color={modalType === "delete" ? "red" : "yellow"}
+                clickHandler={modalType === "delete" ? deleteHandler : checkOut}
               />
             </ButtonWrapper>
           </BookingModal>,

@@ -10,9 +10,9 @@ import { FieldError, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useClickOutside from "../../hooks/useClickOutside";
 import FormBlock from "./FormBlock";
-import Label from "./Label";
-import Input from "./Input";
-import TextArea from "./TextArea";
+import Label from "../common/Label";
+import Input from "../common/Input";
+import TextArea from "../common/TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
 

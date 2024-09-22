@@ -2,8 +2,8 @@ import HeaderContainer from "../components/layout/HeadingContainer";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import PrimaryActionButton from "../components/common/PrimaryActionButton";
 import FormBlock from "../components/layout/FormBlock";
-import Label from "../components/layout/Label";
-import Input from "../components/layout/Input";
+import Label from "../components/common/Label";
+import Input from "../components/common/Input";
 import ButtonWrapper from "../components/layout/ButtonWrapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,9 +32,9 @@ const Users = () => {
     try {
       const { repeatPassword, ...correctFormData } = formData;
       const response = await createNewUser(correctFormData);
-      console.log(response)
+      console.log(response);
       if (response.user.id) {
-        showToast('User sucessfully created')
+        showToast("User sucessfully created");
       }
     } catch (error) {
       console.error("Error creating new user: ", error);
@@ -42,7 +42,6 @@ const Users = () => {
 
     reset();
   };
-
 
   return (
     <>

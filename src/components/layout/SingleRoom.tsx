@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import { deleteRoomFromServer } from "src/api/RoomsApi";
 import { formatPrice } from "src/utils/helpers";
 import useClickOutside from "../../hooks/useClickOutside";
-import OptionButton from "./OptionButton";
+import OptionButton from "../common/OptionButton";
 import Option from "../common/Option";
 import ModalForm from "./ModalForm";
 import Amount from "../common/Amount";

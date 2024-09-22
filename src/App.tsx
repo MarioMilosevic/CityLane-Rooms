@@ -9,6 +9,7 @@ import ErrorRoute from "./pages/ErrorRoute";
 import { useEffect, useState } from "react";
 import BookingDetails from "./components/layout/BookingDetails";
 import CheckInBooking from "./components/layout/CheckInBooking";
+import Account from "./pages/Account";
 
 function App() {
   const [theme, setTheme] = useState<string>("light");
@@ -35,6 +36,7 @@ function App() {
             <SharedLayout theme={theme} handleThemeSwitch={handleThemeSwitch} />
           }
         >
+          <Route path="account" element={<Account />} />
           <Route path="bookings" element={<Bookings />} />
           <Route path="bookings/:bookingId" element={<BookingDetails />} />
           <Route path="bookings/checkIn/:bookingId" element={<CheckInBooking />} />

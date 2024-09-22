@@ -7,7 +7,7 @@ import { BookingType } from "src/types/types";
 import BookingHeader from "./BookingHeader";
 import BookingSection from "./BookingSection";
 import CheckboxSection from "./CheckboxSection";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../common/LoadingSpinner";
 import ButtonWrapper from "./ButtonWrapper";
 import Amount from "../common/Amount";
 import PrimaryActionButton from "../common/PrimaryActionButton";
@@ -337,4 +337,3 @@ export default CheckInBooking;
 // };
 
 // export default CheckInBooking;
-

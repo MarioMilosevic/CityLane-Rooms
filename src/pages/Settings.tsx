@@ -1,6 +1,6 @@
 import HeaderContainer from "src/components/layout/HeadingContainer";
 import ContentWrapper from "src/components/layout/ContentWrapper";
-import LoadingSpinner from "src/components/layout/LoadingSpinner";
+import LoadingSpinner from "src/components/common/LoadingSpinner";
 import SettingsForm from "src/components/layout/SettingsForm";
 import useFetchSettings from "src/hooks/useFetchSettings";
 const Settings = () => {
