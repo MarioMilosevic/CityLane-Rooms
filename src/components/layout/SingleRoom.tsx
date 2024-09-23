@@ -12,9 +12,10 @@ import ModalForm from "./ModalForm";
 import Amount from "../common/Amount";
 import OpenModalOptions from "./OpenModalOptions";
 
-const SingleRoom = ({ room, setRooms }: ContentRowProps) => {
+const SingleRoom = ({ room, setRooms, setNumberOfRooms }: ContentRowProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
   const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
+
 
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsOptionsModalOpen(false),
@@ -31,6 +32,7 @@ const SingleRoom = ({ room, setRooms }: ContentRowProps) => {
       const response = await deleteRoomFromServer(roomId);
       if (response) {
         deleteRoom(roomId);
+        setNumberOfRooms((prev) => prev - 1)
         showToast("Room deleted sucessfully", "success");
       }
     } catch (error) {
@@ -83,6 +85,7 @@ const SingleRoom = ({ room, setRooms }: ContentRowProps) => {
             room={room}
             setRooms={setRooms}
             setIsModalFormOpen={setIsModalFormOpen}
+            setNumberOfRooms={setNumberOfRooms}
           />,
           document.body
         )}

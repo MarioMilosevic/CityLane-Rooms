@@ -1,8 +1,8 @@
 import HeadingContainer from "src/components/layout/HeadingContainer";
 import UpdateUserForm from "src/components/layout/UpdateUserForm";
 import UpdateUserPasswordForm from "src/components/layout/UpdateUserPasswordForm";
-// import { useEffect } from "react";
-// import { retrieveUser } from "src/api/AccountApi";
+import { useEffect } from "react";
+import { retrieveUser } from "src/api/AccountApi";
 const Account = () => {
   // useEffect(() => {
   //   const retrieveUserInfo = async () => {

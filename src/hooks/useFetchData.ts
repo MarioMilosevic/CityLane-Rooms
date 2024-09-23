@@ -48,7 +48,7 @@ const useFetchData = (page: "bookings" | "rooms", fetchFunction: FetchFunction) 
     fetchAndSetData();
   }, [filterValue, sortValue, currentPage, fetchFunction]);
 
-  return { data, loading, numberOfItems, currentPage ,setData };
+  return { data, loading, numberOfItems, currentPage ,setData, setNumberOfItems };
 };
 
 export default useFetchData;

@@ -65,6 +65,7 @@ export type OptionProps = {
 export type ContentRowProps = {
   room: RoomType;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
+  setNumberOfRooms: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type buttonColorOptions = {
@@ -122,6 +123,7 @@ export type ModalFormProps = {
   room?: RoomType;
   setIsModalFormOpen: Dispatch<SetStateAction<boolean>>;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
+  setNumberOfRooms: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type LabelProps = {

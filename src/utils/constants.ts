@@ -42,3 +42,4 @@ export const initialSettingsState = {
   minNights: 0,
 };
 
+export const supabaseUrl = "https://xonugvplyyycodzjotuu.supabase.co";

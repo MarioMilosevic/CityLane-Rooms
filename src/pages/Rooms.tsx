@@ -27,6 +27,7 @@ const Rooms = () => {
     loading,
     setData: setRooms,
     numberOfItems: numberOfRooms,
+    setNumberOfItems: setNumberOfRooms,
   } = useFetchData("rooms", fetchAllRooms);
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -62,6 +63,7 @@ const Rooms = () => {
               setRooms={
                 setRooms as React.Dispatch<React.SetStateAction<RoomType[]>>
               }
+              setNumberOfRooms={setNumberOfRooms}
             ></SingleRoom>
           ))}
         </ContentRowWrapper>
@@ -88,6 +90,7 @@ const Rooms = () => {
             setRooms={
               setRooms as React.Dispatch<React.SetStateAction<RoomType[]>>
             }
+            setNumberOfRooms={setNumberOfRooms}
           />,
           document.body
         )}

@@ -9,7 +9,10 @@ import {
 } from "src/validation/updateUserData";
 import { useForm, FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { updateUserEmail } from "src/api/AccountApi";
+import { supabaseUrl } from "src/utils/constants";
+import { updateUserEmail, updateUserMetadata } from "src/api/AccountApi";
+import { uploadImage } from "src/api/RoomsApi";
+import { nanoid } from "nanoid";
 
 const UpdateUserForm = () => {
   const form = useForm<updateUserDataFormValues>({
@@ -30,11 +33,16 @@ const UpdateUserForm = () => {
   } = form;
 
   const onSubmit = async (formData: updateUserDataFormValues) => {
-    console.log("submit");
     console.log(formData);
-    const { emailAddress } = formData;
-    const emailResponse = await updateUserEmail(emailAddress);
-    console.log(emailResponse);
+    const { emailAddress, fullName, image } = formData;
+    // ovo ispod je objekat koji sam uzeo iz liste
+    const imageObj = image[0]
+    const imageUrl = await uploadImage(imageObj as File, 'userStorage');
+  
+      const emailResponse = await updateUserEmail(emailAddress);
+      const metadataResonse = await updateUserMetadata(fullName, imageUrl)
+      console.log(metadataResonse)
+      console.log(emailResponse);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

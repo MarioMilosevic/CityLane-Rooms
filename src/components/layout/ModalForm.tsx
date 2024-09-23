@@ -16,7 +16,7 @@ import TextArea from "../common/TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
 
-const ModalForm = ({ room, setIsModalFormOpen, setRooms }: ModalFormProps) => {
+const ModalForm = ({ room, setIsModalFormOpen, setRooms, setNumberOfRooms }: ModalFormProps) => {
   const modalRef = useClickOutside<HTMLFormElement>(() =>
     setIsModalFormOpen(false)
   );
@@ -42,32 +42,24 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms }: ModalFormProps) => {
     formState: { errors },
   } = form;
 
-  const addRoom = (newRoom: RoomType) => {
-    setRooms((prev) => [...prev, newRoom]);
-  };
 
   const addNewRoom = async (formData: newRoomValues) => {
     try {
       setIsButtonLoading(true);
       const imageFile = formData.image[0];
-      const imageUrl = await uploadImage(imageFile as File);
+      const imageUrl = await uploadImage(imageFile as File, 'roomsStorage');
       const newRoom = { ...formData, image: imageUrl as string };
       const data = await createNewRoom(newRoom);
-      addRoom(data);
+      setRooms((prev) => [...prev, data])
+      setNumberOfRooms((prev) => prev + 1)
       showToast("Room created successfully!", "success");
     } catch (error) {
       console.error("Error creating new room:", error);
-      showToast("Unable to create new room. Please try again later.", "error");
+      showToast("Unable to create new room. Please try again later", "error");
     } finally {
       setIsButtonLoading(false);
       setIsModalFormOpen(false);
     }
-  };
-
-  const editRoom = (roomId: number, updatedRoom: RoomType) => {
-    setRooms((prev) =>
-      prev.map((room) => (room.id === roomId ? updatedRoom : room))
-    );
   };
 
   const editCurrentRoom = async (formData: newRoomValues) => {
@@ -81,7 +73,9 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms }: ModalFormProps) => {
         };
         const response = await editRoomServer(room.id, updatedRoom);
         if (response) {
-          editRoom(room.id, response);
+          setRooms((prev) =>
+            prev.map((r) => (r.id === room.id ? response : r))
+          );
           showToast("Room updated successfully!", "success");
         }
       } catch (error) {
