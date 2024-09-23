@@ -33,7 +33,6 @@ const UpdateUserForm = ({setUser}:UpdateAccountFormProps) => {
   } = form;
 
 
-
 const onSubmit = async (formData: updateUserDataFormValues) => {
   const { emailAddress, fullName, image } = formData;
   const imageObj = image[0];
