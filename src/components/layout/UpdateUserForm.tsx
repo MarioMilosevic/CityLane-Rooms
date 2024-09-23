@@ -9,12 +9,10 @@ import {
 } from "src/validation/updateUserData";
 import { useForm, FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { supabaseUrl } from "src/utils/constants";
 import { updateUserEmail, updateUserMetadata } from "src/api/AccountApi";
 import { uploadImage } from "src/api/RoomsApi";
-import { nanoid } from "nanoid";
 
-const UpdateUserForm = () => {
+const UpdateUserForm = ({setUser}) => {
   const form = useForm<updateUserDataFormValues>({
     defaultValues: {
       emailAddress: "",
@@ -32,18 +30,30 @@ const UpdateUserForm = () => {
     reset,
   } = form;
 
-  const onSubmit = async (formData: updateUserDataFormValues) => {
-    console.log(formData);
-    const { emailAddress, fullName, image } = formData;
-    // ovo ispod je objekat koji sam uzeo iz liste
-    const imageObj = image[0]
-    const imageUrl = await uploadImage(imageObj as File, 'userStorage');
-  
-      const emailResponse = await updateUserEmail(emailAddress);
-      const metadataResonse = await updateUserMetadata(fullName, imageUrl)
-      console.log(metadataResonse)
-      console.log(emailResponse);
-  };
+
+
+const onSubmit = async (formData: updateUserDataFormValues) => {
+  const { emailAddress, fullName, image } = formData;
+  const imageObj = image[0];
+
+  try {
+    const [imageUrl] = await Promise.all([
+      uploadImage(imageObj as File, "userStorage"),
+      updateUserEmail(emailAddress),
+    ]);
+
+    const response = await updateUserMetadata(fullName, imageUrl as string);
+    if (response) {
+      const updatedUser = response.user
+      setUser(updatedUser)
+    }
+    reset();
+  } catch (error) {
+    console.error("Error updating user data:", error);
+  }
+};
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h2 className="text-xl py-4">Update user data</h2>

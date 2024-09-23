@@ -35,7 +35,7 @@ export const retrieveUser = async () => {
 
 export const updateUserEmail = async (newEmail: string) => {
   try {
-    const { data, error } = await supabase.auth.updateUser({
+    const { error } = await supabase.auth.updateUser({
       email: newEmail,
     });
 
@@ -43,40 +43,22 @@ export const updateUserEmail = async (newEmail: string) => {
       console.error("Unable to update email", error);
       return;
     }
-    return data;
   } catch (error) {
     console.error("Unexpected error occured", error);
   }
 };
 
-export const updateUserMetadata = async (fullName: string, image:string) => {
-  console.log(fullName)
-  console.log("u funkciji imidz",image)
+export const updateUserMetadata = async (fullName: string, image: string) => {
   try {
-    // const newImageObj = image.image[0]
     const { data, error } = await supabase.auth.updateUser({
-      data: { fullName: fullName, image:image },
+      data: { fullName: fullName, image: image },
     });
     if (error) {
       console.error("Unable to update user name");
       return;
     }
-    return data;
+    return data
   } catch (error) {
     console.error("Unexpected error occured", error);
   }
-
-    //  const newRoomName = newRoom.image[0] as File;
-    //  const imageName = `${nanoid()}--${newRoomName.name}`;
-    //  const imagePath = `${supabaseUrl}/storage/v1/object/public/roomsStorage/${imageName}`;
-
-    //  const updateRoomQuery = supabase
-    //    .from("Rooms")
-    //    .update({
-    //      ...newRoom,
-    //      image: imagePath,
-    //    })
-    //    .eq("id", roomId)
-    //    .select()
-    //    .single();
 };

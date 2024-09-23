@@ -6,17 +6,21 @@ import { Outlet } from "react-router-dom";
 
 const SharedLayout = ({
   handleThemeSwitch,
-  theme
+  theme,
+  user
 }: {
     handleThemeSwitch: () => void;
   theme:string
-}) => {
+  }) => {
+  
+  console.log("uzer iz shared layouta", user)
+  
   return (
     <>
       <Toaster />
       <Sidebar />
       <div className="w-full bg-neutral-100 dark:bg-slate-700">
-        <Navigation handleThemeSwitch={handleThemeSwitch} theme={theme} />
+        <Navigation handleThemeSwitch={handleThemeSwitch} theme={theme} user={user} />
         <MainContainer>
           <Outlet />
         </MainContainer>

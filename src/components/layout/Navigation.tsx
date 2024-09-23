@@ -3,44 +3,20 @@ import { MdOutlineLogin } from "react-icons/md";
 import supabase from "src/config/supabaseClient";
 import { showToast } from "src/utils/toast";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { retrieveUser } from "src/api/AccountApi";
-import LoadingSpinner from "../common/LoadingSpinner";
 
 const Navigation = ({
   handleThemeSwitch,
   theme,
+  user,
 }: {
   handleThemeSwitch: () => void;
   theme: string;
 }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState();
-  const [loading, setLoading] = useState<boolean>(true);
-  useEffect(() => {
-    try {
-      setLoading(true);
-      const retrieveUserInfo = async () => {
-        const user = await retrieveUser();
-        console.log(user);
-        setUser(user);
-      };
-      retrieveUserInfo();
-    } catch (error) {
-      console.error("Unexpected error occured", error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  if (loading || !user) return <LoadingSpinner />;
-
   const {
     user_metadata: { fullName, image },
   } = user;
 
-  console.log(fullName);
-  console.log(image);
 
   const signOut = async () => {
     try {
