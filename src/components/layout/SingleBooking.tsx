@@ -20,7 +20,11 @@ import Option from "../common/Option";
 import useClickOutside from "src/hooks/useClickOutside";
 import BookingModal from "./BookingModal";
 
-const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
+const SingleBooking = ({
+  booking,
+  setBookings,
+  setNumberOfBookings,
+}: SingleBookingProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
   const [modalType, setModalType] = useState<"delete" | "checkout" | null>(
     null
@@ -47,10 +51,15 @@ const SingleBooking = ({ booking, setBookings }: SingleBookingProps) => {
   };
 
   const deleteHandler = async () => {
-    await deleteBooking(bookingId);
-    setBookings((prev) => prev.filter((booking) => booking.id !== bookingId));
-    showToast("Booking deleted successfully", "success");
-    closeModal();
+    try {
+      await deleteBooking(bookingId);
+      setBookings((prev) => prev.filter((booking) => booking.id !== bookingId));
+      setNumberOfBookings((prev) => prev - 1);
+      showToast("Booking deleted successfully", "success");
+      closeModal();
+    } catch (error) {
+      console.error("Unexpected error occured", error);
+    }
   };
 
   const goToCheckIn = () => {

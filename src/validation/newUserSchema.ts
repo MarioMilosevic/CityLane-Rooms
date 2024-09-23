@@ -8,6 +8,7 @@ export const newUserSchema = z
     emailAddress: z.string().email({
       message: "Please provide a correct email",
     }),
+    userImage:z.any(),
   })
   .extend({
     password: z

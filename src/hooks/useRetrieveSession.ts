@@ -8,10 +8,11 @@ const useRetrieveSession = (navigate: NavigateFunction) => {
     const retrieveSession = async () => {
       try {
         setLoading(true);
-          const result = await getSession();
+        const result = await getSession();
         if (result && "session" in result && result.session) {
           navigate("/bookings");
         }
+        console.log(result)
       } catch (error) {
         console.error("Error fetching session", error);
       } finally {

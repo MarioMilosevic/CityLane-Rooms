@@ -7,6 +7,12 @@ export const createNewUser = async (user: UserType) => {
     const { data, error } = await supabase.auth.signUp({
       email: user.emailAddress,
       password: user.password,
+      options: {
+        data: {
+          fullName: user.fullName,
+          image: user.image,
+        },
+      },
     });
     if (error) {
       showToast("Error occured when signing up", "error");

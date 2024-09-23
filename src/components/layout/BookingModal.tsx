@@ -13,7 +13,7 @@ const BookingModal = ({
   return (
     <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
       <form
-        className="max-h-[80vh] flex flex-col gap-8 bg-neutral-50 dark:bg-slate-600 z-20 border px-8 py-8 relative"
+        className="max-h-[80vh] flex flex-col gap-8 bg-neutral-50 dark:bg-slate-600 dark:text-slate-50 z-20 border px-8 py-8 relative"
         ref={modalRef}
       >
         <PiXBold

@@ -22,15 +22,16 @@ const Bookings = () => {
   const {
     data: bookings,
     loading,
-    numberOfItems,
+    numberOfItems: numberOfBookings,
     currentPage,
     setData: setBookings,
+    setNumberOfItems: setNumberOfBookings,
   } = useFetchData("bookings", fetchBookings);
 
   const showResultsFrom = (currentPage - 1) * itemsPerPage + 1;
   let showResultsTo = showResultsFrom + itemsPerPage - 1;
-  if (showResultsTo > numberOfItems) {
-    showResultsTo = numberOfItems;
+  if (showResultsTo > numberOfBookings) {
+    showResultsTo = numberOfBookings;
   }
 
   return loading ? (
@@ -61,6 +62,7 @@ const Bookings = () => {
                   React.SetStateAction<BookingType[]>
                 >
               }
+              setNumberOfBookings={setNumberOfBookings}
             />
           ))}
         </ContentRowWrapper>
@@ -68,10 +70,10 @@ const Bookings = () => {
           <ShowResults
             showResultsFrom={showResultsFrom}
             showResultsTo={showResultsTo}
-            numberOfItems={numberOfItems}
+            numberOfItems={numberOfBookings}
           />
-          {numberOfItems > itemsPerPage && (
-            <Pagination numberOfItems={numberOfItems} />
+          {numberOfBookings > itemsPerPage && (
+            <Pagination numberOfItems={numberOfBookings} />
           )}
         </ButtonWrapper>
       </ContentWrapper>

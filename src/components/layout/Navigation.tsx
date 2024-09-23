@@ -3,20 +3,15 @@ import { MdOutlineLogin } from "react-icons/md";
 import supabase from "src/config/supabaseClient";
 import { showToast } from "src/utils/toast";
 import { useNavigate } from "react-router-dom";
+import { NavigationProps } from "src/types/types";
 
-const Navigation = ({
-  handleThemeSwitch,
-  theme,
-  user,
-}: {
-  handleThemeSwitch: () => void;
-  theme: string;
-}) => {
+const Navigation = ({ handleThemeSwitch, theme, user }: NavigationProps) => {
   const navigate = useNavigate();
   const {
     user_metadata: { fullName, image },
   } = user;
 
+  const firstName = fullName.split(" ")[0];
 
   const signOut = async () => {
     try {
@@ -35,8 +30,10 @@ const Navigation = ({
   return (
     <nav className="flex justify-end gap-4 mx-12 h-[50px] py-2 bg-neutral-50 dark:bg-slate-700">
       <div className="flex gap-2 justify-center items-center h-full">
-        <img src={image} alt={image} className="rounded-full h-full" />
-        <span className="text-sm lowercase">{fullName}</span>
+        {image && (
+          <img src={image} alt={image} className="rounded-full h-full" />
+        )}
+        <span className="text-sm lowercase">{firstName}</span>
       </div>
       <div className="flex items-center gap-4">
         <FaUser className="cursor-pointer" onClick={goToAccount} />

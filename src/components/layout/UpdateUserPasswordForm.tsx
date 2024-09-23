@@ -10,6 +10,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserPassword } from "src/api/AccountApi";
+import { showToast } from "src/utils/toast";
 const UpdateUserPasswordForm = () => {
   const form = useForm<updatePasswordFormValues>({
     defaultValues: {
@@ -27,8 +28,16 @@ const UpdateUserPasswordForm = () => {
   } = form;
 
   const onSubmit = async (formData: updatePasswordFormValues) => {
-    await updateUserPassword(formData.password);
-    // reset()
+    try {
+      const response = await updateUserPassword(formData.password);
+      if (response) {
+        showToast('User password updated successfully', 'success')
+      }
+    } catch (error) {
+      console.error("Unable to update password", error);
+      showToast("Unable to update password", "error");
+    }
+    reset()
   };
 
   return (
@@ -53,7 +62,11 @@ const UpdateUserPasswordForm = () => {
         />
       </FormBlock>
       <ButtonWrapper justify="end">
-        <PrimaryActionButton text="Cancel" color="white" clickHandler={() => reset()} />
+        <PrimaryActionButton
+          text="Cancel"
+          color="white"
+          clickHandler={() => reset()}
+        />
         <PrimaryActionButton
           text="Update password"
           color="yellow"

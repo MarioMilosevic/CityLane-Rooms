@@ -3,7 +3,7 @@ import { ModalFormProps } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
 import { createNewRoom, editRoomServer } from "src/api/RoomsApi";
 import { showToast } from "src/utils/toast";
-import { uploadImage } from "src/api/RoomsApi";
+import { uploadImage } from "src/api/HelperApi";
 import { RoomType } from "../../types/types";
 import { newRoomSchema, newRoomValues } from "src/validation/newRoomSchema";
 import { FieldError, useForm } from "react-hook-form";

@@ -10,9 +10,11 @@ import {
 import { useForm, FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserEmail, updateUserMetadata } from "src/api/AccountApi";
-import { uploadImage } from "src/api/RoomsApi";
+import { uploadImage } from "src/api/HelperApi";
+import { UpdateAccountFormProps } from "src/types/types";
+import { showToast } from "src/utils/toast";
 
-const UpdateUserForm = ({setUser}) => {
+const UpdateUserForm = ({setUser}:UpdateAccountFormProps) => {
   const form = useForm<updateUserDataFormValues>({
     defaultValues: {
       emailAddress: "",
@@ -46,6 +48,7 @@ const onSubmit = async (formData: updateUserDataFormValues) => {
     if (response) {
       const updatedUser = response.user
       setUser(updatedUser)
+      showToast('User data has been updated', 'success')
     }
     reset();
   } catch (error) {
@@ -57,7 +60,6 @@ const onSubmit = async (formData: updateUserDataFormValues) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h2 className="text-xl py-4">Update user data</h2>
-
       <FormBlock size="small" direction="row">
         <Label id="Email address" />
         <Input

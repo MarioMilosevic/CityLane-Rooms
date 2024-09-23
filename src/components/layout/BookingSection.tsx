@@ -29,7 +29,7 @@ const BookingSection = ({ booking }: BookingSectionData) => {
     : "bg-yellow-200 text-yellow-900";
 
   return (
-    <section className="bg-neutral-50">
+    <section className="bg-neutral-50 dark:bg-slate-600">
       <header className="p-4 flex items-center justify-between bg-yellow-500 text-yellow-100 rounded-md">
         <div className="flex items-center gap-4">
           <PiHouseLineBold size={30} />

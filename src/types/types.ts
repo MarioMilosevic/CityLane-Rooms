@@ -1,3 +1,4 @@
+import { User } from "@supabase/supabase-js";
 import { ReactNode, MouseEventHandler, Dispatch, SetStateAction } from "react";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 import { IconType } from "react-icons";
@@ -15,6 +16,19 @@ export type RoomType = {
 
 export type RoomsState = {
   rooms: RoomType[];
+};
+
+export type SharedLayoutProps = {
+  handleThemeSwitch: () => void;
+  theme: string;
+  user: User | undefined;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+};
+
+export type NavigationProps = {
+  handleThemeSwitch: () => void;
+  theme: string;
+  user: User;
 };
 
 export type TitleProps = {
@@ -185,6 +199,7 @@ export type UserType = {
   fullName: string;
   emailAddress: string;
   password: string;
+  image:string | null
 };
 
 export type StatusProps = {
@@ -264,6 +279,7 @@ export type GuestType = {
 export type SingleBookingProps = {
   booking: BookingType;
   setBookings: React.Dispatch<React.SetStateAction<BookingType[]>>;
+  setNumberOfBookings: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type DeleteBookingModalProps = {
@@ -306,3 +322,11 @@ export type CheckboxSectionProps = {
   changeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked?:boolean
 };
+
+export type AccountProps = {
+  setUser:React.Dispatch<React.SetStateAction<User | undefined>>
+}
+
+export type UpdateAccountFormProps = {
+  setUser:React.Dispatch<React.SetStateAction<User | undefined>>
+}

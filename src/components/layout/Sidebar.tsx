@@ -28,7 +28,7 @@ const Sidebar = () => {
           />
         ))}
       </div>
-      {/* <Uploader/> */}
+      {/* <Uploader /> */}
     </aside>
   );
 };

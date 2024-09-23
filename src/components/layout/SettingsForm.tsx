@@ -12,8 +12,10 @@ import { updateSettings } from "src/api/SettingsApi";
 import { showToast } from "src/utils/toast";
 import ButtonWrapper from "./ButtonWrapper";
 import { SettingsFormProps } from "../../types/types";
+import { useState } from "react";
 
 const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
   const form = useForm<settingsFormValues>({
     defaultValues: {
       maxGuests: settings.maxGuests,
@@ -34,6 +36,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
 
   const onSubmit = async (formData: settingsFormValues) => {
     try {
+      setIsButtonLoading(true)
       const response = await updateSettings(formData);
       if (response.id) {
         setSettings(response);
@@ -44,6 +47,8 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
     } catch (error) {
       showToast("Unexpected error occured, please try again", "error");
       console.error("Updating settings failed: ", error);
+    } finally {
+      setIsButtonLoading(false)
     }
   };
   return (
@@ -97,6 +102,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
             text="Save changes"
             color="yellow"
             type="submit"
+            isLoading={isButtonLoading}
           />
         </ButtonWrapper>
       )}
