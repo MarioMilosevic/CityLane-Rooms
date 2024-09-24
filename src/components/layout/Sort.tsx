@@ -14,7 +14,7 @@ const Sort = ({ options }: SelectProps) => {
 
   return (
     <select
-      className="py-1 px-2 rounded-md bg-neutral-50 focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 dark:text-slate-50 dark:bg-slate-500 dark:focus:ring-0"
+      className="py-1 lg:px-2 rounded-md lg:text-base text-sm bg-neutral-50 focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 dark:text-slate-50 dark:bg-slate-500 dark:focus:ring-0"
       onChange={(e) => handleChange(e)}
       value={sortValue}
     >

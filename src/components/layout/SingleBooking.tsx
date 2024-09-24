@@ -89,27 +89,25 @@ const SingleBooking = ({
   };
 
   return (
-    <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center py-1 bg-neutral-50 relative dark:bg-slate-500">
-      <p className="pl-4">{roomId}</p>
-      <div className="flex flex-col gap-2">
-        <h2>{fullName}</h2>
-        <h3 className="text-sm">{email}</h3>
+    <div className="grid lg:grid-cols-[2fr_5fr_5fr_4fr_4fr] lg:gap-6 grid-cols-[1fr_2fr_2fr_2fr_2fr] place-items-center py-1 bg-neutral-50 relative dark:bg-slate-500 border">
+      <p className="lg:pl-4 text-xs">{roomId}</p>
+      <div className="flex flex-col justify-self-start gap-2 text-sm">
+        <h2 className="lg:text-base text-sm">{fullName}</h2>
+        <h3 className="lg:block hidden text-sm">{email}</h3>
       </div>
       <div className="flex flex-col">
-        <span className="text-base">
+        <span className="lg:block hidden text-base">
           {status === "Checked out" ? "Over" : "In"} {timeDifference(startDate)}{" "}
           → {""}
           {numNights} night stay
         </span>
-        <span className="text-sm">
+        <span className="lg:text-sm text-xs">
           {formatDate(startDate)} — {formatDate(endDate)}
         </span>
       </div>
       <Status status={status} />
-      <div className="flex justify-between pr-6">
-        <Amount value={totalPrice} type="amount" />
-        <OpenModalOptions clickHandler={() => setIsOptionsModalOpen(true)} />
-      </div>
+      <Amount value={totalPrice} type="amount" />
+      <OpenModalOptions clickHandler={() => setIsOptionsModalOpen(true)} />
       {isOptionsModalOpen && (
         <OptionButton ref={modalRef}>
           <Option
@@ -169,7 +167,7 @@ const SingleBooking = ({
           </BookingModal>,
           document.body
         )}
-    </li>
+    </div>
   );
 };
 

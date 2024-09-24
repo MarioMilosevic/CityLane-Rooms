@@ -41,7 +41,7 @@ const Bookings = () => {
       <HeadingContainer title="All bookings">
         <SearchFilterTab
           tabOptions={bookingsTabs}
-          sortOptions={bookingsSortOptions}
+            sortOptions={bookingsSortOptions}
         />
       </HeadingContainer>
       <ContentWrapper>

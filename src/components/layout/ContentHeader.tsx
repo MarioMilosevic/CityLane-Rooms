@@ -1,9 +1,7 @@
 import { ContentHeaderProps } from "../../types/types";
 const ContentHeader = ({ title }: ContentHeaderProps) => {
   return (
-    <div className="py-4">
-      <h2 className="uppercase text-lg font-medium">{title}</h2>
-    </div>
+      <h2 className="uppercase py-4 lg:text-lg text-sm font-medium">{title}</h2>
   );
 };
 

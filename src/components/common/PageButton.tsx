@@ -23,7 +23,7 @@ const PageButton = ({
 
   return (
     <button
-      className={`flex items-center gap-1 px-2 py-1 rounded-md bg-yellow-500 text-yellow-50 ${buttonClass}`}
+      className={`flex items-center gap-1 lg:px-2 lg:py-1 p-1 lg:text-base text-xs rounded-md bg-yellow-500 text-yellow-50 ${buttonClass}`}
       onClick={clickHandler}
       disabled={isDisabled}
     >

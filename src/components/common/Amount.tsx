@@ -7,7 +7,7 @@ const Amount = ({ type, value }: AmountProps) => {
     amount: "font-normal",
   };
 
-  return <span className={`${typeOptions[type]}`}>${formatPrice(value)}</span>;
+  return <span className={`${typeOptions[type]} lg:text-base text-xs`}>${formatPrice(value)}</span>;
 };
 
 export default Amount;

@@ -30,7 +30,7 @@ const Pagination = ({ numberOfItems }: { numberOfItems: number }) => {
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex lg:gap-4 gap-1">
       <PageButton
         isDisabled={currentPage === 1 ? true : false}
         direction="previous"

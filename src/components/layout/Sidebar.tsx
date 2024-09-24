@@ -18,7 +18,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }: SidebarProps) => {
   };
   return (
     <aside
-      className={`bg-neutral-50 w-[220px] lg:w-[300px] lg:flex lg:flex-col  border-neutral-200 rounded-lg dark:bg-slate-800 lg:translate-x-0 lg:static absolute z-20 lg:z-0 transition duration-300 ${
+      className={`bg-neutral-50 w-[220px] lg:w-[300px] lg:flex lg:flex-col border-neutral-200 rounded-lg dark:bg-slate-800 lg:translate-x-0 lg:static absolute z-20 lg:z-0 transition duration-300 ${
         isSidebarOpen ? "translate-x-0" : "-translate-x-[100%]"
       }`}
     >
@@ -37,7 +37,6 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }: SidebarProps) => {
         ))}
       </div>
       {/* <Uploader /> */}
-      {/* {isSidebarOpen && <SidebarOverlay />} */}
     </aside>
   );
 };

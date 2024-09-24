@@ -212,7 +212,7 @@ export type UserType = {
 };
 
 export type StatusProps = {
-  status: keyof StatusOptions | string;
+  status: keyof StatusOptions;
 };
 
 export type StatusOptions = {

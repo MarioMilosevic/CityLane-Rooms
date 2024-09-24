@@ -2,7 +2,7 @@ import { ContentHeaderWrapperProps } from "../../types/types";
 
 const ContentHeaderWrapper = ({ children }: ContentHeaderWrapperProps) => {
   return (
-    <div className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6">{children}</div>
+    <div className="grid lg:grid-cols-[2fr_5fr_5fr_4fr_4fr] lg:gap-6 grid-cols-[1fr_2fr_2fr_2fr_2fr] place-items-center">{children}</div>
   );
 };
 

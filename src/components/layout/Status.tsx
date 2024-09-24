@@ -8,11 +8,11 @@ const Status = ({ status }: StatusProps) => {
   };
 
   return (
-    <span
-      className={`${statusOptions[status]} uppercase flex justify-center items-center font-medium rounded-full text-xs  w-[120px] px-2 py-1`}
+    <div
+      className={`${statusOptions[status]} lg:uppercase  text-center w-full font-medium rounded-full text-xs p-1 lg:w-[120px] lg:p-2`}
     >
       {status}
-    </span>
+    </div>
   );
 };
 

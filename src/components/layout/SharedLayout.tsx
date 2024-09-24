@@ -38,7 +38,7 @@ const SharedLayout = ({
     <>
       <Toaster />
       <Sidebar isSidebarOpen={isSidebarOpen} closeSidebar={closeSidebar} />
-      <div className="w-full bg-neutral-100 dark:bg-slate-700">
+      <div className="w-full">
         <Navigation
           handleThemeSwitch={handleThemeSwitch}
           theme={theme}
