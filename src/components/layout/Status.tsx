@@ -9,7 +9,7 @@ const Status = ({ status }: StatusProps) => {
 
   return (
     <div
-      className={`${statusOptions[status]} lg:uppercase  text-center w-full font-medium rounded-full text-xs p-1 lg:w-[120px] lg:p-2`}
+      className={`${statusOptions[status]} lg:uppercase flex justify-center items-center text-center font-medium rounded-full text-xs px-2 py-1 lg:w-[120px] lg:p-2`}
     >
       {status}
     </div>

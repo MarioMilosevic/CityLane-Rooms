@@ -12,9 +12,9 @@ const FormBlock = ({ children, size, direction }: FormBlockProps) => {
 
   return (
     <div
-      className={`w-[70%] mx-auto lg:w-full ${formBlockSizeOptions[size]}  rounded-lg border border-neutral bg-neutral-50 dark:bg-slate-900 dark:border-slate-500`}
+      className={`w-full mx-auto ${formBlockSizeOptions[size]}  rounded-lg border border-neutral bg-neutral-50 dark:bg-slate-900 dark:border-slate-500`}
     >
-      <div className={`w-full flex ${formBlockDirectionOptions[direction]}`}>
+      <div className={`w-full flex ${formBlockDirectionOptions[direction]} `}>
         {children}
       </div>
     </div>

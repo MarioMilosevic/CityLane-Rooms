@@ -11,7 +11,7 @@ const ButtonWrapper = ({
   }
 
   return (
-    <div className={`flex items-center ${buttonWrapperJustifyOptions[justify]} gap-4 py-4`}>{children}</div>
+    <div className={`flex items-center ${buttonWrapperJustifyOptions[justify]} gap-2 lg:gap-4 lg:py-4`}>{children}</div>
   );
 };
 

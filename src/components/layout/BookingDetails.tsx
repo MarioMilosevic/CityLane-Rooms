@@ -99,7 +99,7 @@ const BookingDetails = () => {
         )}
         <PrimaryActionButton
           color="red"
-          text="Delete booking"
+          text="Delete"
           clickHandler={() => setIsDeleteModalOpen(true)}
         />
         <PrimaryActionButton color="white" text="Back" clickHandler={goBack} />

@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { showToast } from "src/utils/toast";
 import { Toaster } from "react-hot-toast";
+import ButtonWrapper from "src/components/layout/ButtonWrapper";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -47,7 +48,6 @@ const Login = () => {
       console.error(error);
     }
   };
-
   if (loading) return <LoadingSpinner />;
 
   return (
@@ -67,7 +67,7 @@ const Login = () => {
         </h1>
       </div>
       <form
-        className="w-[500px] pt-24 flex flex-col"
+        className="lg:w-[500px] pt-24 flex flex-col w-full px-4"
         onSubmit={handleSubmit(onSubmit)}
       >
         <FormBlock size="small" direction="column">
@@ -88,7 +88,9 @@ const Login = () => {
             error={errors.password}
           />
         </FormBlock>
+        <ButtonWrapper justify="start">
         <PrimaryActionButton text="Log in" type="submit" color={isValid ? "yellow" : "gray" } />
+        </ButtonWrapper>
       </form>
     </main>
   );

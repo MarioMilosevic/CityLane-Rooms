@@ -9,7 +9,7 @@ const Input = ({ id, type, zod, error }: InputProps) => {
         id={id}
         type={type}
         onChange={zodOnChange}
-        className={`w-full p-1.5 lg:p-3 rounded-md border outline-none transition-all duration-200 border-neutral-300 focus:outline-yellow-500 focus:border-none dark:bg-slate-500 dark:border-slate-500 dark:text-neutral-50 ${
+        className={`w-full p-1 lg:p-3 lg:text-base text-sm rounded-md border outline-none transition-all duration-200 border-neutral-300 focus:outline-yellow-500 focus:border-none dark:bg-slate-500 dark:border-slate-500 dark:text-neutral-50 ${
           type === "file" && "file_custom"
         }`}
         {...restZodProps}

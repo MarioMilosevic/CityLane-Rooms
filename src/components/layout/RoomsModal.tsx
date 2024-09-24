@@ -92,7 +92,7 @@ const RoomsModal = ({ room, setIsRoomsModalOpen, setRooms, setNumberOfRooms }: R
   return (
     <Overlay showChildren={true}>
       <form
-        className="overflow-scroll w-[800px] max-h-[80vh] flex flex-col bg-neutral-50 dark:bg-slate-600 z-20 border px-8 py-8 relative"
+        className="overflow-scroll lg:w-[800px] lg:max-h-[80vh] flex flex-col bg-neutral-50 dark:bg-slate-600 z-20 border px-8 py-8 relative"
         ref={modalRef}
         onSubmit={handleSubmit(isEditingSession ? editCurrentRoom : addNewRoom)}
       >

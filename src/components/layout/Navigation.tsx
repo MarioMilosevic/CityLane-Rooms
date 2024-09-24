@@ -34,7 +34,7 @@ const Navigation = ({
   };
 
   return (
-    <nav className="flex justify-between items-center gap-4 px-8 h-[50px] py-2  bg-neutral-50 dark:bg-slate-700 relative">
+    <nav className="flex justify-between lg:justify-end items-center gap-4 px-8 h-[50px] py-2  bg-neutral-50 dark:bg-slate-700 relative">
       <BsLayoutTextSidebarReverse
         className="block lg:hidden cursor-pointer"
         onClick={() => setIsSidebarOpen((prev) => !prev)}

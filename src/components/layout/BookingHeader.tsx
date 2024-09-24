@@ -1,7 +1,7 @@
-import { BookingHeaderProps } from "src/types/types";
+import { BookingHeaderProps, StatusOptions } from "src/types/types";
+import { BiArrowBack } from "react-icons/bi";
 import Title from "../common/Title";
 import Status from "./Status";
-import { BiArrowBack } from "react-icons/bi";
 
 const BookingHeader = ({ status, goBack, title }: BookingHeaderProps) => {
 
@@ -9,11 +9,11 @@ const BookingHeader = ({ status, goBack, title }: BookingHeaderProps) => {
     <div className="flex justify-between items-center py-8">
       <div className="flex gap-4">
         <Title title={title} position="left" />
-        <Status status={status as string} />
+        <Status status={status as keyof StatusOptions} />
       </div>
       <button onClick={goBack} className="flex items-center gap-2">
-        <BiArrowBack size={22} />
-        <span className="font-medium">Back</span>
+        <BiArrowBack className="lg:text-xl text-base"/>
+        <span className="font-medium lg:text-base text-sm">Back</span>
       </button>
     </div>
   );
