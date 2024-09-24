@@ -8,13 +8,13 @@ import {
 } from "src/api/BookingsApi";
 import { createPortal } from "react-dom";
 import { showToast } from "src/utils/toast";
+import { BookingType } from "src/types/types";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
 import LoadingSpinner from "../common/LoadingSpinner";
 import BookingModal from "./BookingModal";
 import BookingHeader from "./BookingHeader";
 import BookingSection from "./BookingSection";
-import { BookingType } from "src/types/types";
 
 const BookingDetails = () => {
   const { bookingId } = useParams();
@@ -59,13 +59,16 @@ const BookingDetails = () => {
     if (response) {
       setSingleBooking((prev) => {
         if (!prev) return prev;
-        
+
         return {
           ...prev,
           status: "Checked out",
         };
       });
-      showToast(`${singleBooking.Guests.fullName} has been checked out`, 'success')
+      showToast(
+        `${singleBooking.Guests.fullName} has been checked out`,
+        "success"
+      );
     }
   };
 
@@ -107,14 +110,14 @@ const BookingDetails = () => {
       {isDeleteModalOpen &&
         createPortal(
           <BookingModal
-            title="Delete booking"
+            title="Delete booking ?"
             closeModal={() => setIsDeleteModalOpen(false)}
           >
+            <p className="lg:text-lg text-base ">
+              Are you sure you want to delete this booking permanently? <br />{" "}
+              This action cannot be undone.
+            </p>
             <ButtonWrapper justify="end">
-              <p>
-                Are you sure you want to delete this booking permanently? <br />{" "}
-                This action cannot be undone.
-              </p>
               <PrimaryActionButton
                 text="Cancel"
                 color="white"
@@ -135,6 +138,3 @@ const BookingDetails = () => {
 
 export default BookingDetails;
 
-// za check In kada kliknem check out da se rerenderuje i prikaze delete booking a gore check out
-// da posaljem request kada izaberem dorucak i dobijem dorucak nazad
-// da ono dugme bude sivo pa kada se strikira da postane zuto

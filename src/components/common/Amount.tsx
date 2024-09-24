@@ -9,7 +9,7 @@ const Amount = ({ type, value, position }: AmountProps) => {
 
   const positionOptions = {
     start:"justify-self-start",
-    center:'justify-self-center'
+    center: 'justify-self-center',
   }
 
   return <span className={`${typeOptions[type]} lg:text-base text-xs ${positionOptions[position]}`}>${formatPrice(value)}</span>;

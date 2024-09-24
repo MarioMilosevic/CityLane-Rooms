@@ -70,28 +70,29 @@ const BookingSection = ({ booking }: BookingSectionData) => {
           <h3 className="lg:text-base text-sm font-light">{hasBreakfast ? "Yes" : "No"}</h3>
         </div>
         <div
-          className={`flex justify-between items-center ${isPaidClass} p-4 rounded-md`}
+          className={`flex lg:flex-row lg:justify-between lg:items-center lg:gap-0 gap-2 flex-col ${isPaidClass} p-4 rounded-md`}
         >
-          <div className="flex lg:flex-row flex-col lg:items-center lg:gap-2 gap-1">
+          
+          <div className="flex flex-row items-center lg:gap-2 gap-1 lg:text-base text-xs">
             <AiFillDollarCircle className="lg:text-xl text-base" />
             <h3>Total price:</h3>
             <Amount value={totalPrice} type="amount" position="start" />
             {status === "Checked out" && (
               <>
                 (
-                <Amount value={roomPrice} type="amount" position="start" /> room
+                <Amount value={roomPrice} type="amount" position="start" /> 
                 +
                 <Amount
                   value={extrasPrice}
                   type="amount"
                   position="start"
-                />{" "}
-                breakfast)
+                  />{" "}
+                )
               </>
             )}
-          </div>
+            </div>
           <span className="lg:text-base text-sm font-medium uppercase">
-            {isPaid ? "Paid" : "Will pay at property"}
+            {!isPaid ? "Paid" : "Will pay at property"}
           </span>
         </div>
       </section>

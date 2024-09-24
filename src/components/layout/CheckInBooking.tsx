@@ -129,18 +129,29 @@ const CheckInBooking = () => {
             changeHandler={(e) => handleBreakfast(e)}
             checked={hasBreakfast}
           >
-            <span>Want to add breakfast for:</span>
-            <Amount value={totalBreakfastPrice} type="amount" />
+            <div className="flex items-center justify-between gap-1">
+              <p className="lg:text-base text-sm">Want to add breakfast for:</p>
+              <Amount
+                value={totalBreakfastPrice}
+                type="amount"
+                position="start"
+              />
+            </div>
           </CheckboxSection>
         )}
         {status === "Unconfirmed" && (
           <CheckboxSection zod={{ ...register("confirmation") }}>
-            <span>I confirm that {fullName} has paid the total amount of </span>
-            <Amount value={totalBookingPrice} type="amount" />
+            <div className="flex justify-between gap-1 items-center pl-4">
+            <p className="lg:text-base text-sm">
+              I confirm that <span className="font-medium">{fullName}</span> has
+              paid the total amount of:{" "}
+            </p>
+            <Amount value={totalBookingPrice} type="amount" position="start" />
+            </div>
             {hasBreakfast && (
-              <span>{`($${formatPrice(bookingPrice)} + $${formatPrice(
-                totalBreakfastPrice
-              )})`}</span>
+              <span className="lg:block hidden">{` ($${formatPrice(
+                bookingPrice
+              )} + $${formatPrice(totalBreakfastPrice)})`}</span>
             )}
           </CheckboxSection>
         )}

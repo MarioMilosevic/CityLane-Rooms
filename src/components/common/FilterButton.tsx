@@ -9,7 +9,7 @@ const FilterButton = ({ text, color, buttonHandler }: FilterButtonProps) => {
 
   return (
     <button
-      className={`lg:px-2 lg:py-1 px-2 py-1 rounded-md transition duration-300 lg:text-base text-sm ${filterTabColors[color]}`}
+      className={`lg:px-2 lg:py-1 p-1 rounded-md transition duration-300 lg:text-base text-sm ${filterTabColors[color]}`}
       onClick={buttonHandler}
     >
       {text}

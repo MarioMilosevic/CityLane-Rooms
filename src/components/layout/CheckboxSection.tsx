@@ -10,10 +10,10 @@ const CheckboxSection = ({
   const handleChange = changeHandler ? changeHandler : zodOnChange;
 
   return (
-    <div className="flex items-center gap-2 px-4 py-6  bg-neutral-50">
+    <div className="flex justify-between items-center lg:p-4 p-3 bg-neutral-50 dark:bg-slate-600">
       <input
         type="checkbox"
-        className="w-5 h-5 accent-yellow-300 focus:ring-offset-1 focus:ring focus:ring-yellow-300"
+        className="lg:w-5 lg:h-5 accent-yellow-300 focus:ring-offset-1 focus:ring focus:ring-yellow-300"
         {...(checked !== undefined && { checked })}
         onChange={handleChange}
         {...restZodProps}

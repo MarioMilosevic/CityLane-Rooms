@@ -229,7 +229,7 @@ export type AmountProps = {
 
 export type AmountPositionOptions = {
   start: string;
-  center:string
+  center: string;
 }
 
 export type TypeOptions = {
