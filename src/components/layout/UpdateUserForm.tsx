@@ -13,8 +13,10 @@ import { updateUserEmail, updateUserMetadata } from "src/api/AccountApi";
 import { uploadImage } from "src/api/HelperApi";
 import { UpdateAccountFormProps } from "src/types/types";
 import { showToast } from "src/utils/toast";
+import { useState } from "react";
 
-const UpdateUserForm = ({setUser}:UpdateAccountFormProps) => {
+const UpdateUserForm = ({ setUser }: UpdateAccountFormProps) => {
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false)
   const form = useForm<updateUserDataFormValues>({
     defaultValues: {
       emailAddress: "",
@@ -34,10 +36,11 @@ const UpdateUserForm = ({setUser}:UpdateAccountFormProps) => {
 
 
 const onSubmit = async (formData: updateUserDataFormValues) => {
-  const { emailAddress, fullName, image } = formData;
-  const imageObj = image[0];
-
+  
   try {
+    setIsButtonLoading(true)
+    const { emailAddress, fullName, image } = formData;
+    const imageObj = image[0];
     const [imageUrl] = await Promise.all([
       uploadImage(imageObj as File, "userStorage"),
       updateUserEmail(emailAddress),
@@ -52,6 +55,8 @@ const onSubmit = async (formData: updateUserDataFormValues) => {
     reset();
   } catch (error) {
     console.error("Error updating user data:", error);
+  } finally {
+    setIsButtonLoading(false)
   }
 };
 
@@ -96,6 +101,7 @@ const onSubmit = async (formData: updateUserDataFormValues) => {
           text="Update account"
           color="yellow"
           type="submit"
+          isLoading={isButtonLoading}
         />
       </ButtonWrapper>
     </form>

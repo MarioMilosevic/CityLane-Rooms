@@ -32,7 +32,7 @@ const Login = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors,isValid },
   } = form;
 
   const onSubmit = async (formData: loginUserFormValues) => {
@@ -59,10 +59,10 @@ const Login = () => {
           alt="Company logo"
           className="rounded-full w-[100px] h-[100px]"
         />
-        <h2 className="text-2xl text-yellow-800 dark:text-yellow-500 text-center">
+        <h2 className="text-xl lg:text-2xl text-yellow-800 dark:text-yellow-500 text-center">
           CityLane Rooms
         </h2>
-        <h1 className="text-3xl font-medium dark:text-neutral-50">
+        <h1 className="text-2xl lg:text-3xl font-medium dark:text-neutral-50">
           Log into your account
         </h1>
       </div>
@@ -88,7 +88,7 @@ const Login = () => {
             error={errors.password}
           />
         </FormBlock>
-        <PrimaryActionButton text="Log in" color="yellow" type="submit" />
+        <PrimaryActionButton text="Log in" type="submit" color={isValid ? "yellow" : "gray" } />
       </form>
     </main>
   );

@@ -11,7 +11,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserPassword } from "src/api/AccountApi";
 import { showToast } from "src/utils/toast";
+import { useState } from "react";
+
 const UpdateUserPasswordForm = () => {
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const form = useForm<updatePasswordFormValues>({
     defaultValues: {
       password: "",
@@ -29,15 +32,18 @@ const UpdateUserPasswordForm = () => {
 
   const onSubmit = async (formData: updatePasswordFormValues) => {
     try {
+      setIsButtonLoading(true);
       const response = await updateUserPassword(formData.password);
       if (response) {
-        showToast('User password updated successfully', 'success')
+        showToast("User password updated successfully", "success");
       }
     } catch (error) {
       console.error("Unable to update password", error);
       showToast("Unable to update password", "error");
+    } finally {
+      setIsButtonLoading(false);
+      reset();
     }
-    reset()
   };
 
   return (
@@ -71,6 +77,7 @@ const UpdateUserPasswordForm = () => {
           text="Update password"
           color="yellow"
           type="submit"
+          isLoading={isButtonLoading}
         />
       </ButtonWrapper>
     </form>

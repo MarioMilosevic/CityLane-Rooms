@@ -23,7 +23,7 @@ const PrimaryActionButton = ({
   return (
     <button
       className={`
-       ${buttonColorOptions[color]} ${buttonClass} flex items-center justify-center gap-4 mt-8 font-medium text-lg text-center px-4 py-2 rounded-md transition-all duration-200`}
+       ${buttonColorOptions[color]} ${buttonClass} w-[70%] mx-auto lg:w-full flex items-center justify-center gap-4 mt-8 font-medium text-lg text-center px-4 py-2 rounded-md transition-all duration-200`}
       type={type}
       {...(type !== "submit" && { onClick: clickHandler })}
       disabled={isDisabled}
