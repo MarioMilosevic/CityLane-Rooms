@@ -41,18 +41,20 @@ const SingleRoom = ({ room, setRooms, setNumberOfRooms }: ContentRowProps) => {
   };
 
   return (
-    <li className="grid grid-cols-[2fr_5fr_5fr_4fr_4fr] gap-6 items-center h-[60px] bg-neutral-50 relative dark:bg-slate-500">
-      <div className="h-[60px]">
+    <div className="grid lg:grid-cols-[2fr_5fr_5fr_4fr_4fr] place-content-center lg:gap-6  items-center  grid-cols-[1fr_2fr_2fr_2fr_2fr] gap-1 h-[60px] bg-neutral-50 relative dark:bg-slate-500 mb-1">
+      <div className="h-[60px] justify-self-start w-full">
         <img
           src={image as string}
           alt={image as string}
           className="object-cover w-full h-full rounded-sm"
         />
       </div>
-      <h3 className="text-lg font-medium">{name}</h3>
-      <p>Fits up to {capacity} guests</p>
-      <Amount value={regularPrice} type="price" />
-      <div className="font-medium relative flex items-center justify-between pr-6">
+      <h3 className="lg:text-lg text-sm font-medium justify-self-start">
+        {name}
+      </h3>
+      <p className="lg:text-base text-xs">Fits up to {capacity} guests</p>
+      <Amount value={regularPrice} type="price" position="start" />
+      <div className="font-medium relative flex items-center justify-between lg:text-base text-xs">
         {discount ? (
           <h4 className="text-green-500">{`$${formatPrice(discount)}`}</h4>
         ) : (
@@ -60,24 +62,24 @@ const SingleRoom = ({ room, setRooms, setNumberOfRooms }: ContentRowProps) => {
             regularPrice
           )}`}</h4>
         )}
-        <OpenModalOptions
-          clickHandler={() => setIsOptionsModalOpen((prev) => !prev)}
-        />
-        {isOptionsModalOpen && (
-          <OptionButton ref={modalRef}>
-            <Option
-              text="Edit"
-              icon={MdModeEditOutline}
-              clickHandler={() => setIsRoomsModalOpen(true)}
-            />
-            <Option
-              text="Delete"
-              icon={MdDelete}
-              clickHandler={() => deleteHandler(room.id)}
-            />
-          </OptionButton>
-        )}
       </div>
+      <OpenModalOptions
+        clickHandler={() => setIsOptionsModalOpen((prev) => !prev)}
+      />
+      {isOptionsModalOpen && (
+        <OptionButton ref={modalRef}>
+          <Option
+            text="Edit"
+            icon={MdModeEditOutline}
+            clickHandler={() => setIsRoomsModalOpen(true)}
+          />
+          <Option
+            text="Delete"
+            icon={MdDelete}
+            clickHandler={() => deleteHandler(room.id)}
+          />
+        </OptionButton>
+      )}
       {isRoomsModalOpen &&
         createPortal(
           <RoomsModal
@@ -88,7 +90,7 @@ const SingleRoom = ({ room, setRooms, setNumberOfRooms }: ContentRowProps) => {
           />,
           document.body
         )}
-    </li>
+    </div>
   );
 };
 

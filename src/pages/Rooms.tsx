@@ -11,7 +11,6 @@ import PrimaryActionButton from "src/components/common/PrimaryActionButton";
 import HeaderContainer from "src/components/layout/HeadingContainer";
 import RoomsModal from "src/components/layout/RoomsModal";
 import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
-import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
 import LoadingSpinner from "src/components/common/LoadingSpinner";
 import ButtonWrapper from "src/components/layout/ButtonWrapper";
@@ -49,13 +48,12 @@ const Rooms = () => {
       </HeaderContainer>
       <ContentWrapper>
         <ContentHeaderWrapper>
-          <ContentHeader title="" />
+          <ContentHeader title="Image" />
           <ContentHeader title="Room" />
           <ContentHeader title="Capacity" />
           <ContentHeader title="Price" />
           <ContentHeader title="Discount" />
         </ContentHeaderWrapper>
-        <ContentRowWrapper>
           {rooms.map((room) => (
             <SingleRoom
               key={room.id}
@@ -66,7 +64,6 @@ const Rooms = () => {
               setNumberOfRooms={setNumberOfRooms}
             ></SingleRoom>
           ))}
-        </ContentRowWrapper>
         <ButtonWrapper justify="between">
           <ShowResults
             showResultsFrom={showResultsFrom}

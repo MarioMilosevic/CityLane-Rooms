@@ -224,7 +224,13 @@ export type StatusOptions = {
 export type AmountProps = {
   type: keyof TypeOptions;
   value: number;
+  position: keyof AmountPositionOptions
 };
+
+export type AmountPositionOptions = {
+  start: string;
+  center:string
+}
 
 export type TypeOptions = {
   price: string;

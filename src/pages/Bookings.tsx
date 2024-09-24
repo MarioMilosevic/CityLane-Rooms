@@ -3,7 +3,6 @@ import HeadingContainer from "src/components/layout/HeadingContainer";
 import ContentWrapper from "src/components/layout/ContentWrapper";
 import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentHeader from "src/components/layout/ContentHeader";
-import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SingleBooking from "src/components/layout/SingleBooking";
 import LoadingSpinner from "src/components/common/LoadingSpinner";
 import Pagination from "src/components/layout/Pagination";
@@ -52,7 +51,6 @@ const Bookings = () => {
           <ContentHeader title="Status" />
           <ContentHeader title="Amount" />
         </ContentHeaderWrapper>
-        <ContentRowWrapper>
           {bookings.map((booking) => (
             <SingleBooking
               key={booking.id}
@@ -65,7 +63,6 @@ const Bookings = () => {
               setNumberOfBookings={setNumberOfBookings}
             />
           ))}
-        </ContentRowWrapper>
         <ButtonWrapper justify="between">
           <ShowResults
             showResultsFrom={showResultsFrom}

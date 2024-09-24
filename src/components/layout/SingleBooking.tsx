@@ -89,7 +89,7 @@ const SingleBooking = ({
   };
 
   return (
-    <div className="grid lg:grid-cols-[2fr_5fr_5fr_4fr_4fr] lg:gap-6 grid-cols-[1fr_2fr_2fr_2fr_2fr] place-items-center py-1 bg-neutral-50 relative dark:bg-slate-500 border">
+    <div className="grid lg:grid-cols-[2fr_5fr_5fr_4fr_4fr] lg:gap-6 grid-cols-[1fr_2fr_2fr_2fr_2fr] place-content-center items-center mb-1 py-1 bg-neutral-50 relative dark:bg-slate-500 border">
       <p className="lg:pl-4 text-xs">{roomId}</p>
       <div className="flex flex-col justify-self-start gap-2 text-sm">
         <h2 className="lg:text-base text-sm">{fullName}</h2>
@@ -106,7 +106,7 @@ const SingleBooking = ({
         </span>
       </div>
       <Status status={status} />
-      <Amount value={totalPrice} type="amount" />
+      <Amount value={totalPrice} type="amount" position="center"/>
       <OpenModalOptions clickHandler={() => setIsOptionsModalOpen(true)} />
       {isOptionsModalOpen && (
         <OptionButton ref={modalRef}>
