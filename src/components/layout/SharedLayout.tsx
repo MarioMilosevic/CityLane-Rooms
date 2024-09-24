@@ -4,7 +4,7 @@ import Navigation from "./Navigation";
 import Sidebar from "./Sidebar";
 import { Toaster } from "react-hot-toast";
 import { Outlet } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { retrieveUser } from "src/api/AccountApi";
 import { Navigate } from "react-router";
 
@@ -14,6 +14,9 @@ const SharedLayout = ({
   user,
   setUser,
 }: SharedLayoutProps) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+
+
   useEffect(() => {
     const retrieveUserInfo = async () => {
       try {
@@ -31,14 +34,15 @@ const SharedLayout = ({
   return user?.id ? (
     <>
       <Toaster />
-      <Sidebar />
+      <Sidebar isSidebarOpen={isSidebarOpen} />
       <div className="w-full bg-neutral-100 dark:bg-slate-700">
         <Navigation
           handleThemeSwitch={handleThemeSwitch}
           theme={theme}
           user={user}
+          setIsSidebarOpen={setIsSidebarOpen}
         />
-        <MainContainer>
+        <MainContainer isSidebarOpen={isSidebarOpen} closeSidebar={() => setIsSidebarOpen(false) }>
           <Outlet />
         </MainContainer>
       </div>
@@ -50,19 +54,3 @@ const SharedLayout = ({
 
 export default SharedLayout;
 
-// return (
-//   <>
-//     <Toaster />
-//     <Sidebar />
-//     <div className="w-full bg-neutral-100 dark:bg-slate-700">
-//       <Navigation
-//         handleThemeSwitch={handleThemeSwitch}
-//         theme={theme}
-//         user={user}
-//       />
-//       <MainContainer>
-//         <Outlet />
-//       </MainContainer>
-//     </div>
-//   </>
-// );

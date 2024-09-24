@@ -29,6 +29,7 @@ export type NavigationProps = {
   handleThemeSwitch: () => void;
   theme: string;
   user: User;
+  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type TitleProps = {
@@ -86,7 +87,7 @@ export type buttonColorOptions = {
   white: string;
   yellow: string;
   red: string;
-  gray:string
+  gray: string;
 };
 
 export type PrimaryActionButtonProps = {
@@ -133,9 +134,9 @@ export type OptionButtonProps = {
   children: ReactNode;
 };
 
-export type ModalFormProps = {
+export type RoomsModalProps = {
   room?: RoomType;
-  setIsModalFormOpen: Dispatch<SetStateAction<boolean>>;
+  setIsRoomsModalOpen: Dispatch<SetStateAction<boolean>>;
   setRooms: Dispatch<SetStateAction<RoomType[]>>;
   setNumberOfRooms: React.Dispatch<React.SetStateAction<number>>;
 };
@@ -199,7 +200,7 @@ export type UserType = {
   fullName: string;
   emailAddress: string;
   password: string;
-  image:string | null
+  image: string | null;
 };
 
 export type StatusProps = {
@@ -284,8 +285,8 @@ export type SingleBookingProps = {
 
 export type DeleteBookingModalProps = {
   closeModal: () => void;
-  children: ReactNode
-  title:string
+  children: ReactNode;
+  title: string;
 };
 
 export type BookingHeaderProps = {
@@ -315,18 +316,17 @@ export type BookingSectionData = {
   };
 };
 
-
 export type CheckboxSectionProps = {
   children: ReactNode;
   zod: UseFormRegisterReturn;
   changeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  checked?:boolean
+  checked?: boolean;
 };
 
 export type AccountProps = {
-  setUser:React.Dispatch<React.SetStateAction<User | undefined>>
-}
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+};
 
 export type UpdateAccountFormProps = {
-  setUser:React.Dispatch<React.SetStateAction<User | undefined>>
-}
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+};

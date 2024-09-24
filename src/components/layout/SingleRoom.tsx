@@ -8,14 +8,13 @@ import { formatPrice } from "src/utils/helpers";
 import useClickOutside from "../../hooks/useClickOutside";
 import OptionButton from "../common/OptionButton";
 import Option from "../common/Option";
-import ModalForm from "./ModalForm";
+import RoomsModal from "./RoomsModal";
 import Amount from "../common/Amount";
 import OpenModalOptions from "./OpenModalOptions";
 
 const SingleRoom = ({ room, setRooms, setNumberOfRooms }: ContentRowProps) => {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false);
-  const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
-
+  const [isRoomsModalOpen, setIsRoomsModalOpen] = useState<boolean>(false);
 
   const modalRef = useClickOutside<HTMLDivElement>(
     () => setIsOptionsModalOpen(false),
@@ -32,7 +31,7 @@ const SingleRoom = ({ room, setRooms, setNumberOfRooms }: ContentRowProps) => {
       const response = await deleteRoomFromServer(roomId);
       if (response) {
         deleteRoom(roomId);
-        setNumberOfRooms((prev) => prev - 1)
+        setNumberOfRooms((prev) => prev - 1);
         showToast("Room deleted sucessfully", "success");
       }
     } catch (error) {
@@ -69,7 +68,7 @@ const SingleRoom = ({ room, setRooms, setNumberOfRooms }: ContentRowProps) => {
             <Option
               text="Edit"
               icon={MdModeEditOutline}
-              clickHandler={() => setIsModalFormOpen(true)}
+              clickHandler={() => setIsRoomsModalOpen(true)}
             />
             <Option
               text="Delete"
@@ -79,12 +78,12 @@ const SingleRoom = ({ room, setRooms, setNumberOfRooms }: ContentRowProps) => {
           </OptionButton>
         )}
       </div>
-      {isModalFormOpen &&
+      {isRoomsModalOpen &&
         createPortal(
-          <ModalForm
+          <RoomsModal
             room={room}
             setRooms={setRooms}
-            setIsModalFormOpen={setIsModalFormOpen}
+            setIsRoomsModalOpen={setIsRoomsModalOpen}
             setNumberOfRooms={setNumberOfRooms}
           />,
           document.body

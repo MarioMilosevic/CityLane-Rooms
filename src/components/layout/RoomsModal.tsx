@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ModalFormProps } from "../../types/types";
+import { RoomsModalProps } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
 import { createNewRoom, editRoomServer } from "src/api/RoomsApi";
 import { showToast } from "src/utils/toast";
@@ -15,10 +15,11 @@ import Input from "../common/Input";
 import TextArea from "../common/TextArea";
 import PrimaryActionButton from "../common/PrimaryActionButton";
 import ButtonWrapper from "./ButtonWrapper";
+import Overlay from "./Overlay";
 
-const ModalForm = ({ room, setIsModalFormOpen, setRooms, setNumberOfRooms }: ModalFormProps) => {
+const RoomsModal = ({ room, setIsRoomsModalOpen, setRooms, setNumberOfRooms }: RoomsModalProps) => {
   const modalRef = useClickOutside<HTMLFormElement>(() =>
-    setIsModalFormOpen(false)
+    setIsRoomsModalOpen(false)
   );
   const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
 
@@ -58,7 +59,7 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms, setNumberOfRooms }: Mod
       showToast("Unable to create new room. Please try again later", "error");
     } finally {
       setIsButtonLoading(false);
-      setIsModalFormOpen(false);
+      setIsRoomsModalOpen(false);
     }
   };
 
@@ -83,13 +84,13 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms, setNumberOfRooms }: Mod
         showToast("Unable to update room. Please try again later.", "error");
       } finally {
         setIsButtonLoading(false);
-        setIsModalFormOpen(false);
+        setIsRoomsModalOpen(false);
       }
     }
   };
 
   return (
-    <div className="flex items-center justify-center z-10 fixed top-0 right-0 w-full h-screen backdrop-blur-sm">
+    <Overlay showChildren={true}>
       <form
         className="overflow-scroll w-[800px] max-h-[80vh] flex flex-col bg-neutral-50 dark:bg-slate-600 z-20 border px-8 py-8 relative"
         ref={modalRef}
@@ -97,7 +98,7 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms, setNumberOfRooms }: Mod
       >
         <PiXBold
           className="absolute top-1 right-1 cursor-pointer w-[30px] h-[30px] p-1 hover:border hover:border-neutral-500 transition-all duration-200 dark:text-slate-200 dark:hover:border-neutral-50 dark:hover:border"
-          onClick={() => setIsModalFormOpen(false)}
+          onClick={() => setIsRoomsModalOpen(false)}
         />
         <FormBlock size="big" direction="row">
           <Label id="Room name" />
@@ -155,7 +156,7 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms, setNumberOfRooms }: Mod
         <ButtonWrapper justify="end">
           <PrimaryActionButton
             text="Cancel"
-            clickHandler={() => setIsModalFormOpen(false)}
+            clickHandler={() => setIsRoomsModalOpen(false)}
             color="white"
           />
           <PrimaryActionButton
@@ -166,8 +167,8 @@ const ModalForm = ({ room, setIsModalFormOpen, setRooms, setNumberOfRooms }: Mod
           />
         </ButtonWrapper>
       </form>
-    </div>
+    </Overlay>
   );
 };
 
-export default ModalForm;
+export default RoomsModal;

@@ -4,8 +4,10 @@ import supabase from "src/config/supabaseClient";
 import { showToast } from "src/utils/toast";
 import { useNavigate } from "react-router-dom";
 import { NavigationProps } from "src/types/types";
+import { BsLayoutTextSidebarReverse } from "react-icons/bs";
 
-const Navigation = ({ handleThemeSwitch, theme, user }: NavigationProps) => {
+
+const Navigation = ({ handleThemeSwitch, theme, user, setIsSidebarOpen }: NavigationProps) => {
   const navigate = useNavigate();
   const {
     user_metadata: { fullName, image },
@@ -28,7 +30,8 @@ const Navigation = ({ handleThemeSwitch, theme, user }: NavigationProps) => {
   };
 
   return (
-    <nav className="flex justify-end gap-4 mx-12 h-[50px] py-2 bg-neutral-50 dark:bg-slate-700">
+    <nav className="flex justify-end gap-4 mx-12 h-[50px] py-2 bg-neutral-50 dark:bg-slate-700 border relative">
+      <BsLayoutTextSidebarReverse className="block lg:hidden absolute top-1/2 left-4 -translate-y-1/2" onClick={() => setIsSidebarOpen((prev) => !prev)}/>
       <div className="flex gap-2 justify-center items-center h-full">
         {image && (
           <img src={image} alt={image} className="rounded-full h-full" />

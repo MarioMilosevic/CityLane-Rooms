@@ -9,7 +9,7 @@ import ContentHeader from "src/components/layout/ContentHeader";
 import SingleRoom from "src/components/layout/SingleRoom";
 import PrimaryActionButton from "src/components/common/PrimaryActionButton";
 import HeaderContainer from "src/components/layout/HeadingContainer";
-import ModalForm from "src/components/layout/ModalForm";
+import RoomsModal from "src/components/layout/RoomsModal";
 import ContentHeaderWrapper from "src/components/layout/ContentHeaderWrapper";
 import ContentRowWrapper from "src/components/layout/ContentRowWrapper";
 import SearchFilterTab from "src/components/common/SearchFilterTab";
@@ -21,7 +21,7 @@ import useFetchData from "src/hooks/useFetchData";
 
 const Rooms = () => {
   const [searchParams] = useSearchParams();
-  const [isModalFormOpen, setIsModalFormOpen] = useState<boolean>(false);
+  const [isRoomsModalOpen, setIsRoomsModalOpen] = useState<boolean>(false);
   const {
     data: rooms,
     loading,
@@ -80,13 +80,13 @@ const Rooms = () => {
         <PrimaryActionButton
           text="Add new room"
           color="yellow"
-          clickHandler={() => setIsModalFormOpen(true)}
+          clickHandler={() => setIsRoomsModalOpen(true)}
         />
       </ContentWrapper>
-      {isModalFormOpen &&
+      {isRoomsModalOpen &&
         createPortal(
-          <ModalForm
-            setIsModalFormOpen={setIsModalFormOpen}
+          <RoomsModal
+            setIsRoomsModalOpen={setIsRoomsModalOpen}
             setRooms={
               setRooms as React.Dispatch<React.SetStateAction<RoomType[]>>
             }

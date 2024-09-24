@@ -12,7 +12,6 @@ const useRetrieveSession = (navigate: NavigateFunction) => {
         if (result && "session" in result && result.session) {
           navigate("/bookings");
         }
-        console.log(result)
       } catch (error) {
         console.error("Error fetching session", error);
       } finally {
