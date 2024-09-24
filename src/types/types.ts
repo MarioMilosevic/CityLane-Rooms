@@ -50,6 +50,8 @@ export type PageLinkProps = {
 
 export type MainContainerProps = {
   children: ReactNode;
+  isSidebarOpen: boolean;
+  closeSidebar: () => void;
 };
 
 export type FilterButtonProps = {
@@ -132,6 +134,12 @@ export type FormBlockSizeOptions = {
 
 export type OptionButtonProps = {
   children: ReactNode;
+};
+
+
+export type SidebarProps = {
+  isSidebarOpen: boolean;
+  closeSidebar:() => void
 };
 
 export type RoomsModalProps = {

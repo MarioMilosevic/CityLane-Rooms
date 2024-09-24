@@ -5,7 +5,7 @@ const Title = ({ title, position }: TitleProps) => {
     left:'text-left',
     center:'text-center',
   }
-  return <h1 className={`text-3xl font-medium ${titlePositionOptions[position]}`}>{title}</h1>;
+  return <h1 className={`text-xl lg:text-3xl font-medium ${titlePositionOptions[position]}`}>{title}</h1>;
 };
 
 export default Title;

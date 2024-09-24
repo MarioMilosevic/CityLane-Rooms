@@ -21,7 +21,7 @@ const PageLink = ({ link, isSelected, clickHandler }: PageLinkProps) => {
       <span className={`transition-colors duration-200 ${spanClass}`}>
         {<link.icon />}
       </span>
-      <h2 className={`capitalize font-normal ${h2Class}`}>{link.text}</h2>
+      <h2 className={`capitalize font-normal text-base lg:text-lg ${h2Class}`}>{link.text}</h2>
     </button>
   );
 };

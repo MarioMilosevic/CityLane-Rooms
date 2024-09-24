@@ -13,19 +13,22 @@ import CheckInBooking from "./components/layout/CheckInBooking";
 import Account from "./pages/Account";
 
 function App() {
-  const [theme, setTheme] = useState<string>("light");
   const [user, setUser] = useState<User>();
+  const [theme, setTheme] = useState<string>("light");
 
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }, []);
 
   const handleThemeSwitch = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme((prev) => {
+      const newTheme = prev === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", newTheme);
+      document.documentElement.classList.toggle("dark", newTheme === "dark");
+      return newTheme;
+    });
   };
 
   return (
@@ -62,3 +65,8 @@ function App() {
 }
 
 export default App;
+// if (theme === "dark") {
+//   document.documentElement.classList.add("dark");
+// } else {
+//   document.documentElement.classList.remove("dark");
+// }

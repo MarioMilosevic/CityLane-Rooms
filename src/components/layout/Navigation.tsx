@@ -30,8 +30,8 @@ const Navigation = ({ handleThemeSwitch, theme, user, setIsSidebarOpen }: Naviga
   };
 
   return (
-    <nav className="flex justify-end gap-4 mx-12 h-[50px] py-2 bg-neutral-50 dark:bg-slate-700 border relative">
-      <BsLayoutTextSidebarReverse className="block lg:hidden absolute top-1/2 left-4 -translate-y-1/2" onClick={() => setIsSidebarOpen((prev) => !prev)}/>
+    <nav className="flex justify-end gap-4 mx-12 h-[50px] py-2 bg-neutral-50 dark:bg-slate-700 relative">
+      <BsLayoutTextSidebarReverse className="block lg:hidden absolute top-1/2 left-4 -translate-y-1/2 cursor-pointer" onClick={() => setIsSidebarOpen((prev) => !prev)}/>
       <div className="flex gap-2 justify-center items-center h-full">
         {image && (
           <img src={image} alt={image} className="rounded-full h-full" />
