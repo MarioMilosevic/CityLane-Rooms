@@ -32,10 +32,10 @@ const SingleRoom = ({ room, setRooms, setNumberOfRooms }: ContentRowProps) => {
       if (response) {
         deleteRoom(roomId);
         setNumberOfRooms((prev) => prev - 1);
-        showToast("Room deleted sucessfully", "success");
+        showToast("Room deleted sucessfully");
       }
     } catch (error) {
-      showToast("Error deleting room");
+      showToast("Error deleting room", 'error');
       console.error("Error deleting room :", error);
     }
   };

@@ -19,7 +19,7 @@ const useFetchSingleBooking = (bookingId: string) => {
     };
     fetchBooking();
   }, [bookingId]);
-  return { loading, singleBooking };
+  return { loading, singleBooking, setSingleBooking };
 };
 
 export default useFetchSingleBooking;

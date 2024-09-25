@@ -44,7 +44,7 @@ const Login = () => {
         reset();
       }
     } catch (error) {
-      showToast("Unexpected error occured, please try again later");
+      showToast("Unexpected error occured, please try again later", 'error');
       console.error(error);
     }
   };

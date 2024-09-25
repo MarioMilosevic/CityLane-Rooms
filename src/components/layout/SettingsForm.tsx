@@ -40,7 +40,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
       const response = await updateSettings(formData);
       if (response.id) {
         setSettings(response);
-        showToast("Settings updated sucessfully", "success");
+        showToast("Settings updated sucessfully");
       } else {
         showToast("Updating failed, please try again", "error");
       }

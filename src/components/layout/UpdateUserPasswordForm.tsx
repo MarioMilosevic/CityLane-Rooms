@@ -26,7 +26,7 @@ const UpdateUserPasswordForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors},
     reset,
   } = form;
 
@@ -35,7 +35,7 @@ const UpdateUserPasswordForm = () => {
       setIsButtonLoading(true);
       const response = await updateUserPassword(formData.password);
       if (response) {
-        showToast("User password updated successfully", "success");
+        showToast("User password updated successfully");
       }
     } catch (error) {
       console.error("Unable to update password", error);

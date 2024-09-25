@@ -106,27 +106,6 @@ export const createNewRoom = async (newRoom: newRoomValues) => {
   return data;
 };
 
-// export const uploadImage = async (file: File, storage:string) => {
-//   const fileName = `${nanoid()}_${file.name}`;
-
-//   const { data, error } = await supabase.storage
-//     .from(storage)
-//     .upload(`${fileName}`, file, {
-//       cacheControl: "3600",
-//       upsert: false,
-//     });
-
-//   if (data) {
-//     const { data: publicURL } = supabase.storage
-//       .from(storage)
-//       .getPublicUrl(`${fileName}`);
-
-//     return publicURL.publicUrl;
-//   } else {
-//     console.error("Error uploading file: ", error.message);
-//     return null;
-//   }
-// };
 
 export const editRoomServer = async (roomId: number, newRoom: RoomType) => {
   try {

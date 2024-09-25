@@ -2,7 +2,6 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegCalendarAlt, FaUsers } from "react-icons/fa";
 import { MdLocalHotel } from "react-icons/md";
 
-export const initialRoomsState = [];
 
 export const links = [
   { text: "bookings", icon: FaRegCalendarAlt },

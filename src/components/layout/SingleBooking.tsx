@@ -55,7 +55,7 @@ const SingleBooking = ({
       await deleteBooking(bookingId);
       setBookings((prev) => prev.filter((booking) => booking.id !== bookingId));
       setNumberOfBookings((prev) => prev - 1);
-      showToast("Booking deleted successfully", "success");
+      showToast("Booking deleted successfully");
       closeModal();
     } catch (error) {
       showToast("Unable to delete booking", "error");
@@ -91,7 +91,7 @@ const SingleBooking = ({
 
   return (
     <div className="grid lg:grid-cols-[2fr_5fr_5fr_4fr_4fr] lg:gap-6 grid-cols-[1fr_2fr_2fr_2fr_2fr] place-content-center items-center mb-1 py-1 bg-neutral-50 relative dark:bg-slate-500">
-      <p className="lg:pl-4 text-xs text-center">{roomId}</p>
+      <p className="lg:pl-4 lg:text-base text-xs lg:text-left text-center">{roomId}</p>
       <div className="flex flex-col justify-self-start pl-1 gap-2 text-sm">
         <h2 className="lg:text-base text-sm">{fullName}</h2>
         <h3 className="lg:block hidden text-sm">{email}</h3>
@@ -107,7 +107,7 @@ const SingleBooking = ({
         </span>
       </div>
       <Status status={status} />
-      <Amount value={totalPrice} type="amount" position="center"/>
+      <Amount value={totalPrice} type="amount" position="center" />
       <OpenModalOptions clickHandler={() => setIsOptionsModalOpen(true)} />
       {isOptionsModalOpen && (
         <OptionButton ref={modalRef}>
@@ -148,11 +148,11 @@ const SingleBooking = ({
             }
             closeModal={closeModal}
           >
-              <p>
-                {modalType === "delete"
-                  ? "Are you sure you want to delete this booking permanently? This action cannot be undone."
-                  : `Are you sure you want to check out ${fullName}? This action cannot be undone.`}
-              </p>
+            <p>
+              {modalType === "delete"
+                ? "Are you sure you want to delete this booking permanently? This action cannot be undone."
+                : `Are you sure you want to check out ${fullName}? This action cannot be undone.`}
+            </p>
             <ButtonWrapper justify="end">
               <PrimaryActionButton
                 text="Cancel"

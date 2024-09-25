@@ -14,9 +14,6 @@ export type RoomType = {
   created_at: string;
 };
 
-export type RoomsState = {
-  rooms: RoomType[];
-};
 
 export type SharedLayoutProps = {
   handleThemeSwitch: () => void;
@@ -106,11 +103,6 @@ export type HeadingContainerProps = {
   children?: ReactNode;
 };
 
-export type filterAndSortType = {
-  filter: string;
-  sort: string;
-};
-
 export type SearchFilterTabProps = {
   tabOptions: string[];
   sortOptions: string[];
@@ -166,9 +158,6 @@ export type TextAreaProps = {
   error: FieldError | undefined;
 };
 
-export type ContentRowWrapperProps = {
-  children: ReactNode;
-};
 
 export type ContentHeaderWrapperProps = {
   children: ReactNode;

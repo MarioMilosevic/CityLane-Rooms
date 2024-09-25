@@ -1,11 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import {
-  deleteBooking,
-  checkOutBooking,
-  fetchSingleBooking,
-} from "src/api/BookingsApi";
+import { useState } from "react";
+import { deleteBooking, checkOutBooking } from "src/api/BookingsApi";
 import { createPortal } from "react-dom";
 import { showToast } from "src/utils/toast";
 import { BookingType } from "src/types/types";
@@ -15,26 +11,14 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import BookingModal from "./BookingModal";
 import BookingHeader from "./BookingHeader";
 import BookingSection from "./BookingSection";
+import useFetchSingleBooking from "src/hooks/useFetchSingleBooking";
 
 const BookingDetails = () => {
   const { bookingId } = useParams();
-  const [singleBooking, setSingleBooking] = useState<BookingType>();
-  const [loading, setLoading] = useState<boolean>(true);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    const fetchBooking = async () => {
-      try {
-        const result = await fetchSingleBooking(Number(bookingId));
-        setSingleBooking(result);
-      } catch (error) {
-        console.error("Error occured", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBooking();
-  }, [bookingId]);
+  const { loading, singleBooking, setSingleBooking } = useFetchSingleBooking(
+    bookingId as string
+  );
 
   const navigate = useNavigate();
 
@@ -47,7 +31,7 @@ const BookingDetails = () => {
   const deleteHandler = async () => {
     deleteBooking(singleBooking.id);
     goBack();
-    showToast("Booking deleted successfully", "success");
+    showToast("Booking deleted successfully");
   };
 
   const checkIn = () => {
@@ -65,10 +49,7 @@ const BookingDetails = () => {
           status: "Checked out",
         };
       });
-      showToast(
-        `${singleBooking.Guests.fullName} has been checked out`,
-        "success"
-      );
+      showToast(`${singleBooking.Guests.fullName} has been checked out`);
     }
   };
 
@@ -137,4 +118,3 @@ const BookingDetails = () => {
 };
 
 export default BookingDetails;
-

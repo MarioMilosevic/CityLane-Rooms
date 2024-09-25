@@ -3,7 +3,7 @@ import { RoomsModalProps } from "../../types/types";
 import { PiXBold } from "react-icons/pi";
 import { createNewRoom, editRoomServer } from "src/api/RoomsApi";
 import { showToast } from "src/utils/toast";
-import { uploadImage } from "src/api/HelperApi";
+import { uploadImage } from "src/utils/helpers";
 import { RoomType } from "../../types/types";
 import { newRoomSchema, newRoomValues } from "src/validation/newRoomSchema";
 import { FieldError, useForm } from "react-hook-form";
@@ -53,7 +53,7 @@ const RoomsModal = ({ room, setIsRoomsModalOpen, setRooms, setNumberOfRooms }: R
       const data = await createNewRoom(newRoom);
       setRooms((prev) => [...prev, data])
       setNumberOfRooms((prev) => prev + 1)
-      showToast("Room created successfully!", "success");
+      showToast("Room created successfully!");
     } catch (error) {
       console.error("Error creating new room:", error);
       showToast("Unable to create new room. Please try again later", "error");
@@ -77,7 +77,7 @@ const RoomsModal = ({ room, setIsRoomsModalOpen, setRooms, setNumberOfRooms }: R
           setRooms((prev) =>
             prev.map((r) => (r.id === room.id ? response : r))
           );
-          showToast("Room updated successfully!", "success");
+          showToast("Room updated successfully!");
         }
       } catch (error) {
         console.error("Error occurred: ", error);

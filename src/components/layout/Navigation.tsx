@@ -24,7 +24,7 @@ const Navigation = ({
       await supabase.auth.signOut();
       navigate("/login");
     } catch (error) {
-      showToast("Unable to sign out");
+      showToast("Unable to sign out", 'error');
       console.error("Unable to sign out", error);
     }
   };

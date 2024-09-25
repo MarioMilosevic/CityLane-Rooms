@@ -9,7 +9,7 @@ import { useForm, FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewUser } from "src/api/UsersApi";
 import { newUserSchema, userFormValues } from "src/validation/newUserSchema";
-import { uploadImage } from "src/api/HelperApi";
+import { uploadImage } from "src/utils/helpers";
 import { showToast } from "src/utils/toast";
 import { useState } from "react";
 const Users = () => {

@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Title from "../common/Title";
 import PageLink from "../common/PageLink";
 import { SidebarProps } from "src/types/types";
-// import Uploader from "src/data/Uploader";
+import Uploader from "src/data/Uploader";
 
 const Sidebar = ({ isSidebarOpen, closeSidebar }: SidebarProps) => {
   const { pathname } = useLocation();
@@ -36,7 +36,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }: SidebarProps) => {
           />
         ))}
       </div>
-      {/* <Uploader /> */}
+      <Uploader />
     </aside>
   );
 };

@@ -10,7 +10,7 @@ import {
 import { useForm, FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserEmail, updateUserMetadata } from "src/api/AccountApi";
-import { uploadImage } from "src/api/HelperApi";
+import { uploadImage } from "src/utils/helpers";
 import { UpdateAccountFormProps } from "src/types/types";
 import { showToast } from "src/utils/toast";
 import { useState } from "react";
@@ -36,7 +36,6 @@ const UpdateUserForm = ({ setUser }: UpdateAccountFormProps) => {
 
 
 const onSubmit = async (formData: updateUserDataFormValues) => {
-  
   try {
     setIsButtonLoading(true)
     const { emailAddress, fullName, image } = formData;
@@ -99,7 +98,7 @@ const onSubmit = async (formData: updateUserDataFormValues) => {
         />
         <PrimaryActionButton
           text="Update account"
-          color="yellow"
+          color='yellow'
           type="submit"
           isLoading={isButtonLoading}
         />

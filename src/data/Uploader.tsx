@@ -1,11 +1,11 @@
 import PrimaryActionButton from "src/components/common/PrimaryActionButton";
-import {  uploadBookings } from "src/api/HelperApi";
+import { uploadBookings } from "src/utils/helpers";
 
 const Uploader = () => {
   return (
     <PrimaryActionButton
       color="yellow"
-      text="Upload"
+      text="Reupload"
       clickHandler={uploadBookings}
     />
   );

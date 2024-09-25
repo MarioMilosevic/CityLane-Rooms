@@ -41,7 +41,6 @@ const CheckInBooking = () => {
         setLoading(false);
       }
     };
-
     fetchBreakfastPriceAndSingleBooking();
   }, [bookingId]);
 
@@ -108,8 +107,8 @@ const CheckInBooking = () => {
       status: "Checked in",
     };
     await checkInBooking(Number(bookingId), updatedBooking);
-    showToast(`${fullName} checked in`, "success");
-    goBack();
+    showToast(`${fullName} checked in`);
+    navigate(`/bookings/${bookingId}`)
   };
 
   return (
@@ -141,12 +140,16 @@ const CheckInBooking = () => {
         )}
         {status === "Unconfirmed" && (
           <CheckboxSection zod={{ ...register("confirmation") }}>
-            <div className="flex justify-between gap-1 items-center pl-4">
-            <p className="lg:text-base text-sm">
-              I confirm that <span className="font-medium">{fullName}</span> has
-              paid the total amount of:{" "}
-            </p>
-            <Amount value={totalBookingPrice} type="amount" position="start" />
+            <div className="flex justify-between gap-1 items-center lg:pl-0 pl-4">
+              <p className="lg:text-base text-sm">
+                I confirm that <span className="font-medium">{fullName}</span>{" "}
+                has paid the total amount of:{" "}
+              </p>
+              <Amount
+                value={totalBookingPrice}
+                type="amount"
+                position="start"
+              />
             </div>
             {hasBreakfast && (
               <span className="lg:block hidden">{` ($${formatPrice(
