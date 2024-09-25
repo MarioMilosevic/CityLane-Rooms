@@ -1,9 +1,9 @@
 import supabase from "src/config/supabaseClient";
 import { isFuture, isPast, isToday } from "date-fns";
 import { subtractDates } from "src/utils/helpers";
-import { rooms } from "src/data/data-rooms";
-import { bookings } from "src/data/data-bookings";
-import { guests } from "src/data/data-guests";
+import { rooms } from "src/data/rooms";
+import { bookings } from "src/data/bookings";
+import { guests } from "src/data/guests";
 import { showToast } from "src/utils/toast";
 import { nanoid } from "nanoid";
 
