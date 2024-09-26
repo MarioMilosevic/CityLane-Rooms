@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# CityLane Rooms
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CityLane Rooms is a comprehensive room management application designed for administrative use. This application allows you to manage rooms, bookings, settings, and users efficiently.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Login**: Secure login with provided credentials
+  - **Username**:admin@gmail.com
+  - **Password**:12345678
+ 
+- **Rooms**:
+  - Supports CRUD operations: Create, Read, Update, and Delete rooms.
+  - Filter rooms by discount: **All**, **With discount**, **No discount**.
+  - Sort rooms: by name (**A-Z**, **Z-A**); by price or by capacity (**Low to High**, **High to low**).
 
-## Expanding the ESLint configuration
+- **Bookings**: 
+  - Filter bookings by status: **All**, **Checked-in**, **Checked-out**, **Unconfirmed**.
+  - Sort bookings by price amount: (**Low to High**, **High to low**) or by date: (**Upcoming first**, **Past first**)
+  - Manage bookings by **checking in**, **deleting**, **adding breakfast**, and **confirming payment**.
+ 
+- **Settings**:
+  - Configure **breakfast price**.
+  - Set **maximum** days for bookings.
+  - Define the **maximum number of guests** allowed per booking.
+ 
+- **Users**:
+  - Create new users with assigned email, password and metadata: full name and image.
+ 
+- **Account**:
+  - Update admin account: email, password and metadata: full name and image.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used:
 
-- Configure the top-level `parserOptions` property like this:
+- Vite
+- React js
+- TypeScript
+- React Hook Form
+- Zod
+- React Router dom
+- Toastify
+- React Icons
+- Date-fns
+- Supabase
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Note**: This application is intended for administrative management of rooms and bookings.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+
