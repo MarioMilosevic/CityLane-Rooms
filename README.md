@@ -2,6 +2,11 @@
 
 CityLane Rooms is a comprehensive room management application designed for administrative use. This application allows you to manage rooms, bookings, settings, and users efficiently.
 
+## Environment Variables
+  To run this project, you will need to add the following environemnt variables to your .env.local file:
+    - VITE_SUPABASE_URL: Your Supabase URL,
+    - VITE_SUPABASE_ANON_KEY : Your Supabase key.
+
 ## Features
 
 - **Login**: Secure login with provided credentials
@@ -43,6 +48,7 @@ CityLane Rooms is a comprehensive room management application designed for admin
 - Supabase
 - Nanoid
 - Tailwind CSS
+
 
 ## **Note**: This application is intended for administrative management of rooms and bookings.
 
