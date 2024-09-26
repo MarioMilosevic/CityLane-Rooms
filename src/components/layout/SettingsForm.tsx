@@ -52,7 +52,7 @@ const SettingsForm = ({ settings, setSettings }: SettingsFormProps) => {
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="pb-12">
       <FormBlock size="big" direction="row">
         <Label id={"Minimum nights/booking"} />
         <Input

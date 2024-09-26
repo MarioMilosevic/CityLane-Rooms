@@ -5,7 +5,7 @@ const Uploader = () => {
   return (
     <PrimaryActionButton
       color="yellow"
-      text="Reupload"
+      text="Reupload data"
       clickHandler={uploadBookings}
     />
   );

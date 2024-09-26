@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { retrieveUser } from "src/api/AccountApi";
 import { Navigate } from "react-router";
+import Footer from "./Footer";
 
 const SharedLayout = ({
   handleThemeSwitch,
@@ -50,6 +51,7 @@ const SharedLayout = ({
           closeSidebar={closeSidebar}
         >
           <Outlet />
+          <Footer />
         </MainContainer>
       </div>
     </>
