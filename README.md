@@ -41,6 +41,7 @@ CityLane Rooms is a comprehensive room management application designed for admin
 - React Icons
 - Date-fns
 - Supabase
+- Tailwind CSS
 
 - **Note**: This application is intended for administrative management of rooms and bookings.
 
