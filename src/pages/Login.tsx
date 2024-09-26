@@ -15,7 +15,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { showToast } from "src/utils/toast";
 import { Toaster } from "react-hot-toast";
-import ButtonWrapper from "src/components/layout/ButtonWrapper";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -88,9 +87,7 @@ const Login = () => {
             error={errors.password}
           />
         </FormBlock>
-        <ButtonWrapper justify="start">
         <PrimaryActionButton text="Log in" type="submit" color={isValid ? "yellow" : "gray" } />
-        </ButtonWrapper>
       </form>
     </main>
   );

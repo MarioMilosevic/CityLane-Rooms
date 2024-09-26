@@ -89,3 +89,5 @@ export const rooms = [
     regularPrice: 350,
   },
 ];
+
+export type RoomsDataType = typeof rooms;

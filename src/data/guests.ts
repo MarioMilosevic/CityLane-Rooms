@@ -167,5 +167,6 @@ export const guests = [
     nationalID: "951753486",
     countryFlag: "https://flagcdn.com/pt.svg",
   },
-  
 ];
+
+export type GuestsDataType = typeof guests

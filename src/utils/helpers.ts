@@ -1,14 +1,13 @@
 import supabase from "src/config/supabaseClient";
-import { rooms } from "src/data/rooms";
+import { rooms, RoomsDataType } from "src/data/rooms";
 import { bookings } from "src/data/bookings";
-import { guests } from "src/data/guests";
+import { guests, GuestsDataType } from "src/data/guests";
 import { showToast } from "src/utils/toast";
 import { nanoid } from "nanoid";
 import { formatDistance, parseISO, isFuture, isPast, isToday } from "date-fns";
 import { differenceInDays, format } from "date-fns";
 
 const pricePerBreakfast = 10;
-
 
 export const getRoomImagePath = (imageUrl: string) => {
   const imagePath = imageUrl.split(
@@ -42,7 +41,6 @@ export const formatDay = (date: string) => {
   return formattedDay;
 };
 
-
 export const uploadImage = async (file: File, storage: string) => {
   const fileName = `${nanoid()}_${file.name}`;
 
@@ -65,45 +63,21 @@ export const uploadImage = async (file: File, storage: string) => {
   }
 };
 
-export const deleteGuests = async () => {
+export const deleteTable = async (tableName: string) => {
   try {
-    const { error } = await supabase.from("Guests").delete().gt("id", 0);
+    const { error } = await supabase.from(tableName).delete().gt("id", 0);
     if (error) console.error(error.message);
   } catch (error) {
     console.error(error);
   }
 };
 
-export const deleteRooms = async () => {
+export const createTable = async (
+  tableName: string,
+  data: GuestsDataType | RoomsDataType
+) => {
   try {
-    const { error } = await supabase.from("Rooms").delete().gt("id", 0);
-    if (error) console.error(error.message);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const deleteBookings = async () => {
-  try {
-    const { error } = await supabase.from("Bookings").delete().gt("id", 0);
-    if (error) console.error(error.message);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const createGuests = async () => {
-  try {
-    const { error } = await supabase.from("Guests").insert(guests);
-    if (error) console.error(error.message);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const createRooms = async () => {
-  try {
-    const { error } = await supabase.from("Rooms").insert(rooms);
+    const { error } = await supabase.from(tableName).insert(data);
     if (error) console.error(error.message);
   } catch (error) {
     console.error(error);
@@ -112,18 +86,13 @@ export const createRooms = async () => {
 
 export const createBookings = async () => {
   try {
-    const { data: guestsIds } = await supabase
-      .from("Guests")
-      .select("id")
-      .order("id");
+    const [guestsResult, roomsResult] = await Promise.all([
+      supabase.from("Guests").select("id").order("id"),
+      supabase.from("Rooms").select("id").order("id"),
+    ]);
 
-    const allGuestIds = guestsIds?.map((guest) => guest.id);
-
-    const { data: roomsIds } = await supabase
-      .from("Rooms")
-      .select("id")
-      .order("id");
-    const allroomIds = roomsIds?.map((room) => room.id);
+    const allGuestIds = guestsResult.data?.map((guest) => guest.id);
+    const allRoomIds = roomsResult.data?.map((room) => room.id);
 
     const finalBookings = bookings.map((booking) => {
       const room = rooms.at(booking.roomId - 1);
@@ -161,7 +130,7 @@ export const createBookings = async () => {
         extrasPrice,
         totalPrice,
         guestId: allGuestIds?.at(booking.guestId - 1),
-        roomId: allroomIds?.at(booking.roomId - 1),
+        roomId: allRoomIds?.at(booking.roomId - 1),
         status,
       };
     });
@@ -176,24 +145,24 @@ export const createBookings = async () => {
 
 export const uploadAll = async () => {
   try {
-    await deleteBookings();
-    await deleteGuests();
-    await deleteRooms();
-    await createGuests();
-    await createRooms();
+    await deleteTable("Bookings");
+    await deleteTable("Guests");
+    await deleteTable("Rooms");
+    await createTable("Guests", guests);
+    await createTable("Rooms", rooms);
     await createBookings();
   } catch (error) {
+    showToast("Unable to upload all files", "error");
     console.error(error);
   }
 };
 
 export const uploadBookings = async () => {
   try {
-    await deleteBookings();
+    await deleteTable("Bookings");
     await createBookings();
   } catch (error) {
+    showToast("Unable to upload bookings", "error");
     console.error(error);
   }
 };
-
-
