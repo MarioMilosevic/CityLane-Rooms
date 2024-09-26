@@ -161,6 +161,7 @@ export const uploadBookings = async () => {
   try {
     await deleteTable("Bookings");
     await createBookings();
+    window.location.reload()
   } catch (error) {
     showToast("Unable to upload bookings", "error");
     console.error(error);
