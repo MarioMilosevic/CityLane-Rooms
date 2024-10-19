@@ -50,7 +50,7 @@ const Login = () => {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <main className="flex flex-col items-center w-full pt-36">
+    <main className="flex flex-col items-center w-full pt-8">
       <Toaster />
       <div className="flex flex-col gap-4 items-center">
         <img
