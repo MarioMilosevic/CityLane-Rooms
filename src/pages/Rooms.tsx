@@ -21,6 +21,7 @@ import useFetchData from "src/hooks/useFetchData";
 const Rooms = () => {
   const [searchParams] = useSearchParams();
   const [isRoomsModalOpen, setIsRoomsModalOpen] = useState<boolean>(false);
+
   const {
     data: rooms,
     loading,
@@ -28,6 +29,7 @@ const Rooms = () => {
     numberOfItems: numberOfRooms,
     setNumberOfItems: setNumberOfRooms,
   } = useFetchData("rooms", fetchAllRooms);
+  
   const currentPage = Number(searchParams.get("page")) || 1;
 
   const showResultsFrom = (currentPage - 1) * itemsPerPage + 1; // 1 , 11 ,21, 31...

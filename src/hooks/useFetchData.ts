@@ -2,9 +2,16 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { BookingType, RoomType } from "src/types/types";
 
-type FetchFunction = (filter:string, sort:string, page:number) => Promise<{data:BookingType[] | RoomType[], count:number}> 
+type FetchFunction = (
+  filter: string,
+  sort: string,
+  page: number
+) => Promise<{ data: BookingType[] | RoomType[]; count: number }>;
 
-const useFetchData = (page: "bookings" | "rooms", fetchFunction: FetchFunction) => {
+const useFetchData = (
+  page: "bookings" | "rooms",
+  fetchFunction: FetchFunction
+) => {
   const [data, setData] = useState<BookingType[] | RoomType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [numberOfItems, setNumberOfItems] = useState<number>(0);
@@ -48,7 +55,14 @@ const useFetchData = (page: "bookings" | "rooms", fetchFunction: FetchFunction) 
     fetchAndSetData();
   }, [filterValue, sortValue, currentPage, fetchFunction]);
 
-  return { data, loading, numberOfItems, currentPage ,setData, setNumberOfItems };
+  return {
+    data,
+    loading,
+    numberOfItems,
+    currentPage,
+    setData,
+    setNumberOfItems,
+  };
 };
 
 export default useFetchData;
